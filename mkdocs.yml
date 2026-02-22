@@ -1,0 +1,59 @@
+site_name: AGRP Standard Operating Procedures
+site_description: Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB
+site_author: Aquatic Genomics Research Platform (AGRP)
+site_url: https://evilliers.github.io/agrp-sops
+
+repo_name: evilliers/agrp-sops
+repo_url: https://github.com/evilliers/agrp-sops
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - tables
+  - attr_list
+  - def_list
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - HPC:
+    - SLURM Basics: hpc/slurm-basics.md
+    - Conda Environments: hpc/conda-environments.md
+  - Genome Assembly:
+    - Nanopore QC: genome-assembly/nanopore-qc.md
+    - Assembly Polishing: genome-assembly/assembly-polishing.md
+  - eDNA Metabarcoding:
+    - CRABS Reference DB: edna-metabarcoding/crabs-reference-db.md
+    - QIIME2 Workflow: edna-metabarcoding/qiime2-workflow.md
+  - Data Management:
+    - Data Management Policy: data-management/data-management-policy.md
