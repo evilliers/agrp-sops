@@ -51,8 +51,8 @@ ssh username@your-server.ac.za
 
 ```bash
 cd /path/to/your/working/directory
-git clone https://github.com/DIPLOMICS-SA/Genome-Assembly-Pipeline-Nextflow.git
-cd Genome-Assembly-Pipeline-Nextflow
+git clone https://github.com/evilliers/1ksa-genome-assembly-pipeline.git
+cd 1ksa-genome-assembly-pipeline
 ```
 
 Or copy your adapted pipeline files into the working directory.
