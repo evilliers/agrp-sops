@@ -33,7 +33,7 @@ Stages 1, 2, 4, 5, and 6 are managed by Nextflow and submitted automatically to 
 ## Prerequisites
 
 - Access to the SLURM cluster with queue `agrp`
-- Conda environment `1ksa_assembly` installed with all tools
+- Conda environment `1ksa_assembly` created from `environment.yml` (see step 0.3)
 - BUSCO lineage database downloaded (see step 1.3)
 - Raw FASTQ file (concatenated, basecalling already done)
 
@@ -57,7 +57,28 @@ cd 1ksa-genome-assembly-pipeline
 
 Or copy your adapted pipeline files into the working directory.
 
-### 0.3 Download the BUSCO lineage database (once per server)
+### 0.3 Create the conda environment
+
+The repository includes an `environment.yml` file that installs all required tools into a conda environment named `1ksa_assembly`.
+
+```bash
+conda env create -f environment.yml
+```
+
+This installs: KMC · NanoPlot · Chopper · Flye · Hifiasm · Racon · minimap2 · BUSCO · QUAST · samtools · Nextflow · Kraken2 · KrakenTools
+
+Verify the environment was created:
+
+```bash
+conda activate 1ksa_assembly
+nextflow -version
+busco --version
+```
+
+!!! note
+    This only needs to be done **once per server**. If the environment already exists, activate it with `conda activate 1ksa_assembly`.
+
+### 0.4 Download the BUSCO lineage database (once per server)
 
 Choose your lineage based on your study organism (see table below), then download it:
 
@@ -86,7 +107,7 @@ ls ./busco_downloads/lineages/
 
 Other lineage options: `viridiplantae_odb10`, `insecta_odb10`, `vertebrata_odb10`
 
-### 0.4 Prepare your FASTQ file
+### 0.5 Prepare your FASTQ file
 
 If your files are split across multiple files or compressed:
 
