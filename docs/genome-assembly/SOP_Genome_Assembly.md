@@ -5,7 +5,7 @@
 **Date:** 2026-02-19
 **Queue:** `agrp`
 **Conda environment:** `1ksa_assembly`
-**Pipeline tools:** KMC · NanoPlot · Chopper · Flye · Hifiasm · Racon · minimap2 · BUSCO · QUAST · samtools
+**Pipeline tools:** KMC · NanoPlot · Chopper · Kraken2 · KrakenTools · Flye · Hifiasm · Racon · minimap2 · BUSCO · QUAST · samtools
 
 ---
 
@@ -18,14 +18,15 @@ The pipeline has six stages:
 ```
 [0] K-mer analysis        → estimate genome size and coverage
 [1] QC + trimming         → NanoPlot + Chopper
-[2] Assembly              → Flye (< 3 Gb) or Hifiasm (≥ 3 Gb)
-[3] Mapping               → minimap2
-[4] Polishing             → Racon (Flye only)
-[5] Evaluation            → BUSCO + QUAST
-[6] Report generation     → generate_report.sh
+[2] Decontamination       → Kraken2 + extract_kraken_reads.py
+[3] Assembly              → Flye (< 3 Gb) or Hifiasm (≥ 3 Gb)
+[4] Mapping               → minimap2
+[5] Polishing             → Racon (Flye only)
+[6] Evaluation            → BUSCO + QUAST
+[7] Report generation     → generate_report.sh
 ```
 
-Stages 1, 3, 4, and 5 are managed by Nextflow and submitted automatically to SLURM. Stages 0, 2, and 6 are submitted as standalone SLURM jobs.
+Stages 1, 2, 4, 5, and 6 are managed by Nextflow and submitted automatically to SLURM. Stages 0, 3, and 7 are submitted as standalone SLURM jobs or run directly.
 
 ---
 
@@ -267,6 +268,7 @@ This script (run from the pipeline root directory, no job submission needed):
 | `species_name` | Species identifier (no spaces) | `Acacia_karroo` |
 | `assembler` | `flye` or `hifiasm` | `flye` |
 | `threads` | CPUs for Nextflow-managed steps | `15` |
+| `kraken_db` | Path to Kraken2 database directory | `/data/kraken2_db` |
 | `LINEAGE` | BUSCO lineage database | `eukaryota_odb10` |
 | `genome_size` | From k-mer analysis (Flye only) | `0.87g` |
 | `flye_coverage` | From k-mer analysis (Flye only) | `176` |
@@ -278,6 +280,7 @@ This script (run from the pipeline root directory, no job submission needed):
 |---|---|---|---|
 | NANOCHECK1/2 | 8 | 32 GB | 4h |
 | TRIM | 15 | 32 GB | 8h |
+| DECONTAMINATE | 15 | 64 GB | 12h |
 | MAPPINGS | 15 | 64 GB | 12h |
 | POLISH1 | 15 | 64 GB | 12h |
 | BUSCOstat_final | 15 | 64 GB | 24h |
@@ -309,7 +312,7 @@ Adjust these in `nextflow.config` and `submit_flye.sh` / `submit_hifiasm.sh` bas
 [ ] 1. Concatenate/unzip FASTQ files
 [ ] 2. sbatch submit_kmer.sh reads.fastq species_name
 [ ] 3. Check k_mers_Stats_<species>.txt — note genome size and coverage
-[ ] 4. Edit params.config with correct values
+[ ] 4. Edit params.config with correct values (including kraken_db path)
 [ ] 5. sbatch submit_slurm.sh reads.fastq
 [ ] 6. Monitor with: watch squeue -u $USER
 [ ] 7. Check BUSCO and QUAST results
