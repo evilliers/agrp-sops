@@ -1,10 +1,6 @@
 ---
-title: "eDNA Metabarcoding Data Analysis SOP"
-subtitle: "mothur + BLAST Pipeline for Illumina Paired-End Sequencing Data"
 version: "3.0"
 date: "January 2026"
-authors: "Updated from v2 (October 2021)"
-pipeline: "mothur → BLAST → R Integration"
 ---
 
 # eDNA Metabarcoding Data Analysis
