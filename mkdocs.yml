@@ -47,6 +47,7 @@ nav:
   - Home: index.md
   - About: about.md
   - HPC:
+    - Getting Started: hpc/getting-started.md
     - SLURM Basics: hpc/slurm-basics.md
     - Conda Environments: hpc/conda-environments.md
     - Storage Management: hpc/storage_management_sop.md
