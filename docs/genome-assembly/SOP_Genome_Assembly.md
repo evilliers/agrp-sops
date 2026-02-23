@@ -59,15 +59,32 @@ Or copy your adapted pipeline files into the working directory.
 
 ### 0.3 Download the BUSCO lineage database (once per server)
 
+Choose your lineage based on your study organism (see table below), then download it:
+
 ```bash
 conda activate 1ksa_assembly
-busco --download eukaryota_odb10   # change lineage if needed
 
-# Verify download:
-ls ./busco_downloads/lineages/eukaryota_odb10
+# Broad eukaryote lineage (use for any eukaryote, or as a first-pass check)
+busco --download eukaryota_odb10
+
+# Ray-finned fish lineage (use for Actinopterygii — more informative for fish)
+busco --download actinopterygii_odb10
+
+# Verify downloads:
+ls ./busco_downloads/lineages/
 ```
 
-Other lineage options: `viridiplantae_odb10`, `insecta_odb10`
+**Choosing a BUSCO lineage:**
+
+| Lineage | Genes | Use when |
+|---------|-------|----------|
+| `eukaryota_odb10` | ~255 | Your species is any eukaryote, or you want a quick broad check. Lower resolution but universally applicable. |
+| `actinopterygii_odb10` | ~3,640 | Your species is a **ray-finned fish** (Actinopterygii — e.g. teleosts, sharks are *not* included). Far more genes assessed, giving a much more sensitive and meaningful completeness score. |
+
+!!! tip
+    For fish genome projects, always run **both** lineages. `eukaryota_odb10` allows cross-phylum comparison; `actinopterygii_odb10` gives the most biologically meaningful completeness score for your assembly.
+
+Other lineage options: `viridiplantae_odb10`, `insecta_odb10`, `vertebrata_odb10`
 
 ### 0.4 Prepare your FASTQ file
 
@@ -142,7 +159,7 @@ species_name='species_name'    # Your species name (no spaces)
 assembler='flye'               # 'flye' for < 3 Gb; 'hifiasm' for ≥ 3 Gb
 
 threads=15
-LINEAGE='eukaryota_odb10'      # Change if needed
+LINEAGE='actinopterygii_odb10' # Use 'eukaryota_odb10' for non-fish or broad check
 
 # Flye only (from k-mer analysis):
 genome_size='0.87g'            # From k_mers_Stats file
@@ -269,7 +286,7 @@ This script (run from the pipeline root directory, no job submission needed):
 | `assembler` | `flye` or `hifiasm` | `flye` |
 | `threads` | CPUs for Nextflow-managed steps | `15` |
 | `kraken_db` | Path to Kraken2 database directory | `/data/kraken2_db` |
-| `LINEAGE` | BUSCO lineage database | `eukaryota_odb10` |
+| `LINEAGE` | BUSCO lineage database | `actinopterygii_odb10` (fish) or `eukaryota_odb10` (broad) |
 | `genome_size` | From k-mer analysis (Flye only) | `0.87g` |
 | `flye_coverage` | From k-mer analysis (Flye only) | `176` |
 | `flye_read_type` | `nano-raw` or `nano-hq` | `nano-raw` |
