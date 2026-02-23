@@ -46,6 +46,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About: about.md
+  - Publishing SOPs: contributing.md
   - HPC:
     - Getting Started: hpc/getting-started.md
     - SLURM Basics: hpc/slurm-basics.md
