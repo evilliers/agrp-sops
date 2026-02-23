@@ -54,13 +54,14 @@ nav:
     - Storage Management: hpc/storage_management_sop.md
     - User Account Management: hpc/user_management_sop.md
   - Genome Assembly:
+    - De Novo Genome Assembly: genome-assembly/SOP_Genome_Assembly.md
     - Nanopore QC: genome-assembly/nanopore-qc.md
     - Assembly Polishing: genome-assembly/assembly-polishing.md
-    - De Novo Genome Assembly: genome-assembly/SOP_Genome_Assembly.md
   - eDNA Metabarcoding:
     - CRABS Reference DB: edna-metabarcoding/crabs-reference-db.md
     - QIIME2 Workflow: edna-metabarcoding/qiime2-workflow.md
     - ONT COI Barcoding Pipeline: edna-metabarcoding/SOP_ONT_Barcoding_Pipeline.md
     - mothur + BLAST Pipeline: edna-metabarcoding/eDNA_mothur_and_BLAST_analysis_SOP_v3.md
+    - Reference Database Creation: edna-metabarcoding/reference-database-creation.md
   - Data Management:
     - Data Management Policy: data-management/data-management-policy.md
