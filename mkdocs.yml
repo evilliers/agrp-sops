@@ -49,11 +49,15 @@ nav:
   - HPC:
     - SLURM Basics: hpc/slurm-basics.md
     - Conda Environments: hpc/conda-environments.md
+    - Storage Management: hpc/storage_management_sop.md
+    - User Account Management: hpc/user_management_sop.md
   - Genome Assembly:
     - Nanopore QC: genome-assembly/nanopore-qc.md
     - Assembly Polishing: genome-assembly/assembly-polishing.md
+    - De Novo Genome Assembly: genome-assembly/SOP_Genome_Assembly.md
   - eDNA Metabarcoding:
     - CRABS Reference DB: edna-metabarcoding/crabs-reference-db.md
     - QIIME2 Workflow: edna-metabarcoding/qiime2-workflow.md
+    - ONT COI Barcoding Pipeline: edna-metabarcoding/SOP_ONT_Barcoding_Pipeline.md
   - Data Management:
     - Data Management Policy: data-management/data-management-policy.md
