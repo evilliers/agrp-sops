@@ -61,7 +61,6 @@ nav:
     - CRABS Reference DB: edna-metabarcoding/crabs-reference-db.md
     - QIIME2 Workflow: edna-metabarcoding/qiime2-workflow.md
     - ONT COI Barcoding Pipeline: edna-metabarcoding/SOP_ONT_Barcoding_Pipeline.md
-    - Mothur + BLAST Pipeline: edna-metabarcoding/eDNA_mothur_and_BLAST_analysis_SOP_v3.md
-    - Marine eDNA Sample Assessment: edna-metabarcoding/eDNA_SOP_Assessment_Marine_Samples.md
+    - mothur + BLAST Pipeline: edna-metabarcoding/eDNA_mothur_and_BLAST_analysis_SOP_v3.md
   - Data Management:
     - Data Management Policy: data-management/data-management-policy.md
