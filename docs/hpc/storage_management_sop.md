@@ -7,7 +7,7 @@
 | **Version** | 1.0 |
 | **Date** | 2026-02-10 |
 | **Author** | SAIAB HPC Administration |
-| **Contact** | evilliers@saiab.ac.za |
+| **Contact** | EP.deVilliers@saiab.nrf.ac.za |
 
 ---
 
