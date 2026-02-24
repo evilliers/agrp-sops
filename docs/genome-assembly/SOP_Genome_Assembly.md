@@ -33,9 +33,14 @@ Stages 1, 2, 4, 5, and 6 are managed by Nextflow and submitted automatically to 
 ## Prerequisites
 
 - Access to the SLURM cluster with queue `agrp`
-- Conda environment `1ksa_assembly` created from `environment.yml` (see step 0.3)
+- Conda environment `1ksa_assembly` installed with all tools
 - BUSCO lineage database downloaded (see step 1.3)
 - Raw FASTQ file (concatenated, basecalling already done)
+- A `logs/` directory in the pipeline folder (SLURM opens the log file before executing the script, so this must exist before any `sbatch` call):
+
+```bash
+mkdir -p logs
+```
 
 ---
 
@@ -51,63 +56,25 @@ ssh username@your-server.ac.za
 
 ```bash
 cd /path/to/your/working/directory
-git clone https://github.com/evilliers/1ksa-genome-assembly-pipeline.git
-cd 1ksa-genome-assembly-pipeline
+git clone https://github.com/DIPLOMICS-SA/Genome-Assembly-Pipeline-Nextflow.git
+cd Genome-Assembly-Pipeline-Nextflow
 ```
 
 Or copy your adapted pipeline files into the working directory.
 
-### 0.3 Create the conda environment
-
-The repository includes an `environment.yml` file that installs all required tools into a conda environment named `1ksa_assembly`.
-
-```bash
-conda env create -f environment.yml
-```
-
-This installs: KMC · NanoPlot · Chopper · Flye · Hifiasm · Racon · minimap2 · BUSCO · QUAST · samtools · Nextflow · Kraken2 · KrakenTools
-
-Verify the environment was created:
+### 0.3 Download the BUSCO lineage database (once per server)
 
 ```bash
 conda activate 1ksa_assembly
-nextflow -version
-busco --version
+busco --download eukaryota_odb10   # change lineage if needed
+
+# Verify download:
+ls ./busco_downloads/lineages/eukaryota_odb10
 ```
 
-!!! note
-    This only needs to be done **once per server**. If the environment already exists, activate it with `conda activate 1ksa_assembly`.
+Other lineage options: `viridiplantae_odb10`, `insecta_odb10`
 
-### 0.4 Download the BUSCO lineage database (once per server)
-
-Choose your lineage based on your study organism (see table below), then download it:
-
-```bash
-conda activate 1ksa_assembly
-
-# Broad eukaryote lineage (use for any eukaryote, or as a first-pass check)
-busco --download eukaryota_odb10
-
-# Ray-finned fish lineage (use for Actinopterygii — more informative for fish)
-busco --download actinopterygii_odb10
-
-# Verify downloads:
-ls ./busco_downloads/lineages/
-```
-
-**Choosing a BUSCO lineage:**
-
-| Lineage | Genes | Use when |
-|---------|-------|----------|
-| `eukaryota_odb10` | ~255 | Your species is any eukaryote, or you want a quick broad check. Lower resolution but universally applicable. |
-| `actinopterygii_odb10` | ~3,640 | Your species is a **ray-finned fish** (Actinopterygii — e.g. teleosts, sharks are *not* included). Far more genes assessed, giving a much more sensitive and meaningful completeness score. |
-
-!!! tip
-    For fish genome projects, always run **both** lineages. `eukaryota_odb10` allows cross-phylum comparison; `actinopterygii_odb10` gives the most biologically meaningful completeness score for your assembly.
-
-Other lineage options: `viridiplantae_odb10`, `insecta_odb10`, `vertebrata_odb10`
-
-### 0.5 Prepare your FASTQ file
+### 0.4 Prepare your FASTQ file
 
 If your files are split across multiple files or compressed:
 
@@ -126,6 +93,11 @@ gunzip -c *.fastq.gz > species_name_fastq_pass_con.fastq
 This is **mandatory before assembly**. It estimates genome size and read coverage — the two key parameters for Flye assembly.
 
 ### 1.1 Submit the k-mer job
+
+> **Note:** SLURM opens `logs/kmer_<JOBID>.out` before running the script, so the `logs/` directory must exist first. If you have not already done so (see Prerequisites):
+> ```bash
+> mkdir -p logs
+> ```
 
 ```bash
 sbatch submit_kmer.sh /path/to/species_name_fastq_pass_con.fastq species_name
@@ -180,7 +152,7 @@ species_name='species_name'    # Your species name (no spaces)
 assembler='flye'               # 'flye' for < 3 Gb; 'hifiasm' for ≥ 3 Gb
 
 threads=15
-LINEAGE='actinopterygii_odb10' # Use 'eukaryota_odb10' for non-fish or broad check
+LINEAGE='eukaryota_odb10'      # Change if needed
 
 # Flye only (from k-mer analysis):
 genome_size='0.87g'            # From k_mers_Stats file
@@ -307,7 +279,7 @@ This script (run from the pipeline root directory, no job submission needed):
 | `assembler` | `flye` or `hifiasm` | `flye` |
 | `threads` | CPUs for Nextflow-managed steps | `15` |
 | `kraken_db` | Path to Kraken2 database directory | `/data/kraken2_db` |
-| `LINEAGE` | BUSCO lineage database | `actinopterygii_odb10` (fish) or `eukaryota_odb10` (broad) |
+| `LINEAGE` | BUSCO lineage database | `eukaryota_odb10` |
 | `genome_size` | From k-mer analysis (Flye only) | `0.87g` |
 | `flye_coverage` | From k-mer analysis (Flye only) | `176` |
 | `flye_read_type` | `nano-raw` or `nano-hq` | `nano-raw` |
@@ -348,12 +320,13 @@ Adjust these in `nextflow.config` and `submit_flye.sh` / `submit_hifiasm.sh` bas
 ```
 [ ] 0. Log in to server and navigate to pipeline directory
 [ ] 1. Concatenate/unzip FASTQ files
-[ ] 2. sbatch submit_kmer.sh reads.fastq species_name
-[ ] 3. Check k_mers_Stats_<species>.txt — note genome size and coverage
-[ ] 4. Edit params.config with correct values (including kraken_db path)
-[ ] 5. sbatch submit_slurm.sh reads.fastq
-[ ] 6. Monitor with: watch squeue -u $USER
-[ ] 7. Check BUSCO and QUAST results
-[ ] 8. bash generate_report.sh
-[ ] 9. Review results/<species_name>/<species>_report.txt
+[ ] 2. mkdir -p logs   ← required before any sbatch call
+[ ] 3. sbatch submit_kmer.sh reads.fastq species_name
+[ ] 4. Check k_mers_Stats_<species>.txt — note genome size and coverage
+[ ] 5. Edit params.config with correct values (including kraken_db path)
+[ ] 6. sbatch submit_slurm.sh reads.fastq
+[ ] 7. Monitor with: watch squeue -u $USER
+[ ] 8. Check BUSCO and QUAST results
+[ ] 9. bash generate_report.sh
+[ ] 10. Review results/<species_name>/<species>_report.txt
 ```
