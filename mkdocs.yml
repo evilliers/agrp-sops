@@ -57,6 +57,7 @@ nav:
     - De Novo Genome Assembly: genome-assembly/SOP_Genome_Assembly.md
     - Nanopore QC: genome-assembly/nanopore-qc.md
     - Assembly Polishing: genome-assembly/assembly-polishing.md
+    - Mitogenome Assembly (ONT): genome-assembly/SOP_mitogenome_pipeline.md
   - eDNA Metabarcoding:
     - CRABS Reference DB: edna-metabarcoding/crabs-reference-db.md
     - QIIME2 Workflow: edna-metabarcoding/qiime2-workflow.md
