@@ -1,8 +1,8 @@
 # Standard Operating Procedure: ONT COI Barcoding Pipeline for Environmental Samples
 
 **Document ID:** SAIAB-SOP-ONT-001
-**Version:** 1.0
-**Date:** 2026-02-17
+**Version:** 2.1
+**Date:** 2026-03-31
 **Author:** SAIAB Genomics
 **Status:** Active
 
@@ -14,6 +14,7 @@
 2. [Scope](#2-scope)
 3. [Background](#3-background)
 4. [Prerequisites](#4-prerequisites)
+   - 4.5 [Obtain the Pipeline Scripts](#45-obtain-the-pipeline-scripts)
 5. [Pipeline Overview](#5-pipeline-overview)
 6. [Detailed Procedure](#6-detailed-procedure)
    - 6.1 [Prepare Input Data](#61-prepare-input-data)
@@ -40,7 +41,7 @@ This SOP describes how to run the SAIAB ONT COI barcoding pipeline to process Ox
 This procedure applies to:
 
 - COI gene (658 bp) amplicon data generated on PromethION (FLO-PRO114M, R10.4.1 chemistry) or MinION/Flongle flow cells.
-- Specimens multiplexed using a 2-step PCR strategy with M13-tagged FishF1/FishR1 primers and unique molecular identifier (UMI) barcodes (16 bp UMI + GGTAG pad).
+- Specimens multiplexed using a 2-step PCR strategy with M13-tagged FishF1/FishF2/FishR1/FR1d-t1 primers (4-primer cocktail) and unique molecular identifier (UMI) barcodes (GGTAG pad + 16 bp UMI).
 - Pools of up to 100 specimens per sequencing run.
 
 The pipeline is designed to run on the SAIAB SLURM cluster (partition: `agrp`). Users must have an active cluster account with access to this partition.
@@ -57,8 +58,10 @@ Our protocol uses a 2-step PCR approach adapted from the Aguirre Lab protocol (D
 The final amplicon structure is:
 
 ```
-5'-[FWD UMI (16bp)]-[GGTAG pad]-[M13 fwd]-[FishF1]--- COI (658bp) ---[FishR1]-[M13 rev]-[GGTAG pad]-[REV UMI (16bp)]-3'
+5'-[GGTAG pad]-[FWD UMI (16bp)]-[M13 fwd]-[FishF1 or FishF2]--- COI (658bp) ---[FishR1 or FR1d-t1]-[M13 rev]-[REV UMI (16bp)]-[GGTAG pad]-3'
 ```
+
+> **PCR primer cocktail:** PCR 1 uses a 4-primer cocktail — two forward primers (M13-FishF1 and M13-FishF2) and two reverse primers (M13-FishR1 and M13-FR1d-t1) — to improve amplification success across a range of fish taxa. Any combination of one forward and one reverse primer may amplify a given specimen. The pipeline handles all four variants during primer trimming (Step 3).
 
 This pipeline automates all bioinformatic steps from raw reads to taxonomic assignment.
 
@@ -76,8 +79,10 @@ Before first use, ensure the following databases are available on the cluster:
 
 | Database | Purpose | Obtain from |
 |----------|---------|-------------|
-| NCBI nt | BLAST taxonomy | `update_blastdb.pl nt` or download from [NCBI FTP](https://ftp.ncbi.nlm.nih.gov/blast/db/) |
+| MIDORI2 COI (BLAST-formatted) | BLAST taxonomy | Download from [MIDORI](https://www.reference-midori.info/download.php); use the `MIDORI2_LONGEST_NUC_*_CO1_BLAST` release and run `makeblastdb` |
 | BOLD COI (SINTAX-formatted) | SINTAX taxonomy | Download from [BOLD Systems](https://www.boldsystems.org/) and format headers for VSEARCH SINTAX (see Section 6.2.3) |
+
+> **Why MIDORI2 instead of NCBI nt?** MIDORI2 is a curated subset of GenBank containing only COI sequences from metazoans. For COI barcoding it is preferred over NCBI nt because: (1) searches are much faster due to the smaller database size; (2) only COI-relevant hits are returned, avoiding false positives from non-COI sequences; (3) it is taxonomically curated, reducing erroneous hits. Taxonomy is encoded directly in the sequence ID field (`sseqid`) in the format `accession###...;Genus_species_taxid` — the pipeline parses this automatically.
 
 ### 4.3 Required Input Files
 
@@ -92,8 +97,26 @@ Before first use, ensure the following databases are available on the cluster:
 You will need the following information from the wetlab team:
 
 - Which UMI barcode pair was used for each specimen
-- The primer pair used (default: FishF1/FishR1; update in config if different)
+- Which primer cocktail was used (default: FishF1+FishF2 forward, FishR1+FR1d-t1 reverse; update `PRIMER_FWD`/`PRIMER_FWD2`/`PRIMER_REV`/`PRIMER_REV2` in config if different)
 - Sequencing platform and flow cell type (for QC interpretation)
+
+### 4.5 Obtain the Pipeline Scripts
+
+Clone the pipeline repository from the SAIAB internal Gitea server:
+
+```bash
+git clone http://172.20.142.126:3000/evilliers/ont_barcoding
+cd ont_barcoding
+```
+
+> **Note:** All subsequent steps in this SOP assume you are working from the cloned `ont_barcoding/` directory. Replace any reference to `/path/to/ont_barcoding` with the actual path to your clone (e.g., `~/ont_barcoding`).
+
+If you have already cloned the repository previously and want to update to the latest version:
+
+```bash
+cd /path/to/ont_barcoding
+git pull
+```
 
 ## 5. Pipeline Overview
 
@@ -106,7 +129,7 @@ Step 2: Filtering           --- Length (550-950 bp) & quality (Q10) filtering
 Step 3: Demultiplexing      --- UMI-based specimen assignment (Cutadapt)
 Step 4: Clustering          --- VSEARCH clustering at 95% identity
 Step 5: Consensus           --- Multiple alignment & consensus calling
-Step 6: QC Filtering        --- Translation, length, stop codon checks
+Step 6: QC Filtering        --- Primer stripping (cutadapt), then translation, length, and stop codon checks
 Step 7: BLAST Taxonomy      --- NCBI nt search
 Step 8: SINTAX Taxonomy     --- BOLD database classification
 Step 9: Report              --- Merged results & HTML report
@@ -162,33 +185,60 @@ ls -lh data/raw/
 
 #### 6.2.1 Edit the Sample Sheet
 
-Open `config/sample_sheet.csv` and enter one row per specimen, mapping each specimen ID to its forward and reverse UMI barcode names:
+Open `config/sample_sheet.csv` and enter one row per specimen, mapping each specimen ID to its forward and reverse UMI barcode names. The file **must** use exactly these three column headers:
 
 ```csv
-specimen_id,forward_umi_name,reverse_umi_name
-FISH001,bc01F,bc97R
-FISH002,bc02F,bc97R
-ARTH003,bc01F,bc98R
+specimen_id,fwd_umi,rev_umi
+SPR22_008,bc1001,bc1097_rc
+SPR22_054,bc1002,bc1097_rc
+SPR22_264,bc1003,bc1097_rc
+SPR22_033,bc1001,bc1098_rc
+SPR22_080,bc1002,bc1098_rc
 ```
 
-- **specimen_id**: Your unique identifier for the specimen. Use alphanumeric characters and underscores only (no spaces or special characters).
-- **forward_umi_name** / **reverse_umi_name**: Must match names in the UMI sequences file (see 6.2.2).
+**Column descriptions:**
 
-> **Tip:** The barcode index combinations are documented in `articles/Proposed_barocding_indices.xlsx`. Consult this file for the valid F/R UMI pairings used in your experiment.
+| Column | Required | Description |
+|--------|----------|-------------|
+| `specimen_id` | Yes | Unique identifier for the specimen. Use alphanumeric characters and underscores only — **no spaces or special characters**. Must be unique within the file. |
+| `fwd_umi` | Yes | Name of the forward UMI barcode assigned to this specimen during PCR 2. Must exactly match a `umi_name` in `config/umi_sequences.tsv`. Valid values: `bc1001` – `bc1096`. |
+| `rev_umi` | Yes | Name of the reverse UMI barcode. Must exactly match a `umi_name` in `config/umi_sequences.tsv`. Valid values: `bc1097_rc` – `bc1192_rc` (note the `_rc` suffix — these are reverse-complement barcodes). |
 
-#### 6.2.2 Create the UMI Sequences File
+**Combinatorial indexing:** Each specimen is uniquely identified by the **combination** of its forward and reverse barcode. Multiple specimens can share the same forward barcode (e.g., `bc1001`) as long as they have different reverse barcodes, and vice versa. The same barcode pair must **never** be used for two different specimens in the same run.
 
-Create `config/umi_sequences.tsv` with the actual 16 bp UMI barcode sequences. This is a tab-separated file:
+> **Tip:** The barcode index combinations are documented in `articles/Proposed_barcoding_indices.xlsx`. Consult this file together with the wetlab team to confirm which UMI pair was assigned to each specimen before PCR 2.
+
+**Example layout for a 3×3 pool (9 specimens):**
+
+```
+          bc1097_rc  bc1098_rc  bc1099_rc
+bc1001    SPEC_A     SPEC_D     SPEC_G
+bc1002    SPEC_B     SPEC_E     SPEC_H
+bc1003    SPEC_C     SPEC_F     SPEC_I
+```
+
+#### 6.2.2 Verify the UMI Sequences File
+
+The file `config/umi_sequences.tsv` is **pre-populated** with the full set of 16 bp UMI barcode sequences used in the SAIAB barcoding protocol. You do **not** need to create or edit this file for standard runs.
+
+The file is tab-separated with two columns:
 
 ```
 umi_name	sequence
-bc01F	AACTGACTAACCGTAG
-bc02F	AAGGTCGATCAATTGC
-bc97R	CGTCGATGTCTTCAAG
-bc98R	GACTTAGCACGTCAAT
+bc1001	CACATATCAGAGTGCG
+bc1002	ACACACAGACTGTGAG
+...
+bc1096	TGTGCTCTCTACACAG
+bc1097_rc	TAGAGAGATAGAGACG
+bc1098_rc	TGATGTGACACTGCGC
+...
+bc1192_rc	GTCTCAGCACGAGACA
 ```
 
-> **Important:** Replace the example sequences above with your actual UMI sequences. These must exactly match the oligos used in the PCR 2 step (16 bp portion only, without the pad or M13 tag).
+- **Forward barcodes** (`bc1001`–`bc1096`): 96 barcodes used on the forward primer arm (PCR 2 forward primer).
+- **Reverse barcodes** (`bc1097_rc`–`bc1192_rc`): 96 barcodes used on the reverse primer arm, pre-computed as the reverse complement (hence the `_rc` suffix). The `_rc` suffix is required — these names must match exactly what is written in `sample_sheet.csv`.
+
+> **Only edit this file** if you are adding new barcodes beyond the existing 192-barcode set. New entries must follow the same tab-separated format with a unique `umi_name` and a 16 bp DNA sequence.
 
 #### 6.2.3 Edit the Configuration File
 
@@ -198,8 +248,8 @@ Open `config/config.sh` and update the following parameters:
 
 ```bash
 # Set paths to your local reference databases
-BLAST_DB="/path/to/nt"                    # Path to NCBI nt BLAST database
-BOLD_DB="/path/to/bold_sintax.fasta"      # Path to BOLD SINTAX-formatted DB
+BLAST_DB="/path/to/MIDORI2_LONGEST_NUC_*_CO1_BLAST"  # Path to MIDORI2 COI BLAST database
+BOLD_DB="/path/to/bold_COI_sintax_derep.fasta"        # Path to BOLD SINTAX-formatted DB
 ```
 
 **Optional changes (adjust only if needed):**
@@ -215,11 +265,13 @@ BOLD_DB="/path/to/bold_sintax.fasta"      # Path to BOLD SINTAX-formatted DB
 | `MIN_QUALITY` | `10` | Lower for older chemistry; R10.4.1 supports Q20+ |
 | `CLUSTER_ID` | `0.95` | Standard for COI intraspecific variation (Hebert et al., 2025) |
 | `MIN_CLUSTER_SIZE` | `5` | Minimum reads to form a valid cluster |
-| `GENETIC_CODE` | `5` | Code 5 = invertebrate mitochondrial; use 2 for vertebrate mitochondrial |
+| `GENETIC_CODE` | `2` | NCBI translation table (2 = vertebrate mitochondrial; use 5 for invertebrate mitochondrial) |
 | `MIN_READ_DEPTH` | `10` | Minimum reads in dominant cluster for a specimen to pass QC |
-| `SINTAX_CUTOFF` | `0.8` | Bootstrap confidence threshold for SINTAX classification |
+| `SINTAX_CUTOFF` | `0.6` | Bootstrap confidence threshold for SINTAX classification |
 
-> **Note on genetic code:** If your samples are exclusively fish, you may use genetic code 2 (vertebrate mitochondrial). For mixed fish + arthropod samples, use code 5 (invertebrate mitochondrial), which is compatible with both groups for COI. See NCBI genetic codes: https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi
+> **Note on genetic code:** Use code 2 (vertebrate mitochondrial) for fish samples. Use code 5 (invertebrate mitochondrial) for arthropod samples or mixed vertebrate + invertebrate pools. See NCBI genetic codes: https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi
+
+> **Note on SINTAX cutoff:** A cutoff of 0.6 balances sensitivity and specificity. For many Indo-Pacific and deep-sea fish species that are under-represented in BOLD, genus- and species-level SINTAX bootstrap values rarely exceed 0.8, so a cutoff of 0.8 silently discards valid higher-rank classifications (order, family). If your taxa are very well represented in BOLD (e.g., common Atlantic fish, insects), you may raise this to 0.8 for stricter classifications.
 
 #### 6.2.4 Formatting the BOLD Database for SINTAX
 
@@ -292,6 +344,15 @@ Once the dry run succeeds:
 conda activate ont_barcoding
 bash scripts/run_pipeline.sh
 ```
+
+> **Important:** Steps 4 and 5 are SLURM array jobs and must be submitted with `--array=1-N` where N is the number of specimens (rows in `config/sample_sheet.csv`, typically 40 for a full run). All other steps are single jobs and must NOT include `--array`. Submitting Step 3 as an array job will cause multiple processes to write to the same output files simultaneously.
+
+| Step | Script | Submission command | Notes |
+|------|--------|--------------------|-------|
+| 3 | `03_demux.sh` | `sbatch scripts/03_demux.sh` | **NOT an array job.** Loops over all specimens internally. |
+| 4 | `04_cluster.sh` | `sbatch --array=1-N scripts/04_cluster.sh` | **Array job.** Uses `SLURM_ARRAY_TASK_ID` to select specimen. |
+| 5 | `05_consensus.sh` | `sbatch --array=1-N scripts/05_consensus.sh` | **Array job.** Same as Step 4. |
+| 6–9 | All others | `sbatch scripts/0X_name.sh` | **NOT array jobs.** |
 
 The script will:
 1. Run Step 0 (setup) locally
@@ -403,6 +464,9 @@ results/
 |   +-- passed.fasta                # Final QC-passed barcode sequences
 |   +-- failed.tsv                  # Failed specimens with reasons
 |   +-- qc_summary.tsv             # QC pass/fail counts
+|   +-- length_distribution.png    # Histogram of consensus lengths (passed vs failed)
+|   +-- all_consensus_trimmed.fasta # Primer-stripped consensus (input to QC)
+|   +-- primer_trim.log             # Cutadapt primer-stripping log
 +-- 07_blast/
 |   +-- blast_results.tsv          # BLAST hits (tabular format)
 +-- 08_sintax/
@@ -422,8 +486,13 @@ results/
 | `06_qc_passed/passed.fasta` | QC-passed COI sequences | Submit to BOLD/GenBank; use in phylogenetic analyses |
 | `03_demux/demux_stats.tsv` | Reads per specimen | Assess sequencing depth and demux success |
 | `06_qc_passed/failed.tsv` | QC failures with reasons | Troubleshoot failed specimens |
+| `06_qc_passed/length_distribution.png` | Consensus length histogram (passed vs failed) | Detect off-target amplicons (e.g., upper band on PCR gel); sequences outside the 600–700 bp window appear in red |
 
 ## 8. Quality Control Criteria
+
+> **Pre-QC primer stripping:** Before QC is applied, all consensus sequences are stripped of COI primer sequences (and their reverse complements) using cutadapt. This is necessary because the Step 3 demultiplexing trim removes whichever primer end it first encounters but may leave the other end intact; consensus calling then preserves these partial primer sequences. The stripping step uses `--match-read-wildcards` to handle IUPAC ambiguity codes and `--overlap 15` to ensure only genuine primer matches are trimmed.
+
+> **Expected amplicon length for this primer set:** The FishF1/FishF2/FishR1/FR1d-t1 cocktail amplifies a product of approximately 680–686 bp (after primer stripping), not the standard 658 bp COI barcode. This is normal and within the 600–700 bp QC window. Do not narrow the QC window below 680 bp for this primer set.
 
 Consensus sequences must pass **all five** QC criteria to be included in the final results (following Hebert et al., 2025):
 
@@ -431,7 +500,7 @@ Consensus sequences must pass **all five** QC criteria to be included in the fin
 |---|-----------|-----------|-----------|
 | 1 | Sequence length | 600-700 bp | COI barcode region is 658 bp; allows tolerance for primer trimming variation |
 | 2 | Correct reading frame | Translatable in frame 1, 2, or 3 | Verifies the sequence is a genuine coding region |
-| 3 | No internal stop codons | 0 stops (genetic code 5) | Stop codons indicate pseudogenes (NUMTs) or frameshifts |
+| 3 | No internal stop codons | 0 stops (genetic code 2 for fish) | Stop codons indicate pseudogenes (NUMTs) or frameshifts |
 | 4 | No ambiguous bases | 0 N's | Ambiguities indicate low consensus support |
 | 5 | Minimum read depth | >= 10 reads in dominant cluster | Ensures sufficient data for reliable consensus |
 
@@ -447,7 +516,7 @@ Open `results/09_report/report.html` in a web browser. The report contains:
 
 2. **Per-specimen read depth barplot** — Specimens with very low depth (< 50 reads) may yield unreliable consensus sequences. Specimens with zero reads indicate a demultiplexing failure (check UMI sequences).
 
-3. **Demultiplexing success rate** — Target: > 70% of reads assigned to specimens. Low assignment rates may indicate:
+3. **Demultiplexing success rate** — Target: 50–80% of reads assigned to specimens, depending on PCR2 efficiency. Rates as low as 46% may be acceptable if all specimens are assigned and read depths are sufficient. Rates below 50% indicate incomplete PCR2 conversion — see Section 4 lab recommendations. Low assignment rates may also indicate:
    - Incorrect UMI sequences in the config
    - High adapter dimer content
    - Off-target amplification
@@ -455,9 +524,13 @@ Open `results/09_report/report.html` in a web browser. The report contains:
 4. **Taxonomic composition** — Barplots at order and family level. Review for unexpected taxa that may indicate contamination or mis-assignment.
 
 5. **BLAST vs SINTAX agreement** — Target: > 80% genus-level agreement. Disagreements may indicate:
-   - Incomplete reference databases
+   - Incomplete reference databases (see note below)
    - Closely related species not resolved at genus level
    - Specimens at the boundary of taxonomic groups
+
+   > **BOLD coverage note:** BOLD has uneven coverage across taxa. Indo-Pacific and deep-sea fish species (e.g., *Monocentris japonica*, *Hoplostethus* spp.) are frequently under-represented compared to commercially important Atlantic or temperate species. For such taxa, SINTAX bootstrap values at genus and species level may remain below the classification cutoff even with a correct identification, causing SINTAX to report only order- or family-level assignments (or nothing at all). In these cases, **BLAST against MIDORI2 is the more reliable identification method** and should be used as the primary result.
+
+6. **Mixed-well detection:** When a specimen's primary and b consensus sequences match different species (or highly divergent genera), this is strong evidence of a mixed well, cross-contamination, or a labelling error. The pipeline does not automatically flag this — compare BLAST top hits for primary and b sequences manually. In confirmed mixed wells, neither sequence should be used as a definitive identification without re-extraction.
 
 6. **Neighbor-joining tree** — Visual check for clustering of related specimens and potential outliers.
 
@@ -477,6 +550,8 @@ The file `results/09_report/taxonomy_merged.tsv` contains one row per specimen w
 | `sintax_phylum` through `sintax_species` | SINTAX classifications at each rank |
 | `genus_agree` | `agree`, `conflict`, or `one_missing` |
 
+> **When SINTAX assigns a wrong kingdom (e.g., Fungi, Plantae) with very low confidence (< 0.1):** This indicates the sequence has no close match in the BOLD database. It is NOT a sign of contamination — BLAST will correctly identify the specimen if it is a real fish COI sequence. Always check the BLAST result when SINTAX confidence is below 0.1 at kingdom level. Use BLAST as the definitive identification.
+
 **Interpreting percent identity (BLAST):**
 
 | % Identity | Interpretation | Reference |
@@ -493,7 +568,7 @@ Based on Hebert et al. (2025) and Srivathsan et al. (2021):
 | Metric | Expected Range |
 |--------|---------------|
 | Reads passing length/quality filter | 70-90% |
-| Demultiplexing assignment rate | > 70% |
+| Demultiplexing assignment rate | 50–80%, depending on PCR2 efficiency. Rates as low as 46% may be acceptable if all specimens are assigned and read depths are sufficient. |
 | Specimens passing all QC checks | 80-95% |
 | BLAST vs SINTAX genus agreement | > 80% |
 | Consensus accuracy (vs Sanger) | > 99.9% |
@@ -505,11 +580,15 @@ Based on Hebert et al. (2025) and Srivathsan et al. (2021):
 | Problem | Possible Cause | Solution |
 |---------|---------------|----------|
 | Setup fails: "No FASTQ files found" | Wrong path or missing data | Verify files exist in `data/raw/` with `ls -la data/raw/` |
-| Setup warns: "UMI sequence not found" | Mismatch between sample sheet and UMI file | Check that barcode names in `sample_sheet.csv` match `umi_sequences.tsv` exactly |
+| Setup warns: "UMI sequence not found" | Mismatch between sample sheet and UMI file | Check that barcode names in `sample_sheet.csv` match `umi_sequences.tsv` exactly. Common mistake: using `bc1097` instead of `bc1097_rc` for reverse barcodes |
 | Low demux assignment rate (< 50%) | Incorrect UMI sequences | Verify UMI sequences match the oligos used in PCR 2 |
 | Low demux assignment rate (< 50%) | Wrong primer sequences | Update `PRIMER_FWD`/`PRIMER_REV` in config if using non-standard primers |
+| Demux rate 40–55% but all specimens assigned | Incomplete PCR2 UMI-tagging | Expected when PCR1 products are not fully consumed by PCR2. Run is valid. Improve PCR2 efficiency in future runs (bead cleanup after PCR1, verify PCR2 by gel, increase PCR2 cycles). |
 | Many specimens with 0 reads | Contamination or failed PCR | Check wetlab gel images; re-extract/re-amplify failed specimens |
 | High QC failure — stop codons | NUMTs co-amplified | Increase `MIN_CLUSTER_SIZE`; consider redesigning primers |
+| QC failure: stops=16–18 on otherwise normal-looking consensus | 1–2 IUPAC bases immediately before the primer start caused cutadapt to miss the primer; remaining bases shift the reading frame | Expected for ~15% of sequences. These represent real COI sequences. Manual trimming of the IUPAC prefix is possible but not currently automated. |
+| QC failure: not_translatable on "b" sequence; starts with PRIMER_REV | Consensus assembled in minus orientation; `-g PRIMER_REV` in cutadapt failed to strip it due to IUPAC prefix | Same as above. These "b" sequences are typically redundant — if the primary sequence passed, the specimen still has a valid barcode. |
+| QC failure: non-COI sequence; sequence does not resemble fish COI | Non-specific PCR amplification in that well | Re-extract and re-amplify the specimen. Check PCR gel for anomalous band size. |
 | High QC failure — length | Chimeric or truncated amplicons | Tighten length filter; check gel for non-specific bands |
 | High QC failure — ambiguous bases | Low read depth | Pool fewer specimens per run to increase per-specimen depth |
 | BLAST job times out | Large dataset + remote DB | Use local BLAST database; increase `TIME` in config |
@@ -531,6 +610,8 @@ JOB7=$(sbatch -p agrp --dependency=afterok:$JOB6 scripts/07_taxonomy_blast.sh | 
 JOB8=$(sbatch -p agrp --dependency=afterok:$JOB6 scripts/08_taxonomy_sintax.sh | grep -oP '\d+')
 sbatch -p agrp --dependency=afterok:$JOB7:$JOB8 scripts/09_report.sh
 ```
+
+> **If Step 6 produces 0 sequences passing:** Check whether consensus sequences contain primer sequence. Inspect the 5′ end of a few sequences in `results/05_consensus/all_consensus.fasta` using `grep -A1 "^>" results/05_consensus/all_consensus.fasta | head -20`. If primer sequences are visible, verify that the primer-stripping cutadapt block in `scripts/06_qc_filter.sh` is present and that the primer sequences in `config/config.sh` are correct.
 
 ### 10.3 Rerunning a Single Specimen (Steps 4-5)
 
@@ -579,11 +660,13 @@ All parameters are defined in `config/config.sh`. This table provides a complete
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `UMI_MISMATCHES` | `2` | Allowed mismatches in 16 bp UMI (no indels) |
-| `PRIMER_FWD` | FishF1 sequence | Forward COI primer |
-| `PRIMER_REV` | FishR1 sequence | Reverse COI primer |
-| `M13_FWD` | `TGTAAAACGACGGCCAGT` | M13 forward universal tag |
+| `PRIMER_FWD` | FishF1 sequence | Forward COI primer 1 (4-primer cocktail) |
+| `PRIMER_FWD2` | FishF2 sequence | Forward COI primer 2 (4-primer cocktail) |
+| `PRIMER_REV` | FishR1 sequence | Reverse COI primer 1 (4-primer cocktail) |
+| `PRIMER_REV2` | FR1d-t1 sequence | Reverse COI primer 2 (4-primer cocktail) |
+| `M13_FWD` | `TGTAAAACGACGGCCAGT` | M13 forward universal tag (18 bp; absorbs leading T of FishF1/FishF2) |
 | `M13_REV` | `CAGGAAACAGCTATGAC` | M13 reverse universal tag |
-| `PAD` | `GGTAG` | Pad sequence between UMI and M13 tag |
+| `PAD` | `GGTAG` | Pad sequence preceding the UMI in PCR 2 primers (order: PAD → UMI → M13) |
 
 ### Clustering
 
@@ -598,18 +681,18 @@ All parameters are defined in `config/config.sh`. This table provides a complete
 |-----------|---------|-------------|
 | `MIN_SEQ_LENGTH` | `600` | Minimum consensus length (bp) |
 | `MAX_SEQ_LENGTH` | `700` | Maximum consensus length (bp) |
-| `GENETIC_CODE` | `5` | NCBI translation table (5 = invertebrate mito) |
+| `GENETIC_CODE` | `2` | NCBI translation table (2 = vertebrate mitochondrial; use 5 for invertebrate mitochondrial) |
 | `MIN_READ_DEPTH` | `10` | Minimum reads in dominant cluster |
 
 ### Taxonomy
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `BLAST_DB` | `/path/to/nt` | Path to NCBI nt BLAST database |
-| `BOLD_DB` | `/path/to/bold_sintax.fasta` | Path to BOLD SINTAX database |
+| `BLAST_DB` | — | Path to MIDORI2 COI BLAST database (MIDORI2_LONGEST_NUC_*_CO1_BLAST) |
+| `BOLD_DB` | — | Path to BOLD COI SINTAX-formatted database |
 | `BLAST_EVALUE` | `1e-5` | BLAST E-value threshold |
 | `BLAST_PIDENT` | `80` | Minimum percent identity for BLAST hits |
-| `SINTAX_CUTOFF` | `0.8` | SINTAX bootstrap confidence cutoff |
+| `SINTAX_CUTOFF` | `0.6` | SINTAX bootstrap confidence cutoff; lower values recover more classifications for under-represented taxa |
 
 ## 12. References
 
@@ -647,3 +730,8 @@ Wright, E. S. (2016). Using DECIPHER v2.0 to analyze big biological sequence dat
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2026-02-17 | SAIAB Genomics | Initial release |
+| 1.1 | 2026-03-13 | SAIAB Genomics | Corrected sample sheet column names to `fwd_umi`/`rev_umi` (matching actual code); updated UMI naming convention to `bc1001`–`bc1096` (forward) and `bc1097_rc`–`bc1192_rc` (reverse); clarified that `umi_sequences.tsv` is pre-populated; expanded sample sheet field descriptions and added combinatorial indexing layout example |
+| 1.2 | 2026-03-17 | SAIAB Genomics | Updated BLAST database from NCBI nt to MIDORI2 COI (preferred for COI barcoding: smaller, faster, COI-specific); updated `GENETIC_CODE` default from 5 (invertebrate) to 2 (vertebrate mitochondrial) for fish samples; lowered `SINTAX_CUTOFF` from 0.8 to 0.6 to recover order/family-level BOLD classifications for Indo-Pacific and deep-sea fish that are under-represented in BOLD at species level; added guidance on BOLD coverage limitations and when BLAST should be treated as the primary identification; added consensus sequence length distribution plot to Step 6 QC |
+| 1.3 | 2026-03-17 | SAIAB Genomics | Corrected PCR 2 adapter construction order from UMI→PAD→M13 to PAD→UMI→M13 (matching actual primer design confirmed by wetlab); updated amplicon structure diagram; added second forward primer (FishF2) and second reverse primer (FR1d-t1) to config and demux step to handle the full 4-primer cocktail used in PCR 1; demux now correctly identifies reads regardless of which primer combination amplified the specimen |
+| 2.0 | 2026-03-18 | SAIAB Genomics | Incorporated lessons from first full production run (SPR22). Added primer-stripping cutadapt pass to Step 6 (consensus sequences retain partial primers requiring pre-QC stripping); updated demux assignment rate benchmark from >70% to 50–80% (low rates due to PCR2 UMI-tagging efficiency are acceptable); clarified array vs non-array job submission (Steps 4–5 are array jobs; Step 3 is not); added mixed-well detection guidance (divergent primary/b BLAST hits); added SINTAX wrong-kingdom guidance for deep-sea taxa absent from BOLD; documented expected amplicon length of 680–686 bp for FishF1/F2/R1/FR1d-t1 primer set; added three new QC failure patterns to troubleshooting; added Step 6 zero-output diagnostic note |
+| 2.1 | 2026-03-31 | SAIAB Genomics | Added Section 4.5: instructions for obtaining the pipeline scripts by cloning from the SAIAB Gitea repository (http://172.20.142.126:3000/evilliers/ont_barcoding) |
