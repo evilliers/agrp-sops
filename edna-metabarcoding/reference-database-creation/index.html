@@ -1,0 +1,3446 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB">
+      
+      
+        <meta name="author" content="Aquatic Genomics Research Platform (AGRP)">
+      
+      
+        <link rel="canonical" href="https://evilliers.github.io/agrp-sops/edna-metabarcoding/reference-database-creation/">
+      
+      
+        <link rel="prev" href="../eDNA_mothur_and_BLAST_analysis_SOP_v3/">
+      
+      
+        <link rel="next" href="../../data-management/data-management-policy/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Reference Database Creation - AGRP Standard Operating Procedures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#edna-reference-database-creation-pipeline" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-header__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AGRP Standard Operating Procedures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference Database Creation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publishing SOPs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hpc/getting-started/" class="md-tabs__link">
+          
+  
+  
+  HPC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-tabs__link">
+          
+  
+  
+  Genome Assembly
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../crabs-reference-db/" class="md-tabs__link">
+          
+  
+  
+  eDNA Metabarcoding
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-management/data-management-policy/" class="md-tabs__link">
+          
+  
+  
+  Data Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-nav__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AGRP Standard Operating Procedures
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing SOPs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HPC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/slurm-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLURM Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/conda-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conda Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/storage_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/user_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Genome Assembly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    De Novo Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/nanopore-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanopore QC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/assembly-polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Polishing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_mitogenome_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eDNA Metabarcoding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    eDNA Metabarcoding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crabs-reference-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRABS Reference DB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qiime2-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SOP_ONT_Barcoding_Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eDNA_mothur_and_BLAST_analysis_SOP_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mothur + BLAST Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#target-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Taxa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Markers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primer-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primer Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#species-list-merged_sa_speciestxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Species List (merged_sa_species.txt)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-environment-setup-taxonomy-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Environment Setup &amp; Taxonomy Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: Environment Setup &amp; Taxonomy Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-activate-crabs-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Activate CRABS Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-create-project-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Create Project Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-download-ncbi-taxonomy-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Download NCBI Taxonomy Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-download-sequence-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Download Sequence Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Download Sequence Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-download-from-bold-coi-5p-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Download from BOLD (COI-5P only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-download-from-ncbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Download from NCBI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-download-from-embl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Download from EMBL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-download-from-mitofish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Download from MitoFish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-verify-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Verify Downloads
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-import-merge-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Import &amp; Merge Sequences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: Import &amp; Merge Sequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-import-bold-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Import BOLD Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-import-ncbi-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Import NCBI Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-import-embl-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Import EMBL Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-import-mitofish-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Import MitoFish Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-46-marker-specific-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4–6: Marker-Specific Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4–6: Marker-Specific Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-a-mifish-u-12s-rrna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow A: MiFish-U (12S rRNA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow A: MiFish-U (12S rRNA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-merge-12s-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1 — Merge 12S Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-in-silico-pcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2 — In Silico PCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A3 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A4 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-subset-to-south-african-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A5 — Subset to South African Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A6 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-b-marver-marine-mammals-12s-16s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow B: MarVer (Marine Mammals — 12S &amp; 16S)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow B: MarVer (Marine Mammals — 12S &amp; 16S)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b1-merge-marine-mammal-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1 — Merge Marine Mammal Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-in-silico-pcr-both-primers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2 — In Silico PCR (both primers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-tag-and-merge-amplicons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B3 — Tag and Merge Amplicons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b4-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B4 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b5-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B5 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b6-subset-to-sa-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B6 — Subset to SA Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b7-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B7 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-c-leray-xt-coi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow C: Leray-XT (COI)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow C: Leray-XT (COI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c1-merge-coi-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C1 — Merge COI Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c2-in-silico-pcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2 — In Silico PCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c3-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c4-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c5-subset-to-sa-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5 — Subset to SA Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c6-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C6 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-create-blast-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7: Create BLAST Databases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-visualisation-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8: Visualisation &amp; Quality Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 8: Visualisation &amp; Quality Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-diversity-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Diversity Figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplicon-length-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplicon Length Distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#species-coverage-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Species Coverage Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-9-downstream-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 9: Downstream Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 9: Downstream Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blast-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLAST Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dada2-assignment-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DADA2 Assignment (R)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qiime2-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QIIME2 Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-management/data-management-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#target-taxa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Taxa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Markers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primer-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primer Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#species-list-merged_sa_speciestxt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Species List (merged_sa_species.txt)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-environment-setup-taxonomy-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Environment Setup &amp; Taxonomy Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: Environment Setup &amp; Taxonomy Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-activate-crabs-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Activate CRABS Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-create-project-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Create Project Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-download-ncbi-taxonomy-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Download NCBI Taxonomy Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-download-sequence-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Download Sequence Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Download Sequence Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-download-from-bold-coi-5p-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Download from BOLD (COI-5P only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-download-from-ncbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Download from NCBI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-download-from-embl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Download from EMBL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-download-from-mitofish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Download from MitoFish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-verify-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Verify Downloads
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-import-merge-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Import &amp; Merge Sequences
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: Import &amp; Merge Sequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-import-bold-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Import BOLD Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-import-ncbi-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Import NCBI Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-import-embl-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Import EMBL Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-import-mitofish-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Import MitoFish Sequences
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-46-marker-specific-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4–6: Marker-Specific Workflows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4–6: Marker-Specific Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#workflow-a-mifish-u-12s-rrna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow A: MiFish-U (12S rRNA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow A: MiFish-U (12S rRNA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-merge-12s-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A1 — Merge 12S Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-in-silico-pcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A2 — In Silico PCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A3 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A4 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-subset-to-south-african-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A5 — Subset to South African Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A6 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-b-marver-marine-mammals-12s-16s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow B: MarVer (Marine Mammals — 12S &amp; 16S)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow B: MarVer (Marine Mammals — 12S &amp; 16S)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b1-merge-marine-mammal-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1 — Merge Marine Mammal Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-in-silico-pcr-both-primers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2 — In Silico PCR (both primers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-tag-and-merge-amplicons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B3 — Tag and Merge Amplicons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b4-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B4 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b5-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B5 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b6-subset-to-sa-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B6 — Subset to SA Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b7-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B7 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-c-leray-xt-coi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow C: Leray-XT (COI)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow C: Leray-XT (COI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c1-merge-coi-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C1 — Merge COI Sources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c2-in-silico-pcr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2 — In Silico PCR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c3-quality-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3 — Quality Filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c4-dereplicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4 — Dereplicate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c5-subset-to-sa-species" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5 — Subset to SA Species
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c6-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C6 — Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-create-blast-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7: Create BLAST Databases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-visualisation-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8: Visualisation &amp; Quality Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 8: Visualisation &amp; Quality Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#database-diversity-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Database Diversity Figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplicon-length-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplicon Length Distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#species-coverage-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Species Coverage Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-9-downstream-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 9: Downstream Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 9: Downstream Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#blast-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLAST Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dada2-assignment-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DADA2 Assignment (R)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qiime2-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QIIME2 Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="edna-reference-database-creation-pipeline">eDNA Reference Database Creation Pipeline</h1>
+<p><strong>SOP ID:</strong> EDNA-005
+<strong>Version:</strong> 2.0
+<strong>Date:</strong> October 2025
+<strong>Author:</strong> AGRP
+<strong>CRABS Version:</strong> 1.12.0+</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This pipeline creates curated multi-marker reference databases for eDNA metabarcoding analysis of South African marine species in the Southern Atlantic and Indian Ocean. It uses <a href="https://github.com/gjeunen/reference_database_creator">CRABS</a> (Creating Reference databases for Amplicon-Based Sequencing) to integrate sequences from four databases:</p>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Sequences</th>
+<th>Strength</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BOLD</strong></td>
+<td>COI-5P barcodes</td>
+<td>Gold standard for COI; curated, standardised metadata</td>
+</tr>
+<tr>
+<td><strong>NCBI</strong></td>
+<td>12S, 16S, COI</td>
+<td>Broadest taxonomic coverage including regional species</td>
+</tr>
+<tr>
+<td><strong>EMBL</strong></td>
+<td>Vertebrate mitochondrial</td>
+<td>European sequence data</td>
+</tr>
+<tr>
+<td><strong>MitoFish</strong></td>
+<td>Fish mitochondrial genomes</td>
+<td>Complete fish mitogenomes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="target-taxa">Target Taxa</h3>
+<ul>
+<li><strong>Fishes:</strong> Actinopterygii, Chondrichthyes, Sarcopterygii (inc. <em>Latimeria chalumnae</em>), Myxini, Petromyzontida</li>
+<li><strong>Marine Mammals:</strong> Cetacea, Pinnipedia (inc. Cape fur seal <em>Arctocephalus pusillus</em>)</li>
+</ul>
+<h3 id="target-markers">Target Markers</h3>
+<table>
+<thead>
+<tr>
+<th>Marker</th>
+<th>Target</th>
+<th>Amplicon</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MiFish-U (12S rRNA)</td>
+<td>Fish, Cetaceans</td>
+<td>160–180 bp</td>
+<td>Universal fish detection</td>
+</tr>
+<tr>
+<td>MarVer1 (12S rRNA)</td>
+<td>Cetaceans</td>
+<td>~202 bp</td>
+<td>Marine mammal specific</td>
+</tr>
+<tr>
+<td>MarVer3 (16S rRNA)</td>
+<td>Pinnipeds, Sirenians</td>
+<td>~245 bp</td>
+<td>Marine mammal specific</td>
+</tr>
+<tr>
+<td>STAT (16S rRNA)</td>
+<td>Cetaceans, marine mammals</td>
+<td>70–80 bp</td>
+<td>Marine mammal specific</td>
+</tr>
+<tr>
+<td>Leray-XT (COI)</td>
+<td>Fish, Cetaceans, Invertebrates</td>
+<td>~313 bp</td>
+<td>Species-level ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="primer-sequences">Primer Sequences</h3>
+<table>
+<thead>
+<tr>
+<th>Marker</th>
+<th>Direction</th>
+<th>Sequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MiFish-U</td>
+<td>Forward</td>
+<td><code>GTCGGTAAAACTCGTGCCAGC</code></td>
+</tr>
+<tr>
+<td>MiFish-U</td>
+<td>Reverse</td>
+<td><code>CATAGTGGGGTATCTAATCCCAGTTTG</code></td>
+</tr>
+<tr>
+<td>MarVer1</td>
+<td>Forward</td>
+<td><code>CGTGCCAGCCACCGCG</code></td>
+</tr>
+<tr>
+<td>MarVer1</td>
+<td>Reverse</td>
+<td><code>GGGTATCTAATCCYAGTTTG</code></td>
+</tr>
+<tr>
+<td>MarVer3</td>
+<td>Forward</td>
+<td><code>AGACGAGAAGACCCTRTG</code></td>
+</tr>
+<tr>
+<td>MarVer3</td>
+<td>Reverse</td>
+<td><code>GGATTGCGCTGTTATCCC</code></td>
+</tr>
+<tr>
+<td>STAT</td>
+<td>Forward</td>
+<td><code>TTAGACACTTTGGGAGGCTG</code></td>
+</tr>
+<tr>
+<td>STAT</td>
+<td>Reverse</td>
+<td><code>CTGTGTAGCCGAAGGTAGAC</code></td>
+</tr>
+<tr>
+<td>Leray-XT</td>
+<td>Forward</td>
+<td><code>GGWACWRGWTGRACWITITAYCCYCC</code></td>
+</tr>
+<tr>
+<td>Leray-XT</td>
+<td>Reverse</td>
+<td><code>TAIACYTCIGGRTGICCRAARAAYCA</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="workflow-summary">Workflow Summary</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Phase 1: Setup &amp; Taxonomy Files
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Phase 2: Download sequences (BOLD, NCBI, EMBL, MitoFish)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Phase 3: Import &amp; standardise all sequences
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    ↓
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Workflow A: MiFish-U (12S)   → Merge → PCR → Filter → Derep → Subset → Export
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>Workflow B: MarVer (16S/12S) → Merge → PCR → Filter → Derep → Subset → Export
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Workflow C: Leray-XT (COI)   → Merge → PCR → Filter → Derep → Subset → Export
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    ↓
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Phase 7: Create BLAST databases
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Phase 8: Visualisation &amp; QC
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Phase 9: Downstream analysis (BLAST / DADA2 / QIIME2)
+</code></pre></div>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="software">Software</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>conda<span class="w"> </span>--version<span class="w">       </span><span class="c1"># Conda must be installed</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>conda<span class="w"> </span>activate<span class="w"> </span>crabs
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>crabs<span class="w"> </span>--version<span class="w">       </span><span class="c1"># Requires CRABS 1.12.0+</span>
+</code></pre></div>
+<h3 id="species-list-merged_sa_speciestxt">Species List (<code>merged_sa_species.txt</code>)</h3>
+<p>The pipeline filters databases to South African marine species. This file must be prepared before starting:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Convert FishBase download to pipeline format</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>bash<span class="w"> </span>prepare_species_lists.sh<span class="w"> </span>--convert-fish
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Merge fish and cetacean lists</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>bash<span class="w"> </span>prepare_species_lists.sh<span class="w"> </span>--merge
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Verify output (~2,087 species)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>wc<span class="w"> </span>-l<span class="w"> </span>species_lists/merged_sa_species.txt
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>head<span class="w"> </span>-5<span class="w"> </span>species_lists/merged_sa_species.txt
+</code></pre></div>
+<p>Species are downloaded from <a href="https://fishbase.de/">FishBase</a> and <a href="https://www.sealifebase.org/">SeaLifeBase</a>. See the <code>prepare_species_lists.sh</code> script for full details.</p>
+<hr />
+<h2 id="phase-1-environment-setup-taxonomy-files">Phase 1: Environment Setup &amp; Taxonomy Files</h2>
+<h3 id="11-activate-crabs-environment">1.1 Activate CRABS Environment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>crabs
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>crabs<span class="w"> </span>--version
+</code></pre></div>
+<h3 id="12-create-project-directory-structure">1.2 Create Project Directory Structure</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>raw_data<span class="w"> </span>processed_data<span class="w"> </span>reference_dbs<span class="w"> </span>taxonomy<span class="w"> </span>results
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>/home/evilliers/work/edna_method/edna_sa_project
+</code></pre></div>
+<h3 id="13-download-ncbi-taxonomy-files">1.3 Download NCBI Taxonomy Files</h3>
+<div class="admonition warning">
+<p class="admonition-title">One-time setup — ~13 GB, takes 30–60 minutes</p>
+<p>These files are required for all import operations. Download them once and reuse.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>taxonomy
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># NCBI taxonomy database</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>wget<span class="w"> </span>ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>taxdump.tar.gz
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Accession-to-taxonomy mapping</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>wget<span class="w"> </span>ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>gunzip<span class="w"> </span>nucl_gb.accession2taxid.gz
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="nb">cd</span><span class="w"> </span>..
+</code></pre></div>
+<p><strong>Expected files in <code>taxonomy/</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>names.dmp</code></td>
+<td>~272 MB</td>
+</tr>
+<tr>
+<td><code>nodes.dmp</code></td>
+<td>~205 MB</td>
+</tr>
+<tr>
+<td><code>nucl_gb.accession2taxid</code></td>
+<td>~13 GB</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phase-2-download-sequence-data">Phase 2: Download Sequence Data</h2>
+<h3 id="21-download-from-bold-coi-5p-only">2.1 Download from BOLD (COI-5P only)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Ray-finned fishes</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Actinopterygii&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_actinopterygii_coi.fasta
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Cartilaginous fishes</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Chondrichthyes&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_chondrichthyes_coi.fasta
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># Coelacanths</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Sarcopterygii&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_sarcopterygii_coi.fasta
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># Hagfishes</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Myxini&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_myxini_coi.fasta
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># Lampreys</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Petromyzonti&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_lampreys_coi.fasta
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># Cetaceans</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Cetacea&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_cetacea_coi.fasta
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># All Chordata (includes Pinnipeds/seals)</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>crabs<span class="w"> </span>--download-bold<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;Chordata&#39;</span><span class="w"> </span>--marker<span class="w"> </span><span class="s1">&#39;COI-5P&#39;</span><span class="w"> </span>--version-v3<span class="w"> </span>--output<span class="w"> </span>raw_data/bold_chordata_coi.fasta
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Manual download fallback</p>
+<p>If the automated download fails, download manually from <a href="https://www.boldsystems.org">boldsystems.org</a> → Public Data Portal → Taxonomy Browser. Filter by <strong>COI-5P</strong> and download as FASTA.</p>
+</div>
+<h3 id="22-download-from-ncbi">2.2 Download from NCBI</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Replace <code>your.email@example.com</code> with your actual email address. NCBI requires an email for API access.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">EMAIL</span><span class="o">=</span><span class="s2">&quot;your.email@example.com&quot;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># ===== 12S rRNA (MiFish-U marker) =====</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Actinopterygii[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_actinopterygii.fasta
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Chondrichthyes[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_chondrichthyes.fasta
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Sarcopterygii[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_sarcopterygii.fasta
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Myxini[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_myxini.fasta
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Petromyzontidae[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_lampreys.fasta
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Cetacea[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_cetacea.fasta
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;Pinnipedia[Organism] AND (&quot;12S ribosomal RNA&quot;[Title] OR 12S[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_12s_pinnipedia.fasta
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1"># ===== 16S rRNA (STAT / MarVer markers) =====</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(Cetacea[Organism] AND 16S[All Fields]) AND 1000:2000[Sequence Length]&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_16s_cetacea.fasta
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(Sirenia[Organism] AND 16S[All Fields]) AND 1000:2000[Sequence Length]&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_16s_sirenia.fasta
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Pinnipedia&quot;[Organism] AND 16S[All Fields]) AND 1000:2000[Sequence Length]&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_16s_pinnipedia.fasta
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># ===== COI (Leray-XT marker) =====</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Actinopterygii&quot;[Organism] AND (&quot;COX1&quot;[Gene] OR &quot;cytochrome c oxidase subunit I&quot;[Gene])&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_coi_actinopterygii.fasta
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Chondrichthyes&quot;[Organism] AND (&quot;COX1&quot;[Gene] OR &quot;cytochrome c oxidase subunit I&quot;[Gene]))&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_coi_chondrichthyes.fasta
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Sarcopterygii&quot;[Organism] AND (&quot;COX1&quot;[Gene] OR &quot;cytochrome c oxidase subunit I&quot;[Gene]))&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_coi_sarcopterygii.fasta
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Cetacea&quot;[Organism] AND (&quot;COX1&quot;[Gene] OR &quot;cytochrome c oxidase subunit I&quot;[Gene]))&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_coi_cetacea.fasta
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>crabs<span class="w"> </span>--download-ncbi<span class="w"> </span>--database<span class="w"> </span>nucleotide<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;(&quot;Pinnipedia&quot;[Organism] AND (&quot;COX1&quot;[Gene] OR &quot;cytochrome c oxidase subunit I&quot;[Gene]))&#39;</span><span class="w"> </span>--email<span class="w"> </span><span class="nv">$EMAIL</span><span class="w"> </span>--output<span class="w"> </span>raw_data/ncbi_coi_pinnipedia.fasta
+</code></pre></div>
+<h3 id="23-download-from-embl">2.3 Download from EMBL</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Vertebrate mitochondrial sequences</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>crabs<span class="w"> </span>--download-embl<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;VRT_\d+\&#39;</span><span class="w"> </span>--output<span class="w"> </span>raw_data/embl_vertebrates.fasta
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Mammal mitochondrial sequences</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>crabs<span class="w"> </span>--download-embl<span class="w"> </span>--taxon<span class="w"> </span><span class="s1">&#39;MAM_\d+\&#39;</span><span class="w"> </span>--output<span class="w"> </span>raw_data/embl_mammals.fasta
+</code></pre></div>
+<h3 id="24-download-from-mitofish">2.4 Download from MitoFish</h3>
+<p><strong>Recommended: manual download</strong></p>
+<ol>
+<li>Navigate to <a href="http://mitofish.aori.u-tokyo.ac.jp/download.html">mitofish.aori.u-tokyo.ac.jp/download.html</a></li>
+<li>Download <strong>Complete + Partial Mitochondrial Genomes</strong></li>
+<li>Save as <code>raw_data/mitofish_complete.fasta</code></li>
+</ol>
+<p>Or use automated download:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>crabs<span class="w"> </span>--download-mitofish<span class="w"> </span>--output<span class="w"> </span>raw_data/mitofish_complete.fasta
+</code></pre></div></p>
+<h3 id="25-verify-downloads">2.5 Verify Downloads</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ls<span class="w"> </span>-lh<span class="w"> </span>raw_data/
+</code></pre></div>
+<p><strong>Expected:</strong> ~27–30 FASTA files (BOLD: ~7, NCBI: ~17, EMBL: ~2, MitoFish: ~1)</p>
+<hr />
+<h2 id="phase-3-import-merge-sequences">Phase 3: Import &amp; Merge Sequences</h2>
+<p>All sequences must be converted to CRABS format with standardised NCBI taxonomy before processing.</p>
+<h3 id="31-import-bold-sequences">3.1 Import BOLD Sequences</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">for</span><span class="w"> </span>taxon<span class="w"> </span><span class="k">in</span><span class="w"> </span>actinopterygii_coi<span class="w"> </span>chondrichthyes_coi<span class="w"> </span>sarcopterygii_coi<span class="w"> </span>myxini_coi<span class="w"> </span>lampreys_coi<span class="w"> </span>cetacea_coi<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>crabs<span class="w"> </span>--import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span>--import-format<span class="w"> </span>boldv3<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span>--input<span class="w"> </span>raw_data/bold_<span class="si">${</span><span class="nv">taxon</span><span class="si">}</span>.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span>--names<span class="w"> </span>taxonomy/names.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span>--nodes<span class="w"> </span>taxonomy/nodes.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span>--acc2tax<span class="w"> </span>taxonomy/nucl_gb.accession2taxid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span>--output<span class="w"> </span>processed_data/bold_<span class="si">${</span><span class="nv">taxon</span><span class="si">}</span>.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span>--ranks<span class="w"> </span><span class="s1">&#39;superkingdom;phylum;class;order;family;genus;species&#39;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="k">done</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Skip import commands for any files that don't exist or contain no sequences (e.g., Myxini, Sarcopterygii may have limited BOLD data).</p>
+</div>
+<h3 id="32-import-ncbi-sequences">3.2 Import NCBI Sequences</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>ncbi_12s_actinopterygii<span class="w"> </span>ncbi_12s_chondrichthyes<span class="w"> </span>ncbi_12s_sarcopterygii<span class="w"> </span>ncbi_12s_myxini<span class="w"> </span>ncbi_12s_lampreys<span class="w"> </span>ncbi_12s_cetacea<span class="w"> </span>ncbi_12s_pinnipedia<span class="w"> </span>ncbi_16s_cetacea<span class="w"> </span>ncbi_16s_pinnipedia<span class="w"> </span>ncbi_16s_sirenia<span class="w"> </span>ncbi_coi_actinopterygii<span class="w"> </span>ncbi_coi_chondrichthyes<span class="w"> </span>ncbi_coi_sarcopterygii<span class="w"> </span>ncbi_coi_cetacea<span class="w"> </span>ncbi_coi_pinnipedia<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>crabs<span class="w"> </span>--import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span>--import-format<span class="w"> </span>ncbi<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span>--input<span class="w"> </span>raw_data/<span class="si">${</span><span class="nv">file</span><span class="si">}</span>.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span>--names<span class="w"> </span>taxonomy/names.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span>--nodes<span class="w"> </span>taxonomy/nodes.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span>--acc2tax<span class="w"> </span>taxonomy/nucl_gb.accession2taxid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span>--output<span class="w"> </span>processed_data/<span class="si">${</span><span class="nv">file</span><span class="si">}</span>.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span>--ranks<span class="w"> </span><span class="s1">&#39;superkingdom;phylum;class;order;family;genus;species&#39;</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="k">done</span>
+</code></pre></div>
+<h3 id="33-import-embl-sequences">3.3 Import EMBL Sequences</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">for</span><span class="w"> </span><span class="nb">source</span><span class="w"> </span><span class="k">in</span><span class="w"> </span>vertebrates<span class="w"> </span>mammals<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>crabs<span class="w"> </span>--import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span>--import-format<span class="w"> </span>embl<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span>--input<span class="w"> </span>raw_data/embl_<span class="si">${</span><span class="nv">source</span><span class="si">}</span>.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span>--names<span class="w"> </span>taxonomy/names.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span>--nodes<span class="w"> </span>taxonomy/nodes.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span>--acc2tax<span class="w"> </span>taxonomy/nucl_gb.accession2taxid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span>--output<span class="w"> </span>processed_data/embl_<span class="si">${</span><span class="nv">source</span><span class="si">}</span>.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span>--ranks<span class="w"> </span><span class="s1">&#39;superkingdom;phylum;class;order;family;genus;species&#39;</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="k">done</span>
+</code></pre></div>
+<h3 id="34-import-mitofish-sequences">3.4 Import MitoFish Sequences</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>crabs<span class="w"> </span>--import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--import-format<span class="w"> </span>mitofish<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--input<span class="w"> </span>raw_data/mitofish_complete.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>--names<span class="w"> </span>taxonomy/names.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>--nodes<span class="w"> </span>taxonomy/nodes.dmp<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>--acc2tax<span class="w"> </span>taxonomy/nucl_gb.accession2taxid<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/mitofish_complete.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span>--ranks<span class="w"> </span><span class="s1">&#39;superkingdom;phylum;class;order;family;genus;species&#39;</span>
+</code></pre></div>
+<p><strong>Checkpoint:</strong> You should have 10+ <code>.txt</code> files in <code>processed_data/</code>.</p>
+<hr />
+<h2 id="phase-46-marker-specific-workflows">Phase 4–6: Marker-Specific Workflows</h2>
+<p>Each marker follows the same six steps: <strong>Merge → In Silico PCR → Filter → Dereplicate → Subset → Export</strong></p>
+<hr />
+<h3 id="workflow-a-mifish-u-12s-rrna">Workflow A: MiFish-U (12S rRNA)</h3>
+<p><strong>Target:</strong> Universal fish and cetacean detection | <strong>Amplicon:</strong> 160–180 bp</p>
+<h4 id="a1-merge-12s-sources">A1 — Merge 12S Sources</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>crabs<span class="w"> </span>--merge<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/merged_12s.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--import-format<span class="w"> </span>boldv5<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span>--uniq<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span>--input<span class="w"> </span><span class="s2">&quot;processed_data/ncbi_12s_actinopterygii.txt;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="s2">           processed_data/ncbi_12s_chondrichthyes.txt;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="s2">           processed_data/ncbi_12s_sarcopterygii.txt;</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="s2">           processed_data/ncbi_12s_myxini.txt;</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="s2">           processed_data/ncbi_12s_lampreys.txt;</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="s2">           processed_data/ncbi_12s_cetacea.txt;</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="s2">           processed_data/ncbi_12s_pinnipedia.txt;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="s2">           processed_data/mitofish_complete.txt;</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="s2">           processed_data/embl_vertebrates.txt;</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="s2">           processed_data/embl_mammals.txt&quot;</span>
+</code></pre></div>
+<p>Expected: ~500,000–2,000,000 sequences (~2–4 GB)</p>
+<h4 id="a2-in-silico-pcr">A2 — In Silico PCR</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>crabs<span class="w"> </span>--in-silico-pcr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/merged_12s.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/mifish_amplicons.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>--forward<span class="w"> </span>GTCGGTAAAACTCGTGCCAGC<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span>--reverse<span class="w"> </span>CATAGTGGGGTATCTAATCCCAGTTTG<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span>--mismatch<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span>--buffer-size<span class="w"> </span><span class="m">988978900</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">OverflowError fix</p>
+<p>If you get a buffer overflow error, calculate the correct buffer size with:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>awk<span class="w"> </span>-F<span class="s1">&#39;\t&#39;</span><span class="w"> </span><span class="s1">&#39;{ print length($NF) }&#39;</span><span class="w"> </span>processed_data/merged_12s.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-nr<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $1*2 }&#39;</span>
+</code></pre></div></p>
+</div>
+<p>Expected: ~50,000–200,000 sequences</p>
+<h4 id="a3-quality-filter">A3 — Quality Filter</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>crabs<span class="w"> </span>--filter<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/mifish_amplicons.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/mifish_filtered.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>--minimum-length<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span>--maximum-length<span class="w"> </span><span class="m">250</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span>--maximum-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">  </span>--environmental
+</code></pre></div>
+<h4 id="a4-dereplicate">A4 — Dereplicate</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>crabs<span class="w"> </span>--dereplicate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/mifish_filtered.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/mifish_derep.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span>--dereplication-method<span class="w"> </span>unique_species
+</code></pre></div>
+<p>Expected: ~8,000–30,000 sequences (50–80% reduction)</p>
+<h4 id="a5-subset-to-south-african-species">A5 — Subset to South African Species</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>crabs<span class="w"> </span>--subset<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/mifish_derep.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span>--include<span class="w"> </span>merged_sa_species.txt
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="c1"># Check how many SA species have 12S sequences</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div>
+<p>Expected: ~1,000–5,000 sequences</p>
+<h4 id="a6-export">A6 — Export</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/mifish_qiime.fasta<span class="w"> </span>--export-format<span class="w"> </span>qiime-fasta
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/mifish_blast.fasta<span class="w"> </span>--export-format<span class="w"> </span>blast
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/mifish_sintax.fasta<span class="w"> </span>--export-format<span class="w"> </span>sintax
+</code></pre></div>
+<hr />
+<h3 id="workflow-b-marver-marine-mammals-12s-16s">Workflow B: MarVer (Marine Mammals — 12S &amp; 16S)</h3>
+<p><strong>Target:</strong> Cetaceans, Pinnipeds, Sirenians | <strong>Markers:</strong> MarVer1 (12S) + MarVer3 (16S)</p>
+<h4 id="b1-merge-marine-mammal-sources">B1 — Merge Marine Mammal Sources</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>crabs<span class="w"> </span>--merge<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/marine_mammals_16s_merged.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span>--uniq<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span>--input<span class="w"> </span><span class="s2">&quot;processed_data/ncbi_16s_cetacea.txt;</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="s2">           processed_data/ncbi_16s_pinnipedia.txt;</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="s2">           processed_data/ncbi_16s_sirenia.txt&quot;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Why not include EMBL MAM?</p>
+<p>EMBL MAM contains all mammals — 96% are terrestrial primates. STAT/MarVer primers are marine mammal-specific and won't amplify terrestrial species, so including them wastes processing time.</p>
+</div>
+<h4 id="b2-in-silico-pcr-both-primers">B2 — In Silico PCR (both primers)</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>crabs<span class="w"> </span>--in-silico-pcr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/marine_mammals_16s_merged.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/amplicons_MarVer1.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span>--forward<span class="w"> </span>CGTGCCAGCCACCGCG<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span>--reverse<span class="w"> </span>GGGTATCTAATCCYAGTTTG<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">  </span>--mismatch<span class="w"> </span><span class="m">4</span>.5
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>crabs<span class="w"> </span>--in-silico-pcr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/marine_mammals_16s_merged.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/amplicons_MarVer3.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">  </span>--forward<span class="w"> </span>AGACGAGAAGACCCTRTG<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">  </span>--reverse<span class="w"> </span>GGATTGCGCTGTTATCCC<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">  </span>--mismatch<span class="w"> </span><span class="m">4</span>.5
+</code></pre></div>
+<h4 id="b3-tag-and-merge-amplicons">B3 — Tag and Merge Amplicons</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Add primer tags to accession IDs to distinguish sources after merging</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>awk<span class="w"> </span>-F<span class="s1">&#39;\t&#39;</span><span class="w"> </span><span class="s1">&#39;BEGIN {OFS=&quot;\t&quot;} {$1=$1&quot;_MarVer1&quot;; print}&#39;</span><span class="w"> </span>processed_data/amplicons_MarVer1.txt<span class="w"> </span>&gt;<span class="w"> </span>processed_data/amplicons_MarVer1_tagged.txt
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>awk<span class="w"> </span>-F<span class="s1">&#39;\t&#39;</span><span class="w"> </span><span class="s1">&#39;BEGIN {OFS=&quot;\t&quot;} {$1=$1&quot;_MarVer3&quot;; print}&#39;</span><span class="w"> </span>processed_data/amplicons_MarVer3.txt<span class="w"> </span>&gt;<span class="w"> </span>processed_data/amplicons_MarVer3_tagged.txt
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>cat<span class="w"> </span>processed_data/amplicons_MarVer1_tagged.txt<span class="w"> </span>processed_data/amplicons_MarVer3_tagged.txt<span class="w"> </span>&gt;<span class="w"> </span>processed_data/amplicons_combined_tagged.txt
+</code></pre></div>
+<h4 id="b4-quality-filter">B4 — Quality Filter</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>crabs<span class="w"> </span>--filter<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/amplicons_combined_tagged.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/amplicons_cleaned.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span>--minimum-length<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">  </span>--maximum-length<span class="w"> </span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span>--maximum-n<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<h4 id="b5-dereplicate">B5 — Dereplicate</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>crabs<span class="w"> </span>--dereplicate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/amplicons_cleaned.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/amplicons_dereplicated.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span>--dereplication-method<span class="w"> </span>unique_species
+</code></pre></div>
+<h4 id="b6-subset-to-sa-species">B6 — Subset to SA Species</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>crabs<span class="w"> </span>--subset<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/amplicons_dereplicated.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span>--include<span class="w"> </span>merged_sa_species.txt
+</code></pre></div>
+<h4 id="b7-export">B7 — Export</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/marine_mammals_qiime.fasta<span class="w"> </span>--export-format<span class="w"> </span>qiime-fasta
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/marine_mammals_blast.fasta<span class="w"> </span>--export-format<span class="w"> </span>blast
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/marine_mammals_sintax.fasta<span class="w"> </span>--export-format<span class="w"> </span>sintax
+</code></pre></div>
+<hr />
+<h3 id="workflow-c-leray-xt-coi">Workflow C: Leray-XT (COI)</h3>
+<p><strong>Target:</strong> Fish, cetaceans, invertebrates | <strong>Amplicon:</strong> ~313 bp | <strong>Largest dataset</strong></p>
+<h4 id="c1-merge-coi-sources">C1 — Merge COI Sources</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>crabs<span class="w"> </span>--merge<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/merged_coi.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span>--uniq<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">  </span>--input<span class="w"> </span><span class="s2">&quot;processed_data/bold_actinopterygii_coi.txt;</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="s2">           processed_data/bold_chondrichthyes_coi.txt;</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="s2">           processed_data/bold_sarcopterygii_coi.txt;</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="s2">           processed_data/bold_myxini_coi.txt;</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="s2">           processed_data/bold_lampreys_coi.txt;</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="s2">           processed_data/bold_cetacea_coi.txt;</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="s2">           processed_data/ncbi_coi_actinopterygii.txt;</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="s2">           processed_data/ncbi_coi_chondrichthyes.txt;</span>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="s2">           processed_data/ncbi_coi_sarcopterygii.txt;</span>
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="s2">           processed_data/ncbi_coi_cetacea.txt;</span>
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="s2">           processed_data/ncbi_coi_pinnipedia.txt;</span>
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="s2">           processed_data/mitofish_complete.txt;</span>
+<a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="s2">           processed_data/embl_vertebrates.txt&quot;</span>
+</code></pre></div>
+<p>Expected: ~1,000,000–3,000,000 sequences (~5–10 GB)</p>
+<h4 id="c2-in-silico-pcr">C2 — In Silico PCR</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># Calculate buffer size first</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>awk<span class="w"> </span>-F<span class="s1">&#39;\t&#39;</span><span class="w"> </span><span class="s1">&#39;{ print length($NF) }&#39;</span><span class="w"> </span>processed_data/merged_coi.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-nr<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $1*2 }&#39;</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>crabs<span class="w"> </span>--in-silico-pcr<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/merged_coi.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/leray_amplicons.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">  </span>--forward<span class="w"> </span>GGWACWRGWTGRACWITITAYCCYCC<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">  </span>--reverse<span class="w"> </span>TAIACYTCIGGRTGICCRAARAAYCA<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">  </span>--mismatch<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">  </span>--buffer-size<span class="w"> </span><span class="m">452178200</span>
+</code></pre></div>
+<h4 id="c3-quality-filter">C3 — Quality Filter</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>crabs<span class="w"> </span>--filter<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/leray_amplicons.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/leray_filtered.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">  </span>--minimum-length<span class="w"> </span><span class="m">250</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">  </span>--maximum-length<span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">  </span>--maximum-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">  </span>--environmental
+</code></pre></div>
+<h4 id="c4-dereplicate">C4 — Dereplicate</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>crabs<span class="w"> </span>--dereplicate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/leray_filtered.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/leray_derep.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span>--dereplication-method<span class="w"> </span>unique_species
+</code></pre></div>
+<h4 id="c5-subset-to-sa-species">C5 — Subset to SA Species</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>crabs<span class="w"> </span>--subset<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span>--input<span class="w"> </span>processed_data/leray_derep.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">  </span>--output<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="w">  </span>--include<span class="w"> </span>merged_sa_species.txt
+</code></pre></div>
+<p>Expected: ~3,000–15,000 sequences</p>
+<h4 id="c6-export">C6 — Export</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/leray_qiime.fasta<span class="w"> </span>--export-format<span class="w"> </span>qiime-fasta
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/leray_blast.fasta<span class="w"> </span>--export-format<span class="w"> </span>blast
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>crabs<span class="w"> </span>--export<span class="w"> </span>--input<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>reference_dbs/leray_sintax.fasta<span class="w"> </span>--export-format<span class="w"> </span>sintax
+</code></pre></div>
+<hr />
+<h2 id="phase-7-create-blast-databases">Phase 7: Create BLAST Databases</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>makeblastdb<span class="w"> </span>-in<span class="w"> </span>reference_dbs/mifish_blast.fasta<span class="w"> </span>-dbtype<span class="w"> </span>nucl<span class="w"> </span>-parse_seqids<span class="w"> </span>-out<span class="w"> </span>reference_dbs/mifish_blastdb
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>makeblastdb<span class="w"> </span>-in<span class="w"> </span>reference_dbs/marine_mammals_blast.fasta<span class="w"> </span>-dbtype<span class="w"> </span>nucl<span class="w"> </span>-parse_seqids<span class="w"> </span>-out<span class="w"> </span>reference_dbs/marine_mammals_blastdb
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>makeblastdb<span class="w"> </span>-in<span class="w"> </span>reference_dbs/leray_blast.fasta<span class="w"> </span>-dbtype<span class="w"> </span>nucl<span class="w"> </span>-parse_seqids<span class="w"> </span>-out<span class="w"> </span>reference_dbs/leray_blastdb
+</code></pre></div>
+<p>Each marker should produce <code>.nhr</code>, <code>.nin</code>, and <code>.nsq</code> index files.</p>
+<hr />
+<h2 id="phase-8-visualisation-quality-control">Phase 8: Visualisation &amp; Quality Control</h2>
+<h3 id="database-diversity-figures">Database Diversity Figures</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># --tax-level: 1=superkingdom, 2=phylum, 3=class, 4=order, 5=family, 6=genus, 7=species</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>crabs<span class="w"> </span>--diversity-figure<span class="w"> </span>--input<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>results/mifish_diversity.png<span class="w"> </span>--tax-level<span class="w"> </span><span class="m">4</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>crabs<span class="w"> </span>--diversity-figure<span class="w"> </span>--input<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>results/marver_diversity.png<span class="w"> </span>--tax-level<span class="w"> </span><span class="m">4</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>crabs<span class="w"> </span>--diversity-figure<span class="w"> </span>--input<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span>--output<span class="w"> </span>results/leray_diversity.png<span class="w"> </span>--tax-level<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<h3 id="amplicon-length-distributions">Amplicon Length Distributions</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>crabs<span class="w"> </span>--amplicon-length-figure<span class="w"> </span>--input<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span>--tax-level<span class="w"> </span><span class="m">4</span><span class="w"> </span>--output<span class="w"> </span>results/mifish_lengths.png
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>crabs<span class="w"> </span>--amplicon-length-figure<span class="w"> </span>--input<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span>--tax-level<span class="w"> </span><span class="m">4</span><span class="w"> </span>--output<span class="w"> </span>results/leray_lengths.png
+</code></pre></div>
+<h3 id="species-coverage-report">Species Coverage Report</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MiFish-U (12S) species:&quot;</span><span class="p">;</span><span class="w"> </span>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MarVer (16S/12S) species:&quot;</span><span class="p">;</span><span class="w"> </span>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/amplicons_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Leray-XT (COI) species:&quot;</span><span class="p">;</span><span class="w"> </span>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Total SA species in list:&quot;</span><span class="p">;</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w"> </span>merged_sa_species.txt
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="c1"># Find species covered by both 12S and COI</span>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/mifish_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span>&gt;<span class="w"> </span>results/mifish_species_list.txt
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>cut<span class="w"> </span>-f7<span class="w"> </span>processed_data/leray_sa_subset.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-u<span class="w"> </span>&gt;<span class="w"> </span>results/leray_species_list.txt
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>comm<span class="w"> </span>-12<span class="w"> </span>results/mifish_species_list.txt<span class="w"> </span>results/leray_species_list.txt<span class="w"> </span>&gt;<span class="w"> </span>results/species_in_both_12S_COI.txt
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>wc<span class="w"> </span>-l<span class="w"> </span>results/species_in_both_12S_COI.txt
+</code></pre></div>
+<hr />
+<h2 id="phase-9-downstream-analysis">Phase 9: Downstream Analysis</h2>
+<h3 id="blast-assignment">BLAST Assignment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>blastn<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span>-query<span class="w"> </span>your_asvs.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">  </span>-db<span class="w"> </span>reference_dbs/mifish_blastdb<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">  </span>-out<span class="w"> </span>results/blast_results.txt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">  </span>-outfmt<span class="w"> </span><span class="s1">&#39;6 qseqid sseqid pident length qcovs evalue bitscore staxids sscinames scomnames&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">  </span>-max_target_seqs<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">  </span>-perc_identity<span class="w"> </span><span class="m">97</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">  </span>-num_threads<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+<h3 id="dada2-assignment-r">DADA2 Assignment (R)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nf">library</span><span class="p">(</span><span class="n">dada2</span><span class="p">)</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="n">taxa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">assignTaxonomy</span><span class="p">(</span>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">  </span><span class="n">seqs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">seqtab.nochim</span><span class="p">,</span>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="w">  </span><span class="n">refFasta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;reference_dbs/mifish_qiime.fasta&quot;</span><span class="p">,</span>
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="w">  </span><span class="n">minBoot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">80</span><span class="p">,</span>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="w">  </span><span class="n">multithread</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span>
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="w">  </span><span class="n">tryRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span>
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a><span class="p">)</span>
+<a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a><span class="nf">write.csv</span><span class="p">(</span><span class="n">taxa</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;results/mifish_dada2_taxonomy.csv&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="qiime2-assignment">QIIME2 Assignment</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>qiime2-amplicon-2024.10
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="c1"># Import reference sequences</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>qiime<span class="w"> </span>tools<span class="w"> </span>import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">  </span>--type<span class="w"> </span><span class="s1">&#39;FeatureData[Sequence]&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">  </span>--input-path<span class="w"> </span>reference_dbs/mifish_qiime.fasta<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">  </span>--output-path<span class="w"> </span>reference_dbs/mifish_seqs.qza
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="c1"># Train classifier</span>
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>qiime<span class="w"> </span>feature-classifier<span class="w"> </span>fit-classifier-naive-bayes<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="w">  </span>--i-reference-reads<span class="w"> </span>reference_dbs/mifish_seqs.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">  </span>--i-reference-taxonomy<span class="w"> </span>reference_dbs/mifish_taxonomy.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">  </span>--o-classifier<span class="w"> </span>reference_dbs/mifish_classifier.qza
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a>
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="c1"># Classify</span>
+<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a>qiime<span class="w"> </span>feature-classifier<span class="w"> </span>classify-sklearn<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">  </span>--i-classifier<span class="w"> </span>reference_dbs/mifish_classifier.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">  </span>--i-reads<span class="w"> </span>your_rep_seqs.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="w">  </span>--o-classification<span class="w"> </span>results/mifish_taxonomy.qza
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FileNotFoundError: taxonomy/names.dmp</code></td>
+<td>Re-download taxonomy files (Phase 1.3)</td>
+</tr>
+<tr>
+<td>In silico PCR returns &lt; 1,000 sequences</td>
+<td>Increase <code>--mismatch</code> to 5 or 6; verify primer sequences</td>
+</tr>
+<tr>
+<td><code>OverflowError: FASTA record does not fit into buffer</code></td>
+<td>Recalculate <code>--buffer-size</code> (see Phase A2 tip above)</td>
+</tr>
+<tr>
+<td>Subset returns empty file</td>
+<td>Check species name format matches between database and <code>merged_sa_species.txt</code> (e.g., <code>Genus species</code> not <code>Genus_species</code>)</td>
+</tr>
+<tr>
+<td><code>MemoryError</code> during merge</td>
+<td>Process taxa groups separately, then merge the subsetted results</td>
+</tr>
+<tr>
+<td>BLAST database creation fails</td>
+<td>Run <code>makeblastdb -version</code>; install with <code>conda install -c bioconda blast</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="summary-checklist">Summary Checklist</h2>
+<ul>
+<li>[ ] Phase 1: Conda environment active; taxonomy files downloaded</li>
+<li>[ ] Phase 2: All sequences downloaded (BOLD, NCBI, EMBL, MitoFish)</li>
+<li>[ ] Phase 3: All sequences imported to CRABS format</li>
+<li>[ ] <strong>Workflow A (MiFish-U):</strong> Merged → PCR → Filtered → Dereplicated → Subsetted → Exported → BLAST DB</li>
+<li>[ ] <strong>Workflow B (MarVer):</strong> Merged → PCR → Tagged → Filtered → Dereplicated → Subsetted → Exported → BLAST DB</li>
+<li>[ ] <strong>Workflow C (Leray-XT):</strong> Merged → PCR → Filtered → Dereplicated → Subsetted → Exported → BLAST DB</li>
+<li>[ ] Phase 8: Diversity figures and species coverage reports generated</li>
+<li>[ ] Phase 9: Ready for taxonomic assignment (BLAST / DADA2 / QIIME2)</li>
+</ul>
+<hr />
+<h2 id="final-directory-structure">Final Directory Structure</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>edna_sa_project/
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>├── merged_sa_species.txt        (2,087 species)
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>├── taxonomy/
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>│   ├── names.dmp                (272 MB)
+<a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>│   ├── nodes.dmp                (205 MB)
+<a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>│   └── nucl_gb.accession2taxid  (13 GB)
+<a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>├── raw_data/                    (~27–30 FASTA files)
+<a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>├── processed_data/              (~20+ CRABS .txt files)
+<a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>├── reference_dbs/
+<a id="__codelineno-42-10" name="__codelineno-42-10" href="#__codelineno-42-10"></a>│   ├── mifish_qiime.fasta       mifish_blast.fasta   mifish_sintax.fasta
+<a id="__codelineno-42-11" name="__codelineno-42-11" href="#__codelineno-42-11"></a>│   ├── mifish_blastdb.nhr/nin/nsq
+<a id="__codelineno-42-12" name="__codelineno-42-12" href="#__codelineno-42-12"></a>│   ├── marine_mammals_*.fasta   + BLAST index files
+<a id="__codelineno-42-13" name="__codelineno-42-13" href="#__codelineno-42-13"></a>│   └── leray_*.fasta            + BLAST index files
+<a id="__codelineno-42-14" name="__codelineno-42-14" href="#__codelineno-42-14"></a>└── results/
+<a id="__codelineno-42-15" name="__codelineno-42-15" href="#__codelineno-42-15"></a>    ├── *_diversity.png
+<a id="__codelineno-42-16" name="__codelineno-42-16" href="#__codelineno-42-16"></a>    ├── *_lengths.png
+<a id="__codelineno-42-17" name="__codelineno-42-17" href="#__codelineno-42-17"></a>    └── *_species_list.txt
+</code></pre></div>
+<hr />
+<h2 id="references">References</h2>
+<p>Jeunen G-J, Dowle E, Edgecombe J, von Ammon U, Gemmell NJ, Cross H (2022). crabs — A software program to generate curated reference databases for metabarcoding sequencing data. <em>Molecular Ecology Resources</em>. <a href="https://doi.org/10.1111/1755-0998.13741">doi:10.1111/1755-0998.13741</a></p>
+<p>Valsecchi E et al. (2020). Novel universal primers for metabarcoding environmental DNA surveys of marine mammals and other marine vertebrates. <em>Environmental DNA</em>, 2(4), 602–617.</p>
+<ul>
+<li><a href="https://github.com/gjeunen/reference_database_creator">CRABS GitHub</a></li>
+<li><a href="https://fishbase.de/">FishBase</a></li>
+<li><a href="https://www.sealifebase.org/">SeaLifeBase</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

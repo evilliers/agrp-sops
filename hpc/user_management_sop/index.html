@@ -1,0 +1,3870 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB">
+      
+      
+        <meta name="author" content="Aquatic Genomics Research Platform (AGRP)">
+      
+      
+        <link rel="canonical" href="https://evilliers.github.io/agrp-sops/hpc/user_management_sop/">
+      
+      
+        <link rel="prev" href="../storage_management_sop/">
+      
+      
+        <link rel="next" href="../../genome-assembly/SOP_Genome_Assembly/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>User Account Management - AGRP Standard Operating Procedures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#standard-operating-procedure-user-account-management" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-header__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AGRP Standard Operating Procedures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              User Account Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publishing SOPs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../getting-started/" class="md-tabs__link">
+          
+  
+  
+  HPC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-tabs__link">
+          
+  
+  
+  Genome Assembly
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../edna-metabarcoding/crabs-reference-db/" class="md-tabs__link">
+          
+  
+  
+  eDNA Metabarcoding
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-management/data-management-policy/" class="md-tabs__link">
+          
+  
+  
+  Data Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-nav__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AGRP Standard Operating Procedures
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing SOPs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HPC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../slurm-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLURM Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conda-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conda Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-and-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose and Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Purpose and Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-intended-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Intended Audience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-conda-environment-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Conda Environment Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-required-privileges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Required Privileges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-required-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Required Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Software Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-procedure-creating-individual-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Procedure: Creating Individual Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Procedure: Creating Individual Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-step-by-step-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Step-by-Step Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Step-by-Step Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-access-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Access the Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-navigate-to-script-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Navigate to Script Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-run-the-user-creation-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Run the User Creation Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-select-interactive-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Select Interactive Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-provide-user-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Provide User Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-confirm-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Confirm Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-review-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Review Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-send-welcome-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Send Welcome Email
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-secure-credential-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Secure Credential Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-expected-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Expected Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedure-creating-course-participant-accounts-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Procedure: Creating Course Participant Accounts (Batch)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Procedure: Creating Course Participant Accounts (Batch)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-step-by-step-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Step-by-Step Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Step-by-Step Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-prepare-user-list-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Prepare User List File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-upload-file-to-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Upload File to Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-run-the-user-creation-script_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Run the User Creation Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-select-batch-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Select Batch Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-provide-file-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Provide File Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-review-and-confirm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Review and Confirm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-monitor-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Monitor Progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-review-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Review Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-distribute-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Distribute Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-10-secure-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10: Secure Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verification-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verification and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Verification and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-verify-user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Verify User Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-test-user-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Test User Login
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-verify-bashrc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Verify .bashrc Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Common Issues and Solutions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-script-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Script Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-log-file-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Log File Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-password-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Password Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-credential-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Credential Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-file-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 File Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-account-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Account Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-script-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Script Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A: Script Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Script Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Password Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bashrc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .bashrc Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-email-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Email Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-c-batch-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Batch File Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix C: Batch File Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-format-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Format Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-batch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Batch File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-d-bashrc-configuration-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix D: .bashrc Configuration Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix D: .bashrc Configuration Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-helpful-aliases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Helpful Aliases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-slurm-aliases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SLURM Aliases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-conda-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Conda Initialization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-custom-prompt-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Custom Prompt Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customization Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Approval
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Genome Assembly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    De Novo Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/nanopore-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanopore QC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/assembly-polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Polishing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_mitogenome_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eDNA Metabarcoding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    eDNA Metabarcoding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/crabs-reference-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRABS Reference DB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/qiime2-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/SOP_ONT_Barcoding_Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/eDNA_mothur_and_BLAST_analysis_SOP_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mothur + BLAST Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/reference-database-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-management/data-management-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose-and-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose and Scope
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Purpose and Scope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-intended-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Intended Audience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-conda-environment-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Conda Environment Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-required-privileges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Required Privileges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-required-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Required Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Software Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-procedure-creating-individual-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Procedure: Creating Individual Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Procedure: Creating Individual Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-step-by-step-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Step-by-Step Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Step-by-Step Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-access-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Access the Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-navigate-to-script-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Navigate to Script Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-run-the-user-creation-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Run the User Creation Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-select-interactive-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Select Interactive Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-provide-user-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Provide User Information
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-confirm-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Confirm Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-review-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Review Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-send-welcome-email" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Send Welcome Email
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-secure-credential-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Secure Credential Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-expected-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Expected Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-procedure-creating-course-participant-accounts-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Procedure: Creating Course Participant Accounts (Batch)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Procedure: Creating Course Participant Accounts (Batch)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-step-by-step-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Step-by-Step Instructions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Step-by-Step Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-prepare-user-list-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Prepare User List File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-upload-file-to-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Upload File to Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-run-the-user-creation-script_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Run the User Creation Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-select-batch-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Select Batch Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-provide-file-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Provide File Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-review-and-confirm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Review and Confirm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-monitor-progress" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Monitor Progress
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-review-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 8: Review Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-distribute-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9: Distribute Credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-10-secure-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 10: Secure Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-verification-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verification and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Verification and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-verify-user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Verify User Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-test-user-login" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Test User Login
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-verify-bashrc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Verify .bashrc Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Common Issues and Solutions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-script-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Script Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-log-file-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Log File Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-password-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Password Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-credential-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Credential Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-file-cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 File Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-audit-trail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Audit Trail
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-account-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Account Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-script-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A: Script Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A: Script Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Script Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Password Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bashrc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .bashrc Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-email-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B: Email Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-c-batch-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix C: Batch File Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix C: Batch File Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-format-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Format Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-batch-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Batch File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-d-bashrc-configuration-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix D: .bashrc Configuration Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix D: .bashrc Configuration Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-helpful-aliases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Helpful Aliases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-slurm-aliases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SLURM Aliases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-conda-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Conda Initialization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-custom-prompt-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Custom Prompt Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customization Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#document-approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Document Approval
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="standard-operating-procedure-user-account-management">Standard Operating Procedure: User Account Management</h1>
+<p><strong>SAIAB HPC Server</strong></p>
+<table>
+<thead>
+<tr>
+<th>Document Information</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Version</strong></td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>Date</strong></td>
+<td>2026-02-10</td>
+</tr>
+<tr>
+<td><strong>Author</strong></td>
+<td>SAIAB HPC Administration</td>
+</tr>
+<tr>
+<td><strong>Contact</strong></td>
+<td>EP.deVilliers@saiab.nrf.ac.za</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-purpose-and-scope">Purpose and Scope</a></li>
+<li><a href="#2-prerequisites">Prerequisites</a></li>
+<li><a href="#3-procedure-creating-individual-users">Procedure: Creating Individual Users</a></li>
+<li><a href="#4-procedure-creating-course-participant-accounts-batch">Procedure: Creating Course Participant Accounts (Batch)</a></li>
+<li><a href="#5-verification-and-testing">Verification and Testing</a></li>
+<li><a href="#6-troubleshooting">Troubleshooting</a></li>
+<li><a href="#7-security-considerations">Security Considerations</a></li>
+<li><a href="#appendix-a-script-documentation">Appendix A: Script Documentation</a></li>
+<li><a href="#appendix-b-email-template">Appendix B: Email Template</a></li>
+<li><a href="#appendix-c-batch-file-format">Appendix C: Batch File Format</a></li>
+<li><a href="#appendix-d-bashrc-configuration-details">Appendix D: .bashrc Configuration Details</a></li>
+</ol>
+<hr />
+<h2 id="1-purpose-and-scope">1. Purpose and Scope</h2>
+<h3 id="11-purpose">1.1 Purpose</h3>
+<p>This Standard Operating Procedure (SOP) provides step-by-step instructions for creating and configuring user accounts on the SAIAB HPC server. It ensures consistent account setup with proper SLURM and conda environment configurations.</p>
+<h3 id="12-scope">1.2 Scope</h3>
+<p>This SOP covers:
+- Individual user account creation (on-demand)
+- Batch user account creation for course participants
+- Account configuration with SLURM aliases and conda initialization
+- Credential generation and distribution
+- New user onboarding communications</p>
+<h3 id="13-intended-audience">1.3 Intended Audience</h3>
+<ul>
+<li>System administrators with sudo/root privileges</li>
+<li>HPC support staff</li>
+<li>Course organizers</li>
+</ul>
+<h3 id="14-conda-environment-architecture">1.4 Conda Environment Architecture</h3>
+<p>This user creation process implements a <strong>user-specific conda installation model</strong>:</p>
+<ul>
+<li><strong>Each user installs conda in their own home directory</strong> (typically <code>~/miniconda3</code>)</li>
+<li><strong>No system-wide conda installation</strong> is used or configured</li>
+<li>Users have complete control over their conda environments and packages</li>
+<li>This approach provides:</li>
+<li><strong>Isolation</strong>: Package conflicts between users are impossible</li>
+<li><strong>Independence</strong>: Users can install/update packages without affecting others</li>
+<li><strong>Flexibility</strong>: Each user can choose different conda versions or distributions</li>
+<li><strong>No permission issues</strong>: Users own their conda installation completely</li>
+</ul>
+<p>The .bashrc configuration automatically detects conda installations in standard home directory locations (<code>~/miniconda3</code>, <code>~/anaconda3</code>, or <code>~/.conda</code>).</p>
+<hr />
+<h2 id="2-prerequisites">2. Prerequisites</h2>
+<h3 id="21-required-privileges">2.1 Required Privileges</h3>
+<ul>
+<li>Root or sudo access to the HPC server</li>
+<li>SSH access to lab417.saiab.ac.za</li>
+</ul>
+<h3 id="22-required-information">2.2 Required Information</h3>
+<p><strong>For Individual Users:</strong>
+- Username (lowercase, alphanumeric with hyphens/underscores)
+- Email address</p>
+<p><strong>For Course Participants:</strong>
+- Text file containing usernames and email addresses (CSV format)</p>
+<h3 id="23-software-requirements">2.3 Software Requirements</h3>
+<ul>
+<li>Bash shell</li>
+<li>Standard Linux user management tools (useradd, chpasswd, chage)</li>
+<li>User creation script: <code>/home/evilliers/work/sysadmin/create_users/create_new_user.sh</code></li>
+</ul>
+<hr />
+<h2 id="3-procedure-creating-individual-users">3. Procedure: Creating Individual Users</h2>
+<h3 id="31-overview">3.1 Overview</h3>
+<p>Use this procedure when creating accounts for individual users on-demand (e.g., new staff, researchers, or collaborators).</p>
+<h3 id="32-step-by-step-instructions">3.2 Step-by-Step Instructions</h3>
+<h4 id="step-1-access-the-server">Step 1: Access the Server</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>your_admin_account@lab417.saiab.ac.za
+</code></pre></div>
+<h4 id="step-2-navigate-to-script-directory">Step 2: Navigate to Script Directory</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>/home/evilliers/work/sysadmin/create_users
+</code></pre></div>
+<h4 id="step-3-run-the-user-creation-script">Step 3: Run the User Creation Script</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>./create_new_user.sh
+</code></pre></div>
+<h4 id="step-4-select-interactive-mode">Step 4: Select Interactive Mode</h4>
+<p>When the menu appears, select option <strong>1</strong> (Create single user).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>========================================
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>HPC USER CREATION TOOL
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>========================================
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>1) Create single user (interactive)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>2) Create multiple users from file (batch)
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>3) Exit
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Select option [1-3]: 1
+</code></pre></div>
+<h4 id="step-5-provide-user-information">Step 5: Provide User Information</h4>
+<ul>
+<li>Enter the username when prompted</li>
+<li>Must start with a lowercase letter</li>
+<li>Can contain lowercase letters, numbers, hyphens, underscores</li>
+<li>
+<p>Maximum 32 characters</p>
+</li>
+<li>
+<p>Enter the email address when prompted</p>
+</li>
+<li>Must be a valid email format</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Enter username: jsmith
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Enter email address: jsmith@saiab.ac.za
+</code></pre></div>
+<h4 id="step-6-confirm-creation">Step 6: Confirm Creation</h4>
+<p>Review the displayed information and confirm by typing <code>y</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Creating user with the following details:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  Username: jsmith
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  Email:    jsmith@saiab.ac.za
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Proceed? (y/n): y
+</code></pre></div>
+<h4 id="step-7-review-output">Step 7: Review Output</h4>
+<p>The script will:
+- Create the user account
+- Generate a secure random password
+- Configure .bashrc with SLURM and conda settings
+- Save credentials to a dated file
+- Generate an email template</p>
+<h4 id="step-8-send-welcome-email">Step 8: Send Welcome Email</h4>
+<p>Locate the generated email file:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ls<span class="w"> </span>-lt<span class="w"> </span>email_*.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div></p>
+<p>Open the email template and send it to the user:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cat<span class="w"> </span>email_jsmith_YYYYMMDD_HHMMSS.txt
+</code></pre></div></p>
+<p>Copy the email content and send it to the user via your email client.</p>
+<h4 id="step-9-secure-credential-storage">Step 9: Secure Credential Storage</h4>
+<p>After sending the email:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># View credentials file</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cat<span class="w"> </span>credentials_YYYYMMDD_HHMMSS.txt
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Securely delete after confirming email was sent</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>shred<span class="w"> </span>-u<span class="w"> </span>credentials_YYYYMMDD_HHMMSS.txt
+</code></pre></div></p>
+<h3 id="33-expected-results">3.3 Expected Results</h3>
+<ul>
+<li>User account created with home directory at <code>/home/username</code></li>
+<li>User assigned to their own primary group</li>
+<li>.bashrc configured with SLURM aliases and conda initialization for <strong>user-specific conda installations</strong></li>
+<li>Temporary password set (must be changed on first login)</li>
+<li>Welcome email generated with all necessary information, including conda installation instructions</li>
+</ul>
+<p><strong>Note:</strong> Each user will have their own isolated conda installation in their home directory (e.g., <code>~/miniconda3</code>). This ensures package management independence and prevents conflicts between users.</p>
+<hr />
+<h2 id="4-procedure-creating-course-participant-accounts-batch">4. Procedure: Creating Course Participant Accounts (Batch)</h2>
+<h3 id="41-overview">4.1 Overview</h3>
+<p>Use this procedure when creating multiple accounts for course participants or workshops.</p>
+<h3 id="42-step-by-step-instructions">4.2 Step-by-Step Instructions</h3>
+<h4 id="step-1-prepare-user-list-file">Step 1: Prepare User List File</h4>
+<p>Create a CSV file with usernames and email addresses. See <a href="#appendix-c-batch-file-format">Appendix C</a> for format details.</p>
+<p>Example (<code>bioinformatics_course_2026.txt</code>):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># Bioinformatics Course - February 2026
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a># Format: username,email
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>student1,student1@university.ac.za
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>student2,student2@university.ac.za
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>student3,student3@university.ac.za
+</code></pre></div></p>
+<h4 id="step-2-upload-file-to-server">Step 2: Upload File to Server</h4>
+<p>If the file is on your local machine, upload it:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>scp<span class="w"> </span>bioinformatics_course_2026.txt<span class="w"> </span>admin@lab417.saiab.ac.za:~/
+</code></pre></div></p>
+<h4 id="step-3-run-the-user-creation-script_1">Step 3: Run the User Creation Script</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>/home/evilliers/work/sysadmin/create_users
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>./create_new_user.sh
+</code></pre></div>
+<h4 id="step-4-select-batch-mode">Step 4: Select Batch Mode</h4>
+<p>Select option <strong>2</strong> (Create multiple users from file).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Select option [1-3]: 2
+</code></pre></div>
+<h4 id="step-5-provide-file-path">Step 5: Provide File Path</h4>
+<p>Enter the full path to your user list file:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Enter path to user list file: /home/admin/bioinformatics_course_2026.txt
+</code></pre></div></p>
+<h4 id="step-6-review-and-confirm">Step 6: Review and Confirm</h4>
+<p>The script will count the users and ask for confirmation:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Found 3 users in file
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Proceed with creating 3 users? (y/n): y
+</code></pre></div></p>
+<h4 id="step-7-monitor-progress">Step 7: Monitor Progress</h4>
+<p>The script will process each user and display status:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Processing user: student1
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  ✓ User &#39;student1&#39; created successfully
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  ✓ Password set
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  ✓ Password change required on first login
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  ✓ Home directory: /home/student1
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  ✓ Configured .bashrc with SLURM and conda settings
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>  ✓ User &#39;student1&#39; setup complete
+</code></pre></div></p>
+<h4 id="step-8-review-summary">Step 8: Review Summary</h4>
+<p>After completion, review the summary:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>========================================
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Batch creation complete!
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Created: 3 users
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Skipped: 0 users
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>========================================
+</code></pre></div></p>
+<h4 id="step-9-distribute-credentials">Step 9: Distribute Credentials</h4>
+<p>Individual email files are created for each user:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># List all email files</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ls<span class="w"> </span>-lt<span class="w"> </span>email_*.txt
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Send emails to participants</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1"># Option 1: Copy each email manually</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>cat<span class="w"> </span>email_student1_*.txt
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Copy and send via email client</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="c1"># Option 2: Use automated email script (if available)</span>
+</code></pre></div></p>
+<h4 id="step-10-secure-cleanup">Step 10: Secure Cleanup</h4>
+<p>After distributing all credentials:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Securely delete credentials file</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>shred<span class="w"> </span>-u<span class="w"> </span>credentials_YYYYMMDD_HHMMSS.txt
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Optionally archive email templates</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/course_archives/bioinformatics_2026/
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>mv<span class="w"> </span>email_*.txt<span class="w"> </span>~/course_archives/bioinformatics_2026/
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>~/course_archives/bioinformatics_2026/
+</code></pre></div></p>
+<hr />
+<h2 id="5-verification-and-testing">5. Verification and Testing</h2>
+<h3 id="51-verify-user-creation">5.1 Verify User Creation</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Check user exists</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>id<span class="w"> </span>username
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Verify home directory</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>ls<span class="w"> </span>-la<span class="w"> </span>/home/username
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Check password expiration (should show password change required)</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>sudo<span class="w"> </span>chage<span class="w"> </span>-l<span class="w"> </span>username<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Last password change&quot;</span>
+</code></pre></div>
+<h3 id="52-test-user-login">5.2 Test User Login</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Test SSH login</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>ssh<span class="w"> </span>username@lab417.saiab.ac.za
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># On first login, user will be prompted to change password</span>
+</code></pre></div>
+<h3 id="53-verify-bashrc-configuration">5.3 Verify .bashrc Configuration</h3>
+<p>After logging in as the user:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Test aliases</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ll
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>sq
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>si
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1"># Check conda initialization (after user installs conda in their home directory)</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Users should install conda at: ~/miniconda3 or ~/anaconda3</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>conda<span class="w"> </span>--version
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="c1"># Verify prompt shows conda environment</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>conda<span class="w"> </span>activate<span class="w"> </span>base
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="c1"># Prompt should show: (base) username@hostname:~$</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="c1"># Test SLURM interactive login</span>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>slogin
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a><span class="c1"># Prompt should show: [SLURM:JOBID] username@hostname:~$</span>
+</code></pre></div></p>
+<p><strong>Note:</strong> Conda will not be available until the user installs it in their home directory following the instructions in the welcome email. The .bashrc is pre-configured to detect conda installations at:
+- <code>~/miniconda3/etc/profile.d/conda.sh</code>
+- <code>~/anaconda3/etc/profile.d/conda.sh</code>
+- <code>~/.conda/etc/profile.d/conda.sh</code></p>
+<hr />
+<h2 id="6-troubleshooting">6. Troubleshooting</h2>
+<h3 id="61-common-issues-and-solutions">6.1 Common Issues and Solutions</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Possible Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Permission denied" when running script</td>
+<td>Not running as root/sudo</td>
+<td>Use <code>sudo ./create_new_user.sh</code></td>
+</tr>
+<tr>
+<td>"User already exists"</td>
+<td>Username conflict</td>
+<td>Choose a different username or check if user was previously created</td>
+</tr>
+<tr>
+<td>"Invalid username"</td>
+<td>Username doesn't meet requirements</td>
+<td>Use lowercase letters, numbers, hyphens, underscores only; must start with letter</td>
+</tr>
+<tr>
+<td>"Invalid email address"</td>
+<td>Email format incorrect</td>
+<td>Verify email contains @ and valid domain</td>
+</tr>
+<tr>
+<td>User cannot log in</td>
+<td>Network/firewall issue</td>
+<td>Check SSH connectivity; verify user created with <code>id username</code></td>
+</tr>
+<tr>
+<td>Aliases not working</td>
+<td>.bashrc not sourced</td>
+<td>Have user log out and log back in, or run <code>source ~/.bashrc</code></td>
+</tr>
+<tr>
+<td>Conda not found</td>
+<td>Conda not installed in user's home</td>
+<td>User needs to install miniconda/anaconda in their <strong>home directory</strong> following the welcome email instructions. Should be at <code>~/miniconda3</code> or <code>~/anaconda3</code></td>
+</tr>
+<tr>
+<td>SLURM commands fail</td>
+<td>SLURM not configured</td>
+<td>Contact HPC administrator; verify SLURM is running</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-script-errors">6.2 Script Errors</h3>
+<p><strong>Error: "File not found"</strong>
+- Verify the batch file path is correct
+- Check file permissions are readable</p>
+<p><strong>Error: "Cannot create home directory"</strong>
+- Check disk space: <code>df -h /home</code>
+- Verify /home partition is writable</p>
+<p><strong>Error: "Password change failed"</strong>
+- Check chage command availability
+- Verify PAM configuration</p>
+<h3 id="63-log-file-review">6.3 Log File Review</h3>
+<p>Check the activity log for detailed error messages:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>tail<span class="w"> </span>-f<span class="w"> </span>/home/evilliers/work/sysadmin/create_users/user_creation.log
+</code></pre></div></p>
+<hr />
+<h2 id="7-security-considerations">7. Security Considerations</h2>
+<h3 id="71-password-security">7.1 Password Security</h3>
+<ul>
+<li>Passwords are randomly generated with 12 characters including uppercase, lowercase, numbers, and special characters</li>
+<li>Users are forced to change password on first login</li>
+<li>Temporary passwords should never be reused</li>
+<li>Credentials files are created with 600 permissions (owner read/write only)</li>
+</ul>
+<h3 id="72-credential-distribution">7.2 Credential Distribution</h3>
+<ul>
+<li><strong>DO NOT</strong> email passwords in plain text</li>
+<li>Use secure methods:</li>
+<li>In-person delivery for sensitive accounts</li>
+<li>Encrypted email (GPG/PGP)</li>
+<li>Secure messaging platforms</li>
+<li>Two-channel delivery (username via email, password via SMS/phone)</li>
+</ul>
+<h3 id="73-file-cleanup">7.3 File Cleanup</h3>
+<ul>
+<li>Always securely delete credential files after distribution</li>
+<li>Use <code>shred -u</code> instead of <code>rm</code> to prevent recovery</li>
+<li>Archive email templates in a secure location with restricted permissions</li>
+</ul>
+<h3 id="74-audit-trail">7.4 Audit Trail</h3>
+<ul>
+<li>All user creation activities are logged with timestamps</li>
+<li>Review logs periodically: <code>/home/evilliers/work/sysadmin/create_users/user_creation.log</code></li>
+<li>Maintain records of when users were created and by whom</li>
+</ul>
+<h3 id="75-account-review">7.5 Account Review</h3>
+<ul>
+<li>Periodically review active accounts</li>
+<li>Disable or remove accounts for departed users</li>
+<li>Check for unused accounts:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo<span class="w"> </span>lastlog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Never logged in&quot;</span>
+</code></pre></div></li>
+</ul>
+<hr />
+<h2 id="appendix-a-script-documentation">Appendix A: Script Documentation</h2>
+<h3 id="location">Location</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>/home/evilliers/work/sysadmin/create_users/create_new_user.sh
+</code></pre></div>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>Interactive Mode</strong>: Create single users with prompts</li>
+<li><strong>Batch Mode</strong>: Create multiple users from CSV file</li>
+<li><strong>Validation</strong>: Username and email validation</li>
+<li><strong>Password Generation</strong>: Secure 12-character random passwords</li>
+<li><strong>Configuration</strong>: Automatic .bashrc setup with SLURM and conda settings</li>
+<li><strong>Logging</strong>: Complete activity logging with timestamps</li>
+<li><strong>Email Templates</strong>: Automatic generation of welcome emails</li>
+</ul>
+<h3 id="script-components">Script Components</h3>
+<h4 id="user-creation">User Creation</h4>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>useradd<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>/bin/bash<span class="w"> </span>-U<span class="w"> </span>username
+</code></pre></div>
+- <code>-m</code>: Create home directory
+- <code>-s /bin/bash</code>: Set bash as default shell
+- <code>-U</code>: Create user's own primary group</p>
+<h4 id="password-management">Password Management</h4>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;username:password&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>chpasswd
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>chage<span class="w"> </span>-d<span class="w"> </span><span class="m">0</span><span class="w"> </span>username
+</code></pre></div>
+- Sets initial password
+- Forces password change on first login</p>
+<h4 id="bashrc-configuration">.bashrc Configuration</h4>
+<p>Automatically adds:
+- SLURM aliases (sq, si, slogin, slogin-x11)
+- Helpful aliases (ll, cls, gs)
+- Conda initialization
+- Custom prompt function</p>
+<h3 id="file-permissions">File Permissions</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>chmod<span class="w"> </span><span class="m">750</span><span class="w"> </span>create_new_user.sh<span class="w">  </span><span class="c1"># Owner and group can execute</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>credentials_*.txt<span class="w">    </span><span class="c1"># Only owner can read/write</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>email_*.txt<span class="w">          </span><span class="c1"># Only owner can read/write</span>
+</code></pre></div>
+<hr />
+<h2 id="appendix-b-email-template">Appendix B: Email Template</h2>
+<p>Below is the email template automatically generated by the script. Customize as needed for your organization.</p>
+<hr />
+<p><strong>Subject:</strong> Welcome to SAIAB HPC Server - Your Account Details</p>
+<p>Dear [username],</p>
+<p>Welcome to the SAIAB HPC (High Performance Computing) server! Your user account has been created and is ready to use.</p>
+<p><strong>LOGIN CREDENTIALS</strong></p>
+<ul>
+<li><strong>Username:</strong> [username]</li>
+<li><strong>Temporary Password:</strong> [auto-generated]</li>
+<li><strong>Server:</strong> lab417.saiab.ac.za</li>
+</ul>
+<p><strong>IMPORTANT:</strong> You will be required to change your password on first login.</p>
+<p><strong>HOW TO CONNECT</strong></p>
+<p>From a terminal or SSH client, use the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ssh [username]@lab417.saiab.ac.za
+</code></pre></div>
+<p>On first login, you will be prompted to change your password. Choose a strong password that:
+- Is at least 8 characters long
+- Contains uppercase and lowercase letters
+- Contains numbers
+- Contains special characters</p>
+<p><strong>YOUR ENVIRONMENT</strong></p>
+<p>Your account has been pre-configured with helpful tools and shortcuts:</p>
+<p><strong>SLURM Aliases (for job management):</strong>
+- <code>sq</code> - View the SLURM queue (see running jobs)
+- <code>si</code> - View SLURM node information
+- <code>slogin</code> - Start an interactive session on a compute node
+- <code>slogin-x11</code> - Start an interactive session with X11 forwarding (for GUI apps)</p>
+<p><strong>General Aliases:</strong>
+- <code>ll</code> - Detailed file listing (ls -la)
+- <code>cls</code> - Clear screen
+- <code>gs</code> - Git status</p>
+<p>Your shell prompt will automatically show:
+- Active conda environment name (when activated)
+- SLURM job ID (when running in a SLURM allocation)</p>
+<p><strong>GETTING STARTED</strong></p>
+<ol>
+<li>Connect to the server using SSH</li>
+<li>Change your password when prompted</li>
+<li>Install Miniconda in your home directory (detailed instructions provided in email)</li>
+<li>Complete the online training courses (see below)</li>
+</ol>
+<p><strong>NOTE:</strong> The actual email sent to users includes detailed step-by-step instructions for installing Miniconda in their home directory at <code>~/miniconda3</code>. This ensures each user has an isolated conda environment.</p>
+<p><strong>TRAINING COURSES</strong></p>
+<p>We strongly recommend completing these courses to get the most out of the HPC system:</p>
+<p><strong>Shell for Bioinformatics:</strong>
+https://lab417.saiab.ac.za/unix_course/Shell-for-bioinformatics/index.html</p>
+<p><strong>Conda Package Management:</strong>
+https://lab417.saiab.ac.za/conda_course/conda_website.html</p>
+<p><strong>BASIC WORKFLOW</strong></p>
+<ol>
+<li>Log in to the server</li>
+<li>Use SLURM to request computational resources</li>
+<li>Load your conda environments for software</li>
+<li>Run your analyses</li>
+<li>Transfer results back to your local machine</li>
+</ol>
+<p><strong>Example SLURM interactive session:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>slogin
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a># This starts an interactive bash session on a compute node
+</code></pre></div></p>
+<p><strong>Example batch job submission:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sbatch my_script.sh
+</code></pre></div></p>
+<p><strong>NEED HELP?</strong></p>
+<p>If you have questions or need assistance, please contact:</p>
+<p><strong>HPC Administrator:</strong> evilliers@saiab.ac.za</p>
+<p>We also recommend reading the SLURM documentation and conda documentation available through the training courses above.</p>
+<hr />
+<p>Welcome aboard, and happy computing!</p>
+<p>SAIAB HPC Administration Team</p>
+<hr />
+<h2 id="appendix-c-batch-file-format">Appendix C: Batch File Format</h2>
+<h3 id="file-format-specification">File Format Specification</h3>
+<p><strong>Format:</strong> CSV (Comma-Separated Values)</p>
+<p><strong>Structure:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>username,email
+</code></pre></div></p>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>One user per line</li>
+<li>Fields separated by commas</li>
+<li>No spaces around commas (will be trimmed automatically)</li>
+<li>Comments start with <code>#</code></li>
+<li>Blank lines are ignored</li>
+</ul>
+<h3 id="example-file">Example File</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a># Bioinformatics Course - Spring 2026
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a># Instructor: Dr. Smith
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a># Format: username,email
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a># Group 1 - Genomics
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>student1,student1@university.ac.za
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>jdoe,john.doe@institution.org
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>mwilliams,mary.williams@research.edu
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a># Group 2 - Transcriptomics
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>student2,student2@university.ac.za
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>asmith,alice.smith@lab.com
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a># Group 3 - Proteomics
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>rbrown,robert.brown@institute.ac.za
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>student3,student3@university.ac.za
+</code></pre></div>
+<h3 id="creating-a-batch-file">Creating a Batch File</h3>
+<p><strong>Using a text editor:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>nano<span class="w"> </span>course_participants.txt
+</code></pre></div></p>
+<p><strong>From a spreadsheet:</strong>
+1. Create columns: username, email
+2. Export as CSV
+3. Upload to server</p>
+<p><strong>Validation before use:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="c1"># Check file format</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>cat<span class="w"> </span>course_participants.txt
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1"># Count users (excluding comments)</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;^#&#39;</span><span class="w"> </span>course_participants.txt<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;^[[:space:]]*$&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</code></pre></div></p>
+<h3 id="best-practices">Best Practices</h3>
+<ol>
+<li><strong>Naming Convention:</strong> Use descriptive filenames</li>
+<li><code>bioinformatics_course_feb2026.txt</code></li>
+<li>
+<p><code>workshop_participants_2026.txt</code></p>
+</li>
+<li>
+<p><strong>Documentation:</strong> Include comments with:</p>
+</li>
+<li>Course/workshop name</li>
+<li>Date</li>
+<li>Instructor/organizer</li>
+<li>
+<p>File format reminder</p>
+</li>
+<li>
+<p><strong>Validation:</strong> Review file before running script</p>
+</li>
+<li>Check for typos in usernames</li>
+<li>Verify email addresses are correct</li>
+<li>
+<p>Ensure no duplicate usernames</p>
+</li>
+<li>
+<p><strong>Backup:</strong> Keep a copy of the participant list
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>cp<span class="w"> </span>course_participants.txt<span class="w"> </span>~/course_archives/
+</code></pre></div></p>
+</li>
+</ol>
+<hr />
+<h2 id="appendix-d-bashrc-configuration-details">Appendix D: .bashrc Configuration Details</h2>
+<h3 id="overview">Overview</h3>
+<p>The user creation script automatically configures each user's <code>.bashrc</code> file with optimizations for SLURM and conda usage.</p>
+<h3 id="configuration-components">Configuration Components</h3>
+<h4 id="1-helpful-aliases">1. Helpful Aliases</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">ll</span><span class="o">=</span><span class="s1">&#39;ls -la&#39;</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">cls</span><span class="o">=</span><span class="s1">&#39;clear&#39;</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">gs</span><span class="o">=</span><span class="s1">&#39;git status&#39;</span>
+</code></pre></div>
+<p><strong>Purpose:</strong> Common convenience aliases for file listing, screen clearing, and git operations.</p>
+<h4 id="2-slurm-aliases">2. SLURM Aliases</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># View queue with formatted output</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">sq</span><span class="o">=</span><span class="s1">&#39;squeue -o &quot;%8i%12j%4t%10u%20q%20a%20P%5D%R&quot;&#39;</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="c1"># View node information</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">si</span><span class="o">=</span><span class="s1">&#39;sinfo -o &quot;%20P%8D%16F%8z%10m%N&quot;&#39;</span>
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="c1"># Interactive login to compute node</span>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">slogin</span><span class="o">=</span><span class="s1">&#39;srun -p agrp --cpus-per-task=1 --nodes=1 --mem=4G --pty bash -i&#39;</span>
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="c1"># Interactive login with X11 forwarding</span>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="nb">alias</span><span class="w"> </span>slogin-x11<span class="o">=</span><span class="s1">&#39;srun -p agrp --cpus-per-task=1 --nodes=1 --mem=4G --pty --x11 bash -i&#39;</span>
+</code></pre></div>
+<p><strong>Purpose:</strong>
+- <code>sq</code> - Quick view of job queue with relevant columns
+- <code>si</code> - View available compute resources
+- <code>slogin</code> - Fast access to compute nodes for interactive work
+- <code>slogin-x11</code> - For running GUI applications remotely</p>
+<p><strong>Default partition:</strong> <code>agrp</code> (adjust if your setup uses different partitions)</p>
+<h4 id="3-conda-initialization">3. Conda Initialization</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="c1"># Initialize conda - check for user-specific installations in home directory</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="c1"># NOTE: Each user should install conda in their own home directory</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="c1"># This ensures isolation and allows users to manage their own environments</span>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/etc/profile.d/conda.sh&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="w">    </span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/miniconda3/etc/profile.d/conda.sh&quot;</span>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/anaconda3/etc/profile.d/conda.sh&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">    </span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/anaconda3/etc/profile.d/conda.sh&quot;</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="k">elif</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.conda/etc/profile.d/conda.sh&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="w">    </span><span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.conda/etc/profile.d/conda.sh&quot;</span>
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="k">fi</span>
+</code></pre></div>
+<p><strong>Purpose:</strong> Automatically initialize conda if installed in the user's home directory, checking standard installation locations.</p>
+<p><strong>Important:</strong> This configuration supports <strong>user-specific conda installations only</strong>. Each user should install conda in their own home directory (e.g., <code>~/miniconda3</code>). This approach:
+- Ensures package isolation between users
+- Prevents permission conflicts
+- Allows users to manage their own environments independently
+- Avoids dependency conflicts between different users' projects</p>
+<h4 id="4-custom-prompt-function">4. Custom Prompt Function</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>set_custom_prompt<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">conda_env</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">slurm_info</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">    </span><span class="c1"># Show active conda environment</span>
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONDA_DEFAULT_ENV</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">        </span><span class="nv">conda_env</span><span class="o">=</span><span class="s2">&quot;(\e[1;32m</span><span class="nv">$CONDA_DEFAULT_ENV</span><span class="s2">\e[0m) &quot;</span>
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">    </span><span class="k">fi</span>
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>
+<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="w">    </span><span class="c1"># Show SLURM job ID if in allocation</span>
+<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a><span class="w">        </span><span class="nv">slurm_info</span><span class="o">=</span><span class="s2">&quot;[SLURM:</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">] &quot;</span>
+<a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a><span class="w">    </span><span class="k">fi</span>
+<a id="__codelineno-39-14" name="__codelineno-39-14" href="#__codelineno-39-14"></a>
+<a id="__codelineno-39-15" name="__codelineno-39-15" href="#__codelineno-39-15"></a><span class="w">    </span><span class="nb">export</span><span class="w"> </span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">slurm_info</span><span class="si">}${</span><span class="nv">conda_env</span><span class="si">}</span><span class="s2">\u@\h:\w\$ &quot;</span>
+<a id="__codelineno-39-16" name="__codelineno-39-16" href="#__codelineno-39-16"></a><span class="o">}</span>
+<a id="__codelineno-39-17" name="__codelineno-39-17" href="#__codelineno-39-17"></a><span class="nv">PROMPT_COMMAND</span><span class="o">=</span>set_custom_prompt
+</code></pre></div>
+<p><strong>Purpose:</strong> Dynamic prompt that shows:
+- Active conda environment in green (e.g., <code>(base)</code> or <code>(myenv)</code>)
+- SLURM job ID when running in an allocation (e.g., <code>[SLURM:12345]</code>)</p>
+<p><strong>Example prompts:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1"># Default (no conda, no SLURM)</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>user@lab417:~$
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="c1"># With conda environment activated</span>
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="o">(</span>base<span class="o">)</span><span class="w"> </span>user@lab417:~$
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="c1"># In SLURM job allocation</span>
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="o">[</span>SLURM:45678<span class="o">]</span><span class="w"> </span>user@lab417:~$
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>
+<a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a><span class="c1"># Both conda and SLURM</span>
+<a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a><span class="o">[</span>SLURM:45678<span class="o">]</span><span class="w"> </span><span class="o">(</span>myenv<span class="o">)</span><span class="w"> </span>user@lab417:~$
+</code></pre></div></p>
+<h3 id="manual-configuration">Manual Configuration</h3>
+<p>If you need to manually add these configurations to an existing user:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1"># Append to user&#39;s .bashrc</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>sudo<span class="w"> </span>cat<span class="w"> </span>&gt;&gt;<span class="w"> </span>/home/username/.bashrc<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="s"># HPC Server Custom Configuration</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="s">[paste configuration here]</span>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="s">EOF</span>
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="c1"># Apply changes</span>
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>sudo<span class="w"> </span>chown<span class="w"> </span>username:username<span class="w"> </span>/home/username/.bashrc
+</code></pre></div>
+<h3 id="customization-options">Customization Options</h3>
+<p>Administrators can customize the script's .bashrc template by editing:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>/home/evilliers/work/sysadmin/create_users/create_new_user.sh
+</code></pre></div></p>
+<p>Look for the <code>configure_bashrc()</code> function around line 100.</p>
+<p><strong>Common customizations:</strong>
+- Change SLURM partition from <code>agrp</code> to your default partition
+- Add organization-specific aliases
+- Modify prompt colors or format
+- Add module loading commands
+- Include custom environment variables</p>
+<hr />
+<h2 id="document-revision-history">Document Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2026-02-10</td>
+<td>SAIAB HPC Admin</td>
+<td>Initial release</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2026-02-10</td>
+<td>SAIAB HPC Admin</td>
+<td>Enhanced documentation to clarify user-specific conda installation model; added detailed conda installation instructions in welcome email; updated .bashrc comments to emphasize home directory conda installations</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="document-approval">Document Approval</h2>
+<p><strong>Prepared by:</strong> SAIAB HPC Administration Team
+<strong>Contact:</strong> evilliers@saiab.ac.za
+<strong>Server:</strong> lab417.saiab.ac.za</p>
+<hr />
+<p><em>End of Standard Operating Procedure</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

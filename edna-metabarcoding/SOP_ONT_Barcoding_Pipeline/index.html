@@ -1,0 +1,3717 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB">
+      
+      
+        <meta name="author" content="Aquatic Genomics Research Platform (AGRP)">
+      
+      
+        <link rel="canonical" href="https://evilliers.github.io/agrp-sops/edna-metabarcoding/SOP_ONT_Barcoding_Pipeline/">
+      
+      
+        <link rel="prev" href="../qiime2-workflow/">
+      
+      
+        <link rel="next" href="../eDNA_mothur_and_BLAST_analysis_SOP_v3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ONT COI Barcoding Pipeline - AGRP Standard Operating Procedures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#standard-operating-procedure-ont-coi-barcoding-pipeline-for-environmental-samples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-header__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AGRP Standard Operating Procedures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ONT COI Barcoding Pipeline
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publishing SOPs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hpc/getting-started/" class="md-tabs__link">
+          
+  
+  
+  HPC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-tabs__link">
+          
+  
+  
+  Genome Assembly
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../crabs-reference-db/" class="md-tabs__link">
+          
+  
+  
+  eDNA Metabarcoding
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-management/data-management-policy/" class="md-tabs__link">
+          
+  
+  
+  Data Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-nav__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AGRP Standard Operating Procedures
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing SOPs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HPC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/slurm-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLURM Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/conda-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conda Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/storage_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/user_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Genome Assembly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    De Novo Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/nanopore-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanopore QC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/assembly-polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Polishing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_mitogenome_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eDNA Metabarcoding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    eDNA Metabarcoding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crabs-reference-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRABS Reference DB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qiime2-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Background
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cluster-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Cluster Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-reference-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Reference Databases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-required-input-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Required Input Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-wetlab-information-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Wetlab Information Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-obtain-the-pipeline-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Obtain the Pipeline Scripts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-pipeline-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Pipeline Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-detailed-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Detailed Procedure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Detailed Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-prepare-input-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Prepare Input Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-configure-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Configure the Pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Configure the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-edit-the-sample-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Edit the Sample Sheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-verify-the-umi-sequences-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Verify the UMI Sequences File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-edit-the-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 Edit the Configuration File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-formatting-the-bold-database-for-sintax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.4 Formatting the BOLD Database for SINTAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-create-the-conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Create the Conda Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-run-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Run the Pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Run the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-dry-run-recommended-first-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.1 Dry Run (Recommended First Step)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-full-pipeline-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.2 Full Pipeline Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-monitor-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Monitor Jobs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Monitor Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-check-job-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.1 Check Job Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-check-job-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.2 Check Job Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-check-for-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.3 Check for Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#654-cancel-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.4 Cancel Jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-output-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Output Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Output Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key output files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-quality-control-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Quality Control Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interpreting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Interpreting Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interpreting Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-the-html-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 The HTML Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-the-merged-taxonomy-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 The Merged Taxonomy Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-expected-performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Expected Performance Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Common Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-rerunning-individual-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Rerunning Individual Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-rerunning-a-single-specimen-steps-4-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Rerunning a Single Specimen (Steps 4-5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-parameter-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Parameter Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Parameter Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demultiplexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demultiplexing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clustering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. References
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eDNA_mothur_and_BLAST_analysis_SOP_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mothur + BLAST Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-database-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-management/data-management-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Purpose
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Background
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-cluster-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Cluster Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-reference-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Reference Databases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-required-input-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Required Input Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-wetlab-information-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Wetlab Information Needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-obtain-the-pipeline-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Obtain the Pipeline Scripts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-pipeline-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Pipeline Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-detailed-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Detailed Procedure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Detailed Procedure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-prepare-input-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Prepare Input Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-configure-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Configure the Pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Configure the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-edit-the-sample-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Edit the Sample Sheet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-verify-the-umi-sequences-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Verify the UMI Sequences File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-edit-the-configuration-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 Edit the Configuration File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-formatting-the-bold-database-for-sintax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.4 Formatting the BOLD Database for SINTAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-create-the-conda-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Create the Conda Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-run-the-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Run the Pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Run the Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-dry-run-recommended-first-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.1 Dry Run (Recommended First Step)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-full-pipeline-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.2 Full Pipeline Run
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-monitor-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Monitor Jobs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Monitor Jobs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-check-job-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.1 Check Job Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-check-job-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.2 Check Job Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-check-for-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.3 Check for Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#654-cancel-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.4 Cancel Jobs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-output-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Output Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Output Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key output files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-quality-control-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Quality Control Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interpreting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Interpreting Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interpreting Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-the-html-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 The HTML Report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-the-merged-taxonomy-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 The Merged Taxonomy Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-expected-performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Expected Performance Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Common Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-rerunning-individual-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Rerunning Individual Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-rerunning-a-single-specimen-steps-4-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Rerunning a Single Specimen (Steps 4-5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-parameter-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Parameter Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Parameter Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slurm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLURM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#demultiplexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demultiplexing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clustering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clustering
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. References
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="standard-operating-procedure-ont-coi-barcoding-pipeline-for-environmental-samples">Standard Operating Procedure: ONT COI Barcoding Pipeline for Environmental Samples</h1>
+<p><strong>Document ID:</strong> SAIAB-SOP-ONT-001
+<strong>Version:</strong> 2.1
+<strong>Date:</strong> 2026-03-31
+<strong>Author:</strong> SAIAB Genomics
+<strong>Status:</strong> Active</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-purpose">Purpose</a></li>
+<li><a href="#2-scope">Scope</a></li>
+<li><a href="#3-background">Background</a></li>
+<li><a href="#4-prerequisites">Prerequisites</a></li>
+<li>4.5 <a href="#45-obtain-the-pipeline-scripts">Obtain the Pipeline Scripts</a></li>
+<li><a href="#5-pipeline-overview">Pipeline Overview</a></li>
+<li><a href="#6-detailed-procedure">Detailed Procedure</a></li>
+<li>6.1 <a href="#61-prepare-input-data">Prepare Input Data</a></li>
+<li>6.2 <a href="#62-configure-the-pipeline">Configure the Pipeline</a></li>
+<li>6.3 <a href="#63-create-the-conda-environment">Create the Conda Environment</a></li>
+<li>6.4 <a href="#64-run-the-pipeline">Run the Pipeline</a></li>
+<li>6.5 <a href="#65-monitor-jobs">Monitor Jobs</a></li>
+<li><a href="#7-output-description">Output Description</a></li>
+<li><a href="#8-quality-control-criteria">Quality Control Criteria</a></li>
+<li><a href="#9-interpreting-results">Interpreting Results</a></li>
+<li><a href="#10-troubleshooting">Troubleshooting</a></li>
+<li><a href="#11-parameter-reference">Parameter Reference</a></li>
+<li><a href="#12-references">References</a></li>
+<li><a href="#13-revision-history">Revision History</a></li>
+</ol>
+<hr />
+<h2 id="1-purpose">1. Purpose</h2>
+<p>This SOP describes how to run the SAIAB ONT COI barcoding pipeline to process Oxford Nanopore Technologies (ONT) amplicon sequencing data from multiplexed environmental specimens. The pipeline takes basecalled FASTQ reads as input and produces quality-controlled COI barcode sequences with taxonomic identifications against both NCBI and BOLD reference databases.</p>
+<h2 id="2-scope">2. Scope</h2>
+<p>This procedure applies to:</p>
+<ul>
+<li>COI gene (658 bp) amplicon data generated on PromethION (FLO-PRO114M, R10.4.1 chemistry) or MinION/Flongle flow cells.</li>
+<li>Specimens multiplexed using a 2-step PCR strategy with M13-tagged FishF1/FishF2/FishR1/FR1d-t1 primers (4-primer cocktail) and unique molecular identifier (UMI) barcodes (GGTAG pad + 16 bp UMI).</li>
+<li>Pools of up to 100 specimens per sequencing run.</li>
+</ul>
+<p>The pipeline is designed to run on the SAIAB SLURM cluster (partition: <code>agrp</code>). Users must have an active cluster account with access to this partition.</p>
+<h2 id="3-background">3. Background</h2>
+<p>DNA barcoding using the mitochondrial cytochrome c oxidase subunit I (COI) gene is the standard approach for species identification in animals (Hebert et al., 2003). Oxford Nanopore sequencing has recently been demonstrated as a cost-effective platform for high-throughput DNA barcoding, capable of processing tens of thousands of specimens in a single run (Hebert et al., 2025; Srivathsan et al., 2021).</p>
+<p>Our protocol uses a 2-step PCR approach adapted from the Aguirre Lab protocol (DePaul University):</p>
+<ol>
+<li><strong>PCR 1:</strong> COI is amplified using FishF1/FishR1 primers (Ward et al., 2005) carrying M13 universal tag sequences at their 5' ends.</li>
+<li><strong>PCR 2:</strong> Specimen-specific UMI barcodes are added via a second PCR using barcode-M13 fusion primers. Each specimen receives a unique combination of forward and reverse UMI barcodes, enabling computational demultiplexing after pooled sequencing.</li>
+</ol>
+<p>The final amplicon structure is:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>5&#39;-[GGTAG pad]-[FWD UMI (16bp)]-[M13 fwd]-[FishF1 or FishF2]--- COI (658bp) ---[FishR1 or FR1d-t1]-[M13 rev]-[REV UMI (16bp)]-[GGTAG pad]-3&#39;
+</code></pre></div>
+<blockquote>
+<p><strong>PCR primer cocktail:</strong> PCR 1 uses a 4-primer cocktail — two forward primers (M13-FishF1 and M13-FishF2) and two reverse primers (M13-FishR1 and M13-FR1d-t1) — to improve amplification success across a range of fish taxa. Any combination of one forward and one reverse primer may amplify a given specimen. The pipeline handles all four variants during primer trimming (Step 3).</p>
+</blockquote>
+<p>This pipeline automates all bioinformatic steps from raw reads to taxonomic assignment.</p>
+<h2 id="4-prerequisites">4. Prerequisites</h2>
+<h3 id="41-cluster-access">4.1 Cluster Access</h3>
+<ul>
+<li>Active account on the SAIAB SLURM cluster</li>
+<li>Access to the <code>agrp</code> partition</li>
+<li>Conda or Mamba installed (module load or user installation)</li>
+</ul>
+<h3 id="42-reference-databases">4.2 Reference Databases</h3>
+<p>Before first use, ensure the following databases are available on the cluster:</p>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Purpose</th>
+<th>Obtain from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MIDORI2 COI (BLAST-formatted)</td>
+<td>BLAST taxonomy</td>
+<td>Download from <a href="https://www.reference-midori.info/download.php">MIDORI</a>; use the <code>MIDORI2_LONGEST_NUC_*_CO1_BLAST</code> release and run <code>makeblastdb</code></td>
+</tr>
+<tr>
+<td>BOLD COI (SINTAX-formatted)</td>
+<td>SINTAX taxonomy</td>
+<td>Download from <a href="https://www.boldsystems.org/">BOLD Systems</a> and format headers for VSEARCH SINTAX (see Section 6.2.3)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Why MIDORI2 instead of NCBI nt?</strong> MIDORI2 is a curated subset of GenBank containing only COI sequences from metazoans. For COI barcoding it is preferred over NCBI nt because: (1) searches are much faster due to the smaller database size; (2) only COI-relevant hits are returned, avoiding false positives from non-COI sequences; (3) it is taxonomically curated, reducing erroneous hits. Taxonomy is encoded directly in the sequence ID field (<code>sseqid</code>) in the format <code>accession###...;Genus_species_taxid</code> — the pipeline parses this automatically.</p>
+</blockquote>
+<h3 id="43-required-input-files">4.3 Required Input Files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basecalled FASTQ file(s)</td>
+<td>From PromethION/MinION, gzipped or uncompressed</td>
+</tr>
+<tr>
+<td>UMI barcode sequences</td>
+<td>TSV file mapping barcode names to 16 bp sequences</td>
+</tr>
+<tr>
+<td>Sample sheet</td>
+<td>CSV mapping each specimen to its forward + reverse UMI pair</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-wetlab-information-needed">4.4 Wetlab Information Needed</h3>
+<p>You will need the following information from the wetlab team:</p>
+<ul>
+<li>Which UMI barcode pair was used for each specimen</li>
+<li>Which primer cocktail was used (default: FishF1+FishF2 forward, FishR1+FR1d-t1 reverse; update <code>PRIMER_FWD</code>/<code>PRIMER_FWD2</code>/<code>PRIMER_REV</code>/<code>PRIMER_REV2</code> in config if different)</li>
+<li>Sequencing platform and flow cell type (for QC interpretation)</li>
+</ul>
+<h3 id="45-obtain-the-pipeline-scripts">4.5 Obtain the Pipeline Scripts</h3>
+<p>Clone the pipeline repository from the SAIAB internal Gitea server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>http://172.20.142.126:3000/evilliers/ont_barcoding
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>ont_barcoding
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> All subsequent steps in this SOP assume you are working from the cloned <code>ont_barcoding/</code> directory. Replace any reference to <code>/path/to/ont_barcoding</code> with the actual path to your clone (e.g., <code>~/ont_barcoding</code>).</p>
+</blockquote>
+<p>If you have already cloned the repository previously and want to update to the latest version:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/path/to/ont_barcoding
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>git<span class="w"> </span>pull
+</code></pre></div>
+<h2 id="5-pipeline-overview">5. Pipeline Overview</h2>
+<p>The pipeline consists of 10 steps, submitted as SLURM jobs with automatic dependency management:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Step 0: Setup (local)       --- Create directories, validate inputs
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Step 1: Raw QC              --- NanoPlot quality assessment
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Step 2: Filtering           --- Length (550-950 bp) &amp; quality (Q10) filtering
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Step 3: Demultiplexing      --- UMI-based specimen assignment (Cutadapt)
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Step 4: Clustering          --- VSEARCH clustering at 95% identity
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Step 5: Consensus           --- Multiple alignment &amp; consensus calling
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Step 6: QC Filtering        --- Primer stripping (cutadapt), then translation, length, and stop codon checks
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>Step 7: BLAST Taxonomy      --- NCBI nt search
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>Step 8: SINTAX Taxonomy     --- BOLD database classification
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Step 9: Report              --- Merged results &amp; HTML report
+</code></pre></div>
+<p><strong>Job dependency graph:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>          Step 0 (local)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>          /           \
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>     Step 1 (QC)    Step 2 (filter)
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                      |
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                    Step 3 (demux)
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>                      |
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>                    Step 4 (cluster) [array]
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>                      |
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>                    Step 5 (consensus) [array]
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>                      |
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>                    Step 6 (QC filter)
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>                    /           \
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>              Step 7 (BLAST)  Step 8 (SINTAX)
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>                    \           /
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>                    Step 9 (report)
+</code></pre></div>
+<p>Steps 1 and 2 run in parallel. Steps 7 and 8 run in parallel. All other steps are sequential.</p>
+<h2 id="6-detailed-procedure">6. Detailed Procedure</h2>
+<h3 id="61-prepare-input-data">6.1 Prepare Input Data</h3>
+<p><strong>6.1.1</strong> Copy or symlink your basecalled FASTQ file(s) into the <code>data/raw/</code> directory:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">cd</span><span class="w"> </span>/path/to/ont_barcoding
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># Option A: Symlink (recommended to avoid duplicating large files)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>ln<span class="w"> </span>-s<span class="w"> </span>/path/to/your/basecalled_reads.fastq.gz<span class="w"> </span>data/raw/
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Option B: Copy</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>cp<span class="w"> </span>/path/to/your/basecalled_reads.fastq.gz<span class="w"> </span>data/raw/
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> The pipeline accepts both <code>.fastq</code> and <code>.fastq.gz</code> files. Multiple files in <code>data/raw/</code> will be processed together.</p>
+</blockquote>
+<p><strong>6.1.2</strong> Verify your data is in place:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ls<span class="w"> </span>-lh<span class="w"> </span>data/raw/
+</code></pre></div>
+<h3 id="62-configure-the-pipeline">6.2 Configure the Pipeline</h3>
+<h4 id="621-edit-the-sample-sheet">6.2.1 Edit the Sample Sheet</h4>
+<p>Open <code>config/sample_sheet.csv</code> and enter one row per specimen, mapping each specimen ID to its forward and reverse UMI barcode names. The file <strong>must</strong> use exactly these three column headers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>specimen_id,fwd_umi,rev_umi
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>SPR22_008,bc1001,bc1097_rc
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>SPR22_054,bc1002,bc1097_rc
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>SPR22_264,bc1003,bc1097_rc
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>SPR22_033,bc1001,bc1098_rc
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>SPR22_080,bc1002,bc1098_rc
+</code></pre></div>
+<p><strong>Column descriptions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>specimen_id</code></td>
+<td>Yes</td>
+<td>Unique identifier for the specimen. Use alphanumeric characters and underscores only — <strong>no spaces or special characters</strong>. Must be unique within the file.</td>
+</tr>
+<tr>
+<td><code>fwd_umi</code></td>
+<td>Yes</td>
+<td>Name of the forward UMI barcode assigned to this specimen during PCR 2. Must exactly match a <code>umi_name</code> in <code>config/umi_sequences.tsv</code>. Valid values: <code>bc1001</code> – <code>bc1096</code>.</td>
+</tr>
+<tr>
+<td><code>rev_umi</code></td>
+<td>Yes</td>
+<td>Name of the reverse UMI barcode. Must exactly match a <code>umi_name</code> in <code>config/umi_sequences.tsv</code>. Valid values: <code>bc1097_rc</code> – <code>bc1192_rc</code> (note the <code>_rc</code> suffix — these are reverse-complement barcodes).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Combinatorial indexing:</strong> Each specimen is uniquely identified by the <strong>combination</strong> of its forward and reverse barcode. Multiple specimens can share the same forward barcode (e.g., <code>bc1001</code>) as long as they have different reverse barcodes, and vice versa. The same barcode pair must <strong>never</strong> be used for two different specimens in the same run.</p>
+<blockquote>
+<p><strong>Tip:</strong> The barcode index combinations are documented in <code>articles/Proposed_barcoding_indices.xlsx</code>. Consult this file together with the wetlab team to confirm which UMI pair was assigned to each specimen before PCR 2.</p>
+</blockquote>
+<p><strong>Example layout for a 3×3 pool (9 specimens):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>          bc1097_rc  bc1098_rc  bc1099_rc
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>bc1001    SPEC_A     SPEC_D     SPEC_G
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>bc1002    SPEC_B     SPEC_E     SPEC_H
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>bc1003    SPEC_C     SPEC_F     SPEC_I
+</code></pre></div>
+<h4 id="622-verify-the-umi-sequences-file">6.2.2 Verify the UMI Sequences File</h4>
+<p>The file <code>config/umi_sequences.tsv</code> is <strong>pre-populated</strong> with the full set of 16 bp UMI barcode sequences used in the SAIAB barcoding protocol. You do <strong>not</strong> need to create or edit this file for standard runs.</p>
+<p>The file is tab-separated with two columns:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>umi_name    sequence
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>bc1001  CACATATCAGAGTGCG
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>bc1002  ACACACAGACTGTGAG
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>...
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>bc1096  TGTGCTCTCTACACAG
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>bc1097_rc   TAGAGAGATAGAGACG
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>bc1098_rc   TGATGTGACACTGCGC
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>...
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>bc1192_rc   GTCTCAGCACGAGACA
+</code></pre></div>
+<ul>
+<li><strong>Forward barcodes</strong> (<code>bc1001</code>–<code>bc1096</code>): 96 barcodes used on the forward primer arm (PCR 2 forward primer).</li>
+<li><strong>Reverse barcodes</strong> (<code>bc1097_rc</code>–<code>bc1192_rc</code>): 96 barcodes used on the reverse primer arm, pre-computed as the reverse complement (hence the <code>_rc</code> suffix). The <code>_rc</code> suffix is required — these names must match exactly what is written in <code>sample_sheet.csv</code>.</li>
+</ul>
+<blockquote>
+<p><strong>Only edit this file</strong> if you are adding new barcodes beyond the existing 192-barcode set. New entries must follow the same tab-separated format with a unique <code>umi_name</code> and a 16 bp DNA sequence.</p>
+</blockquote>
+<h4 id="623-edit-the-configuration-file">6.2.3 Edit the Configuration File</h4>
+<p>Open <code>config/config.sh</code> and update the following parameters:</p>
+<p><strong>Required changes (you MUST update these):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Set paths to your local reference databases</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">BLAST_DB</span><span class="o">=</span><span class="s2">&quot;/path/to/MIDORI2_LONGEST_NUC_*_CO1_BLAST&quot;</span><span class="w">  </span><span class="c1"># Path to MIDORI2 COI BLAST database</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">BOLD_DB</span><span class="o">=</span><span class="s2">&quot;/path/to/bold_COI_sintax_derep.fasta&quot;</span><span class="w">        </span><span class="c1"># Path to BOLD SINTAX-formatted DB</span>
+</code></pre></div>
+<p><strong>Optional changes (adjust only if needed):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>When to change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PARTITION</code></td>
+<td><code>agrp</code></td>
+<td>If your SLURM partition is different</td>
+</tr>
+<tr>
+<td><code>CPUS</code></td>
+<td><code>8</code></td>
+<td>Adjust based on cluster allocation policy</td>
+</tr>
+<tr>
+<td><code>MEM</code></td>
+<td><code>32G</code></td>
+<td>Increase for very large datasets</td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td><code>04:00:00</code></td>
+<td>Increase if jobs hit the time limit</td>
+</tr>
+<tr>
+<td><code>MIN_LENGTH</code></td>
+<td><code>550</code></td>
+<td>If targeting a different amplicon size</td>
+</tr>
+<tr>
+<td><code>MAX_LENGTH</code></td>
+<td><code>950</code></td>
+<td>If targeting a different amplicon size</td>
+</tr>
+<tr>
+<td><code>MIN_QUALITY</code></td>
+<td><code>10</code></td>
+<td>Lower for older chemistry; R10.4.1 supports Q20+</td>
+</tr>
+<tr>
+<td><code>CLUSTER_ID</code></td>
+<td><code>0.95</code></td>
+<td>Standard for COI intraspecific variation (Hebert et al., 2025)</td>
+</tr>
+<tr>
+<td><code>MIN_CLUSTER_SIZE</code></td>
+<td><code>5</code></td>
+<td>Minimum reads to form a valid cluster</td>
+</tr>
+<tr>
+<td><code>GENETIC_CODE</code></td>
+<td><code>2</code></td>
+<td>NCBI translation table (2 = vertebrate mitochondrial; use 5 for invertebrate mitochondrial)</td>
+</tr>
+<tr>
+<td><code>MIN_READ_DEPTH</code></td>
+<td><code>10</code></td>
+<td>Minimum reads in dominant cluster for a specimen to pass QC</td>
+</tr>
+<tr>
+<td><code>SINTAX_CUTOFF</code></td>
+<td><code>0.6</code></td>
+<td>Bootstrap confidence threshold for SINTAX classification</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note on genetic code:</strong> Use code 2 (vertebrate mitochondrial) for fish samples. Use code 5 (invertebrate mitochondrial) for arthropod samples or mixed vertebrate + invertebrate pools. See NCBI genetic codes: https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi</p>
+<p><strong>Note on SINTAX cutoff:</strong> A cutoff of 0.6 balances sensitivity and specificity. For many Indo-Pacific and deep-sea fish species that are under-represented in BOLD, genus- and species-level SINTAX bootstrap values rarely exceed 0.8, so a cutoff of 0.8 silently discards valid higher-rank classifications (order, family). If your taxa are very well represented in BOLD (e.g., common Atlantic fish, insects), you may raise this to 0.8 for stricter classifications.</p>
+</blockquote>
+<h4 id="624-formatting-the-bold-database-for-sintax">6.2.4 Formatting the BOLD Database for SINTAX</h4>
+<p>If you do not already have a SINTAX-formatted BOLD database, prepare one as follows:</p>
+<ol>
+<li>Download COI sequences from <a href="https://www.boldsystems.org/index.php/resources/api">BOLD Systems</a> or use the BOLD data releases.</li>
+<li>Format FASTA headers to include taxonomy in SINTAX format:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&gt;BOLD:AAA0001;tax=d:Animalia,p:Arthropoda,c:Insecta,o:Coleoptera,f:Carabidae,g:Pterostichus,s:Pterostichus_melanarius
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ATGCATGC...
+</code></pre></div>
+<ol>
+<li>The key requirement is that headers contain <code>tax=</code> followed by comma-separated rank:name pairs using single-letter rank codes: <code>d</code> (domain), <code>k</code> (kingdom), <code>p</code> (phylum), <code>c</code> (class), <code>o</code> (order), <code>f</code> (family), <code>g</code> (genus), <code>s</code> (species).</li>
+</ol>
+<h3 id="63-create-the-conda-environment">6.3 Create the Conda Environment</h3>
+<p><strong>First-time setup only.</strong> This step installs all required software.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">cd</span><span class="w"> </span>/path/to/ont_barcoding
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Create the environment (this may take 10-20 minutes)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>envs/environment.yml
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Or with mamba (faster)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>envs/environment.yml
+</code></pre></div>
+<p>To verify the installation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont_barcoding
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="c1"># Check key tools</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>NanoPlot<span class="w"> </span>--version
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>cutadapt<span class="w"> </span>--version
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>vsearch<span class="w"> </span>--version
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>blastn<span class="w"> </span>-version
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Rscript<span class="w"> </span>--version
+</code></pre></div>
+<blockquote>
+<p><strong>For subsequent runs:</strong> You only need to activate the environment:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont_barcoding
+</code></pre></div></p>
+</blockquote>
+<h3 id="64-run-the-pipeline">6.4 Run the Pipeline</h3>
+<h4 id="641-dry-run-recommended-first-step">6.4.1 Dry Run (Recommended First Step)</h4>
+<p>Always perform a dry run before submitting jobs. This validates your configuration and prints the SLURM commands without executing them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont_barcoding
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>bash<span class="w"> </span>scripts/run_pipeline.sh<span class="w"> </span>--dry-run
+</code></pre></div>
+<p>Review the output carefully. Check that:
+- All input files are found
+- The correct number of specimens is detected
+- SLURM parameters look correct
+- No errors are reported during setup</p>
+<h4 id="642-full-pipeline-run">6.4.2 Full Pipeline Run</h4>
+<p>Once the dry run succeeds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont_barcoding
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>bash<span class="w"> </span>scripts/run_pipeline.sh
+</code></pre></div>
+<blockquote>
+<p><strong>Important:</strong> Steps 4 and 5 are SLURM array jobs and must be submitted with <code>--array=1-N</code> where N is the number of specimens (rows in <code>config/sample_sheet.csv</code>, typically 40 for a full run). All other steps are single jobs and must NOT include <code>--array</code>. Submitting Step 3 as an array job will cause multiple processes to write to the same output files simultaneously.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Script</th>
+<th>Submission command</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td><code>03_demux.sh</code></td>
+<td><code>sbatch scripts/03_demux.sh</code></td>
+<td><strong>NOT an array job.</strong> Loops over all specimens internally.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>04_cluster.sh</code></td>
+<td><code>sbatch --array=1-N scripts/04_cluster.sh</code></td>
+<td><strong>Array job.</strong> Uses <code>SLURM_ARRAY_TASK_ID</code> to select specimen.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>05_consensus.sh</code></td>
+<td><code>sbatch --array=1-N scripts/05_consensus.sh</code></td>
+<td><strong>Array job.</strong> Same as Step 4.</td>
+</tr>
+<tr>
+<td>6–9</td>
+<td>All others</td>
+<td><code>sbatch scripts/0X_name.sh</code></td>
+<td><strong>NOT array jobs.</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The script will:
+1. Run Step 0 (setup) locally
+2. Submit Steps 1-9 as SLURM jobs with dependency chaining
+3. Print all job IDs for monitoring</p>
+<p><strong>Save the terminal output</strong> — it contains the SLURM job IDs you will need for monitoring.</p>
+<p>Example output:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>=== ONT Barcoding Pipeline ===
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Project: /home/user/ont_barcoding
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Specimens: 48
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>--- Step 0: Setup ---
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>Output directories created...
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>--- Step 1: Raw QC ---
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>  Job ID: 123451
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>--- Step 2: Filtering ---
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>  Job ID: 123452
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>--- Step 3: Demultiplexing ---
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>  Job ID: 123453
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>...
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>=== All jobs submitted ===
+</code></pre></div></p>
+<h3 id="65-monitor-jobs">6.5 Monitor Jobs</h3>
+<h4 id="651-check-job-status">6.5.1 Check Job Status</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># View all your running/pending jobs</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># View a specific job</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>squeue<span class="w"> </span>-j<span class="w"> </span>&lt;JOB_ID&gt;
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># View detailed job info</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span>&lt;JOB_ID&gt;
+</code></pre></div>
+<p>SLURM job states:
+| State | Meaning |
+|-------|---------|
+| <code>PD</code> | Pending (waiting for resources or dependencies) |
+| <code>R</code> | Running |
+| <code>CD</code> | Completed |
+| <code>F</code> | Failed |
+| <code>CA</code> | Cancelled |</p>
+<h4 id="652-check-job-logs">6.5.2 Check Job Logs</h4>
+<p>All SLURM logs are written to <code>results/logs/</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># View log for a specific step (e.g., filtering)</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>cat<span class="w"> </span>results/logs/02_filter_&lt;JOB_ID&gt;.out
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Follow a running job&#39;s output in real time</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>tail<span class="w"> </span>-f<span class="w"> </span>results/logs/03_demux_&lt;JOB_ID&gt;.out
+</code></pre></div>
+<h4 id="653-check-for-failures">6.5.3 Check for Failures</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># List any failed jobs</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>sacct<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span><span class="w"> </span>--state<span class="o">=</span>FAILED<span class="w"> </span>--format<span class="o">=</span>JobID,JobName,State,ExitCode,Elapsed
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Check the error log for a failed job</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>cat<span class="w"> </span>results/logs/&lt;step&gt;_&lt;JOB_ID&gt;.err
+</code></pre></div>
+<h4 id="654-cancel-jobs">6.5.4 Cancel Jobs</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Cancel a single job</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>scancel<span class="w"> </span>&lt;JOB_ID&gt;
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Cancel all your jobs</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>scancel<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
+</code></pre></div>
+<h2 id="7-output-description">7. Output Description</h2>
+<p>When the pipeline completes successfully, the <code>results/</code> directory contains:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>results/
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>+-- 01_qc/                      # NanoPlot HTML report and plots
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>|   +-- raw_NanoPlot-report.html    # Open in browser for QC overview
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>|   +-- raw_LengthvsQualityScatterPlot_dot.png
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>|   +-- raw_NanoStats.txt           # Summary statistics
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>+-- 02_filtered/
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>|   +-- filtered.fastq.gz          # Length- and quality-filtered reads
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>+-- 03_demux/
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>|   +-- &lt;SPECIMEN_ID&gt;.fastq         # One file per specimen
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>|   +-- demux_stats.tsv             # Read counts per specimen
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>|   +-- adapters/                   # Generated adapter sequences
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>+-- 04_clusters/
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>|   +-- &lt;SPECIMEN_ID&gt;_centroids.fasta
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>|   +-- &lt;SPECIMEN_ID&gt;_clusters.uc
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>|   +-- &lt;SPECIMEN_ID&gt;_dominant_reads.fasta
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>|   +-- cluster_stats.tsv
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>+-- 05_consensus/
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>|   +-- &lt;SPECIMEN_ID&gt;_consensus.fasta
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>|   +-- all_consensus.fasta         # All consensus sequences combined
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>+-- 06_qc_passed/
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>|   +-- passed.fasta                # Final QC-passed barcode sequences
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>|   +-- failed.tsv                  # Failed specimens with reasons
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>|   +-- qc_summary.tsv             # QC pass/fail counts
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>|   +-- length_distribution.png    # Histogram of consensus lengths (passed vs failed)
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>|   +-- all_consensus_trimmed.fasta # Primer-stripped consensus (input to QC)
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>|   +-- primer_trim.log             # Cutadapt primer-stripping log
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>+-- 07_blast/
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>|   +-- blast_results.tsv          # BLAST hits (tabular format)
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>+-- 08_sintax/
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>|   +-- sintax_results.tsv         # SINTAX classification results
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>+-- 09_report/
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>|   +-- taxonomy_merged.tsv        # *** MAIN RESULT: Merged taxonomy table ***
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>|   +-- report.html                # *** MAIN RESULT: Visual HTML report ***
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>+-- logs/                           # SLURM job logs
+</code></pre></div>
+<h3 id="key-output-files">Key output files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>09_report/report.html</code></td>
+<td>Interactive HTML report</td>
+<td>Open in web browser; primary deliverable</td>
+</tr>
+<tr>
+<td><code>09_report/taxonomy_merged.tsv</code></td>
+<td>Tab-separated taxonomy table</td>
+<td>Import into R/Excel for downstream analysis</td>
+</tr>
+<tr>
+<td><code>06_qc_passed/passed.fasta</code></td>
+<td>QC-passed COI sequences</td>
+<td>Submit to BOLD/GenBank; use in phylogenetic analyses</td>
+</tr>
+<tr>
+<td><code>03_demux/demux_stats.tsv</code></td>
+<td>Reads per specimen</td>
+<td>Assess sequencing depth and demux success</td>
+</tr>
+<tr>
+<td><code>06_qc_passed/failed.tsv</code></td>
+<td>QC failures with reasons</td>
+<td>Troubleshoot failed specimens</td>
+</tr>
+<tr>
+<td><code>06_qc_passed/length_distribution.png</code></td>
+<td>Consensus length histogram (passed vs failed)</td>
+<td>Detect off-target amplicons (e.g., upper band on PCR gel); sequences outside the 600–700 bp window appear in red</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-quality-control-criteria">8. Quality Control Criteria</h2>
+<blockquote>
+<p><strong>Pre-QC primer stripping:</strong> Before QC is applied, all consensus sequences are stripped of COI primer sequences (and their reverse complements) using cutadapt. This is necessary because the Step 3 demultiplexing trim removes whichever primer end it first encounters but may leave the other end intact; consensus calling then preserves these partial primer sequences. The stripping step uses <code>--match-read-wildcards</code> to handle IUPAC ambiguity codes and <code>--overlap 15</code> to ensure only genuine primer matches are trimmed.</p>
+<p><strong>Expected amplicon length for this primer set:</strong> The FishF1/FishF2/FishR1/FR1d-t1 cocktail amplifies a product of approximately 680–686 bp (after primer stripping), not the standard 658 bp COI barcode. This is normal and within the 600–700 bp QC window. Do not narrow the QC window below 680 bp for this primer set.</p>
+</blockquote>
+<p>Consensus sequences must pass <strong>all five</strong> QC criteria to be included in the final results (following Hebert et al., 2025):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Criterion</th>
+<th>Threshold</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sequence length</td>
+<td>600-700 bp</td>
+<td>COI barcode region is 658 bp; allows tolerance for primer trimming variation</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Correct reading frame</td>
+<td>Translatable in frame 1, 2, or 3</td>
+<td>Verifies the sequence is a genuine coding region</td>
+</tr>
+<tr>
+<td>3</td>
+<td>No internal stop codons</td>
+<td>0 stops (genetic code 2 for fish)</td>
+<td>Stop codons indicate pseudogenes (NUMTs) or frameshifts</td>
+</tr>
+<tr>
+<td>4</td>
+<td>No ambiguous bases</td>
+<td>0 N's</td>
+<td>Ambiguities indicate low consensus support</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Minimum read depth</td>
+<td>&gt;= 10 reads in dominant cluster</td>
+<td>Ensures sufficient data for reliable consensus</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>NUMTs warning:</strong> Nuclear copies of mitochondrial genes (NUMTs) are a known issue in COI barcoding. The stop codon and reading frame checks (criteria 2-3) are specifically designed to detect NUMTs (Bensasson et al., 2001). Specimens flagged with stop codons should be manually reviewed.</p>
+</blockquote>
+<h2 id="9-interpreting-results">9. Interpreting Results</h2>
+<h3 id="91-the-html-report">9.1 The HTML Report</h3>
+<p>Open <code>results/09_report/report.html</code> in a web browser. The report contains:</p>
+<ol>
+<li>
+<p><strong>Read count summary</strong> — Tracks read attrition through the pipeline (raw -&gt; filtered -&gt; demuxed -&gt; clustered -&gt; QC passed). Expect 70-90% of reads to survive filtering.</p>
+</li>
+<li>
+<p><strong>Per-specimen read depth barplot</strong> — Specimens with very low depth (&lt; 50 reads) may yield unreliable consensus sequences. Specimens with zero reads indicate a demultiplexing failure (check UMI sequences).</p>
+</li>
+<li>
+<p><strong>Demultiplexing success rate</strong> — Target: 50–80% of reads assigned to specimens, depending on PCR2 efficiency. Rates as low as 46% may be acceptable if all specimens are assigned and read depths are sufficient. Rates below 50% indicate incomplete PCR2 conversion — see Section 4 lab recommendations. Low assignment rates may also indicate:</p>
+</li>
+<li>Incorrect UMI sequences in the config</li>
+<li>High adapter dimer content</li>
+<li>
+<p>Off-target amplification</p>
+</li>
+<li>
+<p><strong>Taxonomic composition</strong> — Barplots at order and family level. Review for unexpected taxa that may indicate contamination or mis-assignment.</p>
+</li>
+<li>
+<p><strong>BLAST vs SINTAX agreement</strong> — Target: &gt; 80% genus-level agreement. Disagreements may indicate:</p>
+</li>
+<li>Incomplete reference databases (see note below)</li>
+<li>Closely related species not resolved at genus level</li>
+<li>Specimens at the boundary of taxonomic groups</li>
+</ol>
+<blockquote>
+<p><strong>BOLD coverage note:</strong> BOLD has uneven coverage across taxa. Indo-Pacific and deep-sea fish species (e.g., <em>Monocentris japonica</em>, <em>Hoplostethus</em> spp.) are frequently under-represented compared to commercially important Atlantic or temperate species. For such taxa, SINTAX bootstrap values at genus and species level may remain below the classification cutoff even with a correct identification, causing SINTAX to report only order- or family-level assignments (or nothing at all). In these cases, <strong>BLAST against MIDORI2 is the more reliable identification method</strong> and should be used as the primary result.</p>
+</blockquote>
+<ol>
+<li>
+<p><strong>Mixed-well detection:</strong> When a specimen's primary and b consensus sequences match different species (or highly divergent genera), this is strong evidence of a mixed well, cross-contamination, or a labelling error. The pipeline does not automatically flag this — compare BLAST top hits for primary and b sequences manually. In confirmed mixed wells, neither sequence should be used as a definitive identification without re-extraction.</p>
+</li>
+<li>
+<p><strong>Neighbor-joining tree</strong> — Visual check for clustering of related specimens and potential outliers.</p>
+</li>
+<li>
+<p><strong>QC failure breakdown</strong> — Identifies the most common reasons for specimen failure, guiding troubleshooting of the wetlab protocol.</p>
+</li>
+</ol>
+<h3 id="92-the-merged-taxonomy-table">9.2 The Merged Taxonomy Table</h3>
+<p>The file <code>results/09_report/taxonomy_merged.tsv</code> contains one row per specimen with columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>specimen_id</code></td>
+<td>Your specimen identifier</td>
+</tr>
+<tr>
+<td><code>blast_species</code></td>
+<td>Top BLAST hit species name</td>
+</tr>
+<tr>
+<td><code>blast_pident</code></td>
+<td>Percent identity to top BLAST hit</td>
+</tr>
+<tr>
+<td><code>blast_evalue</code></td>
+<td>E-value of top BLAST hit</td>
+</tr>
+<tr>
+<td><code>blast_genus</code></td>
+<td>Genus from BLAST top hit</td>
+</tr>
+<tr>
+<td><code>sintax_phylum</code> through <code>sintax_species</code></td>
+<td>SINTAX classifications at each rank</td>
+</tr>
+<tr>
+<td><code>genus_agree</code></td>
+<td><code>agree</code>, <code>conflict</code>, or <code>one_missing</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>When SINTAX assigns a wrong kingdom (e.g., Fungi, Plantae) with very low confidence (&lt; 0.1):</strong> This indicates the sequence has no close match in the BOLD database. It is NOT a sign of contamination — BLAST will correctly identify the specimen if it is a real fish COI sequence. Always check the BLAST result when SINTAX confidence is below 0.1 at kingdom level. Use BLAST as the definitive identification.</p>
+</blockquote>
+<p><strong>Interpreting percent identity (BLAST):</strong></p>
+<table>
+<thead>
+<tr>
+<th>% Identity</th>
+<th>Interpretation</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;= 99%</td>
+<td>Species-level match</td>
+<td>Hebert et al. (2003)</td>
+</tr>
+<tr>
+<td>95-99%</td>
+<td>Likely correct genus, possibly different species</td>
+<td></td>
+</tr>
+<tr>
+<td>90-95%</td>
+<td>Likely correct family</td>
+<td></td>
+</tr>
+<tr>
+<td>&lt; 90%</td>
+<td>Higher-level match only; possible novel lineage</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="93-expected-performance-benchmarks">9.3 Expected Performance Benchmarks</h3>
+<p>Based on Hebert et al. (2025) and Srivathsan et al. (2021):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Expected Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reads passing length/quality filter</td>
+<td>70-90%</td>
+</tr>
+<tr>
+<td>Demultiplexing assignment rate</td>
+<td>50–80%, depending on PCR2 efficiency. Rates as low as 46% may be acceptable if all specimens are assigned and read depths are sufficient.</td>
+</tr>
+<tr>
+<td>Specimens passing all QC checks</td>
+<td>80-95%</td>
+</tr>
+<tr>
+<td>BLAST vs SINTAX genus agreement</td>
+<td>&gt; 80%</td>
+</tr>
+<tr>
+<td>Consensus accuracy (vs Sanger)</td>
+<td>&gt; 99.9%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10-troubleshooting">10. Troubleshooting</h2>
+<h3 id="101-common-issues">10.1 Common Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Possible Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Setup fails: "No FASTQ files found"</td>
+<td>Wrong path or missing data</td>
+<td>Verify files exist in <code>data/raw/</code> with <code>ls -la data/raw/</code></td>
+</tr>
+<tr>
+<td>Setup warns: "UMI sequence not found"</td>
+<td>Mismatch between sample sheet and UMI file</td>
+<td>Check that barcode names in <code>sample_sheet.csv</code> match <code>umi_sequences.tsv</code> exactly. Common mistake: using <code>bc1097</code> instead of <code>bc1097_rc</code> for reverse barcodes</td>
+</tr>
+<tr>
+<td>Low demux assignment rate (&lt; 50%)</td>
+<td>Incorrect UMI sequences</td>
+<td>Verify UMI sequences match the oligos used in PCR 2</td>
+</tr>
+<tr>
+<td>Low demux assignment rate (&lt; 50%)</td>
+<td>Wrong primer sequences</td>
+<td>Update <code>PRIMER_FWD</code>/<code>PRIMER_REV</code> in config if using non-standard primers</td>
+</tr>
+<tr>
+<td>Demux rate 40–55% but all specimens assigned</td>
+<td>Incomplete PCR2 UMI-tagging</td>
+<td>Expected when PCR1 products are not fully consumed by PCR2. Run is valid. Improve PCR2 efficiency in future runs (bead cleanup after PCR1, verify PCR2 by gel, increase PCR2 cycles).</td>
+</tr>
+<tr>
+<td>Many specimens with 0 reads</td>
+<td>Contamination or failed PCR</td>
+<td>Check wetlab gel images; re-extract/re-amplify failed specimens</td>
+</tr>
+<tr>
+<td>High QC failure — stop codons</td>
+<td>NUMTs co-amplified</td>
+<td>Increase <code>MIN_CLUSTER_SIZE</code>; consider redesigning primers</td>
+</tr>
+<tr>
+<td>QC failure: stops=16–18 on otherwise normal-looking consensus</td>
+<td>1–2 IUPAC bases immediately before the primer start caused cutadapt to miss the primer; remaining bases shift the reading frame</td>
+<td>Expected for ~15% of sequences. These represent real COI sequences. Manual trimming of the IUPAC prefix is possible but not currently automated.</td>
+</tr>
+<tr>
+<td>QC failure: not_translatable on "b" sequence; starts with PRIMER_REV</td>
+<td>Consensus assembled in minus orientation; <code>-g PRIMER_REV</code> in cutadapt failed to strip it due to IUPAC prefix</td>
+<td>Same as above. These "b" sequences are typically redundant — if the primary sequence passed, the specimen still has a valid barcode.</td>
+</tr>
+<tr>
+<td>QC failure: non-COI sequence; sequence does not resemble fish COI</td>
+<td>Non-specific PCR amplification in that well</td>
+<td>Re-extract and re-amplify the specimen. Check PCR gel for anomalous band size.</td>
+</tr>
+<tr>
+<td>High QC failure — length</td>
+<td>Chimeric or truncated amplicons</td>
+<td>Tighten length filter; check gel for non-specific bands</td>
+</tr>
+<tr>
+<td>High QC failure — ambiguous bases</td>
+<td>Low read depth</td>
+<td>Pool fewer specimens per run to increase per-specimen depth</td>
+</tr>
+<tr>
+<td>BLAST job times out</td>
+<td>Large dataset + remote DB</td>
+<td>Use local BLAST database; increase <code>TIME</code> in config</td>
+</tr>
+<tr>
+<td>SINTAX: "database not found"</td>
+<td>Wrong path in config</td>
+<td>Verify <code>BOLD_DB</code> path exists and is readable</td>
+</tr>
+<tr>
+<td>Conda environment fails to solve</td>
+<td>Package conflicts</td>
+<td>Try <code>mamba env create -f envs/environment.yml</code> or create in stages</td>
+</tr>
+<tr>
+<td>SLURM: "dependency never satisfied"</td>
+<td>A prerequisite job failed</td>
+<td>Check logs for the failed dependency job; fix and resubmit from that step</td>
+</tr>
+</tbody>
+</table>
+<h3 id="102-rerunning-individual-steps">10.2 Rerunning Individual Steps</h3>
+<p>If a step fails, you do not need to rerun the entire pipeline. Fix the issue, then submit the failed step and all subsequent steps manually:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont_barcoding
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nb">cd</span><span class="w"> </span>/path/to/ont_barcoding
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># Example: Rerun from Step 6 onward</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="nv">JOB6</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span>-p<span class="w"> </span>agrp<span class="w"> </span>scripts/06_qc_filter.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;\d+&#39;</span><span class="k">)</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="nv">JOB7</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span>-p<span class="w"> </span>agrp<span class="w"> </span>--dependency<span class="o">=</span>afterok:<span class="nv">$JOB6</span><span class="w"> </span>scripts/07_taxonomy_blast.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;\d+&#39;</span><span class="k">)</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="nv">JOB8</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span>-p<span class="w"> </span>agrp<span class="w"> </span>--dependency<span class="o">=</span>afterok:<span class="nv">$JOB6</span><span class="w"> </span>scripts/08_taxonomy_sintax.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;\d+&#39;</span><span class="k">)</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>sbatch<span class="w"> </span>-p<span class="w"> </span>agrp<span class="w"> </span>--dependency<span class="o">=</span>afterok:<span class="nv">$JOB7</span>:<span class="nv">$JOB8</span><span class="w"> </span>scripts/09_report.sh
+</code></pre></div>
+<blockquote>
+<p><strong>If Step 6 produces 0 sequences passing:</strong> Check whether consensus sequences contain primer sequence. Inspect the 5′ end of a few sequences in <code>results/05_consensus/all_consensus.fasta</code> using <code>grep -A1 "^&gt;" results/05_consensus/all_consensus.fasta | head -20</code>. If primer sequences are visible, verify that the primer-stripping cutadapt block in <code>scripts/06_qc_filter.sh</code> is present and that the primer sequences in <code>config/config.sh</code> are correct.</p>
+</blockquote>
+<h3 id="103-rerunning-a-single-specimen-steps-4-5">10.3 Rerunning a Single Specimen (Steps 4-5)</h3>
+<p>For array job steps, you can rerun a single specimen by specifying its array index:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Find the specimen&#39;s line number in the specimen list</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>grep<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;SPEC042&quot;</span><span class="w"> </span>results/specimen_list.txt
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="c1"># Output: 42:SPEC042</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># Rerun clustering for just that specimen</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>sbatch<span class="w"> </span>-p<span class="w"> </span>agrp<span class="w"> </span>--array<span class="o">=</span><span class="m">42</span><span class="w"> </span>scripts/04_cluster.sh
+</code></pre></div>
+<h2 id="11-parameter-reference">11. Parameter Reference</h2>
+<p>All parameters are defined in <code>config/config.sh</code>. This table provides a complete reference:</p>
+<h3 id="paths">Paths</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RAW_DATA</code></td>
+<td>Directory containing raw FASTQ files</td>
+</tr>
+<tr>
+<td><code>RESULTS</code></td>
+<td>Base output directory</td>
+</tr>
+<tr>
+<td><code>SAMPLE_SHEET</code></td>
+<td>Path to the specimen-UMI mapping CSV</td>
+</tr>
+</tbody>
+</table>
+<h3 id="slurm">SLURM</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PARTITION</code></td>
+<td><code>agrp</code></td>
+<td>SLURM partition for job submission</td>
+</tr>
+<tr>
+<td><code>CPUS</code></td>
+<td><code>8</code></td>
+<td>CPUs per job</td>
+</tr>
+<tr>
+<td><code>MEM</code></td>
+<td><code>32G</code></td>
+<td>Memory per job</td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td><code>04:00:00</code></td>
+<td>Wall time limit per job</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filtering">Filtering</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MIN_LENGTH</code></td>
+<td><code>550</code></td>
+<td>Minimum read length in bp</td>
+</tr>
+<tr>
+<td><code>MAX_LENGTH</code></td>
+<td><code>950</code></td>
+<td>Maximum read length in bp</td>
+</tr>
+<tr>
+<td><code>MIN_QUALITY</code></td>
+<td><code>10</code></td>
+<td>Minimum Phred quality score</td>
+</tr>
+</tbody>
+</table>
+<h3 id="demultiplexing">Demultiplexing</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UMI_MISMATCHES</code></td>
+<td><code>2</code></td>
+<td>Allowed mismatches in 16 bp UMI (no indels)</td>
+</tr>
+<tr>
+<td><code>PRIMER_FWD</code></td>
+<td>FishF1 sequence</td>
+<td>Forward COI primer 1 (4-primer cocktail)</td>
+</tr>
+<tr>
+<td><code>PRIMER_FWD2</code></td>
+<td>FishF2 sequence</td>
+<td>Forward COI primer 2 (4-primer cocktail)</td>
+</tr>
+<tr>
+<td><code>PRIMER_REV</code></td>
+<td>FishR1 sequence</td>
+<td>Reverse COI primer 1 (4-primer cocktail)</td>
+</tr>
+<tr>
+<td><code>PRIMER_REV2</code></td>
+<td>FR1d-t1 sequence</td>
+<td>Reverse COI primer 2 (4-primer cocktail)</td>
+</tr>
+<tr>
+<td><code>M13_FWD</code></td>
+<td><code>TGTAAAACGACGGCCAGT</code></td>
+<td>M13 forward universal tag (18 bp; absorbs leading T of FishF1/FishF2)</td>
+</tr>
+<tr>
+<td><code>M13_REV</code></td>
+<td><code>CAGGAAACAGCTATGAC</code></td>
+<td>M13 reverse universal tag</td>
+</tr>
+<tr>
+<td><code>PAD</code></td>
+<td><code>GGTAG</code></td>
+<td>Pad sequence preceding the UMI in PCR 2 primers (order: PAD → UMI → M13)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="clustering">Clustering</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CLUSTER_ID</code></td>
+<td><code>0.95</code></td>
+<td>Sequence identity threshold (95%)</td>
+</tr>
+<tr>
+<td><code>MIN_CLUSTER_SIZE</code></td>
+<td><code>5</code></td>
+<td>Minimum reads to form a cluster</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quality-control">Quality Control</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MIN_SEQ_LENGTH</code></td>
+<td><code>600</code></td>
+<td>Minimum consensus length (bp)</td>
+</tr>
+<tr>
+<td><code>MAX_SEQ_LENGTH</code></td>
+<td><code>700</code></td>
+<td>Maximum consensus length (bp)</td>
+</tr>
+<tr>
+<td><code>GENETIC_CODE</code></td>
+<td><code>2</code></td>
+<td>NCBI translation table (2 = vertebrate mitochondrial; use 5 for invertebrate mitochondrial)</td>
+</tr>
+<tr>
+<td><code>MIN_READ_DEPTH</code></td>
+<td><code>10</code></td>
+<td>Minimum reads in dominant cluster</td>
+</tr>
+</tbody>
+</table>
+<h3 id="taxonomy">Taxonomy</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BLAST_DB</code></td>
+<td>—</td>
+<td>Path to MIDORI2 COI BLAST database (MIDORI2_LONGEST_NUC_*_CO1_BLAST)</td>
+</tr>
+<tr>
+<td><code>BOLD_DB</code></td>
+<td>—</td>
+<td>Path to BOLD COI SINTAX-formatted database</td>
+</tr>
+<tr>
+<td><code>BLAST_EVALUE</code></td>
+<td><code>1e-5</code></td>
+<td>BLAST E-value threshold</td>
+</tr>
+<tr>
+<td><code>BLAST_PIDENT</code></td>
+<td><code>80</code></td>
+<td>Minimum percent identity for BLAST hits</td>
+</tr>
+<tr>
+<td><code>SINTAX_CUTOFF</code></td>
+<td><code>0.6</code></td>
+<td>SINTAX bootstrap confidence cutoff; lower values recover more classifications for under-represented taxa</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-references">12. References</h2>
+<p>Bensasson, D., Zhang, D.-X., Hartl, D. L., &amp; Hewitt, G. M. (2001). Mitochondrial pseudogenes: evolution's misplaced witnesses. <em>Trends in Ecology &amp; Evolution</em>, 16(6), 314-321. https://doi.org/10.1016/S0169-5347(01)02151-6</p>
+<p>Hebert, P. D. N., Cywinska, A., Ball, S. L., &amp; deWaard, J. R. (2003). Biological identifications through DNA barcodes. <em>Proceedings of the Royal Society of London B</em>, 270(1512), 313-321. https://doi.org/10.1098/rspb.2002.2218</p>
+<p>Hebert, P. D. N., Floyd, R., Jafarpour, S., &amp; Prosser, S. W. J. (2025). Barcode 100K specimens: In a single nanopore run. <em>Molecular Ecology Resources</em>, 25, e14028. https://doi.org/10.1111/1755-0998.14028</p>
+<p>Martin, M. (2011). Cutadapt removes adapter sequences from high-throughput sequencing reads. <em>EMBnet.journal</em>, 17(1), 10-12. https://doi.org/10.14806/ej.17.1.200</p>
+<p>Rognes, T., Flouri, T., Nichols, B., Quince, C., &amp; Mahé, F. (2016). VSEARCH: a versatile open source tool for metagenomics. <em>PeerJ</em>, 4, e2584. https://doi.org/10.7717/peerj.2584</p>
+<p>Srivathsan, A., Lee, L., Katoh, K., Hartop, E., Kutty, S. N., Wong, J., Yeo, D., &amp; Meier, R. (2021). ONTbarcoder and MinION barcodes aid biodiversity discovery and identification by everyone, for everyone. <em>BMC Biology</em>, 19, 217. https://doi.org/10.1186/s12915-021-01141-x</p>
+<p>Ward, R. D., Zemlak, T. S., Innes, B. H., Last, P. R., &amp; Hebert, P. D. N. (2005). DNA barcoding Australia's fish species. <em>Philosophical Transactions of the Royal Society B</em>, 360(1462), 1847-1857. https://doi.org/10.1098/rstb.2005.1716</p>
+<p>Wright, E. S. (2016). Using DECIPHER v2.0 to analyze big biological sequence data in R. <em>The R Journal</em>, 8(1), 352-359. https://doi.org/10.32614/RJ-2016-025</p>
+<h3 id="software-versions">Software Versions</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Version</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NanoPlot</td>
+<td>1.42</td>
+<td>Read quality assessment (De Coster &amp; Rademakers, 2023)</td>
+</tr>
+<tr>
+<td>Cutadapt</td>
+<td>4.6</td>
+<td>Read filtering and demultiplexing (Martin, 2011)</td>
+</tr>
+<tr>
+<td>VSEARCH</td>
+<td>2.28</td>
+<td>Clustering and SINTAX classification (Rognes et al., 2016)</td>
+</tr>
+<tr>
+<td>BLAST+</td>
+<td>2.16</td>
+<td>Sequence similarity search (Camacho et al., 2009)</td>
+</tr>
+<tr>
+<td>MUSCLE</td>
+<td>5.1</td>
+<td>Multiple sequence alignment (Edgar, 2022)</td>
+</tr>
+<tr>
+<td>seqkit</td>
+<td>2.8</td>
+<td>Sequence file manipulation (Shen et al., 2016)</td>
+</tr>
+<tr>
+<td>DECIPHER</td>
+<td>(R package)</td>
+<td>Consensus sequence calling (Wright, 2016)</td>
+</tr>
+<tr>
+<td>Biostrings</td>
+<td>(R package)</td>
+<td>Sequence handling in R (Pagès et al., 2024)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-revision-history">13. Revision History</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Date</th>
+<th>Author</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2026-02-17</td>
+<td>SAIAB Genomics</td>
+<td>Initial release</td>
+</tr>
+<tr>
+<td>1.1</td>
+<td>2026-03-13</td>
+<td>SAIAB Genomics</td>
+<td>Corrected sample sheet column names to <code>fwd_umi</code>/<code>rev_umi</code> (matching actual code); updated UMI naming convention to <code>bc1001</code>–<code>bc1096</code> (forward) and <code>bc1097_rc</code>–<code>bc1192_rc</code> (reverse); clarified that <code>umi_sequences.tsv</code> is pre-populated; expanded sample sheet field descriptions and added combinatorial indexing layout example</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>2026-03-17</td>
+<td>SAIAB Genomics</td>
+<td>Updated BLAST database from NCBI nt to MIDORI2 COI (preferred for COI barcoding: smaller, faster, COI-specific); updated <code>GENETIC_CODE</code> default from 5 (invertebrate) to 2 (vertebrate mitochondrial) for fish samples; lowered <code>SINTAX_CUTOFF</code> from 0.8 to 0.6 to recover order/family-level BOLD classifications for Indo-Pacific and deep-sea fish that are under-represented in BOLD at species level; added guidance on BOLD coverage limitations and when BLAST should be treated as the primary identification; added consensus sequence length distribution plot to Step 6 QC</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>2026-03-17</td>
+<td>SAIAB Genomics</td>
+<td>Corrected PCR 2 adapter construction order from UMI→PAD→M13 to PAD→UMI→M13 (matching actual primer design confirmed by wetlab); updated amplicon structure diagram; added second forward primer (FishF2) and second reverse primer (FR1d-t1) to config and demux step to handle the full 4-primer cocktail used in PCR 1; demux now correctly identifies reads regardless of which primer combination amplified the specimen</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>2026-03-18</td>
+<td>SAIAB Genomics</td>
+<td>Incorporated lessons from first full production run (SPR22). Added primer-stripping cutadapt pass to Step 6 (consensus sequences retain partial primers requiring pre-QC stripping); updated demux assignment rate benchmark from &gt;70% to 50–80% (low rates due to PCR2 UMI-tagging efficiency are acceptable); clarified array vs non-array job submission (Steps 4–5 are array jobs; Step 3 is not); added mixed-well detection guidance (divergent primary/b BLAST hits); added SINTAX wrong-kingdom guidance for deep-sea taxa absent from BOLD; documented expected amplicon length of 680–686 bp for FishF1/F2/R1/FR1d-t1 primer set; added three new QC failure patterns to troubleshooting; added Step 6 zero-output diagnostic note</td>
+</tr>
+<tr>
+<td>2.1</td>
+<td>2026-03-31</td>
+<td>SAIAB Genomics</td>
+<td>Added Section 4.5: instructions for obtaining the pipeline scripts by cloning from the SAIAB Gitea repository (http://172.20.142.126:3000/evilliers/ont_barcoding)</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

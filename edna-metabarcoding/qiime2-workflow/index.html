@@ -1,0 +1,2457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB">
+      
+      
+        <meta name="author" content="Aquatic Genomics Research Platform (AGRP)">
+      
+      
+        <link rel="canonical" href="https://evilliers.github.io/agrp-sops/edna-metabarcoding/qiime2-workflow/">
+      
+      
+        <link rel="prev" href="../crabs-reference-db/">
+      
+      
+        <link rel="next" href="../SOP_ONT_Barcoding_Pipeline/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>QIIME2 Workflow - AGRP Standard Operating Procedures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#qiime2-edna-metabarcoding-workflow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-header__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AGRP Standard Operating Procedures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              QIIME2 Workflow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publishing SOPs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hpc/getting-started/" class="md-tabs__link">
+          
+  
+  
+  HPC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-tabs__link">
+          
+  
+  
+  Genome Assembly
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../crabs-reference-db/" class="md-tabs__link">
+          
+  
+  
+  eDNA Metabarcoding
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-management/data-management-policy/" class="md-tabs__link">
+          
+  
+  
+  Data Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-nav__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AGRP Standard Operating Procedures
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing SOPs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HPC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/slurm-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLURM Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/conda-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conda Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/storage_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/user_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Genome Assembly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_Genome_Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    De Novo Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/nanopore-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanopore QC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/assembly-polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Polishing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genome-assembly/SOP_mitogenome_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eDNA Metabarcoding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    eDNA Metabarcoding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../crabs-reference-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRABS Reference DB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directory-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directory Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-import-cleaning-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data Import, Cleaning &amp; Quality Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Data Import, Cleaning &amp; Quality Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-import-raw-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Import Raw Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-remove-primers-with-cutadapt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Remove Primers with Cutadapt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-assess-sequence-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Assess Sequence Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-denoise-with-dada2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Denoise with DADA2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-check-denoising-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Check Denoising Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-summarise-feature-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Summarise Feature Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-taxonomic-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Taxonomic Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Taxonomic Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-classify-asvs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Classify ASVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-visualise-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Visualise Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-remove-mitochondria-and-chloroplasts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Remove Mitochondria and Chloroplasts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-summarise-filtered-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Summarise Filtered Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-phylogenetic-tree-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Phylogenetic Tree Construction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-diversity-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Diversity Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Diversity Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-taxonomic-bar-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Taxonomic Bar Charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-rarefaction-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Rarefaction Curves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-core-diversity-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Core Diversity Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-alpha-diversity-group-significance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Alpha Diversity Group Significance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-beta-diversity-group-significance-permanova" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Beta Diversity Group Significance (PERMANOVA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exporting-data-for-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exporting Data for R
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-training-your-own-classifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Training Your Own Classifier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SOP_ONT_Barcoding_Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eDNA_mothur_and_BLAST_analysis_SOP_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mothur + BLAST Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-database-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-management/data-management-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Environment Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directory-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Directory Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-import-cleaning-quality-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data Import, Cleaning &amp; Quality Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Data Import, Cleaning &amp; Quality Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-import-raw-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Import Raw Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-remove-primers-with-cutadapt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Remove Primers with Cutadapt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-assess-sequence-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Assess Sequence Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-denoise-with-dada2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Denoise with DADA2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-check-denoising-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Check Denoising Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-summarise-feature-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Summarise Feature Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-taxonomic-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Taxonomic Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Taxonomic Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-classify-asvs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Classify ASVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-visualise-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Visualise Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-remove-mitochondria-and-chloroplasts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Remove Mitochondria and Chloroplasts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-summarise-filtered-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Summarise Filtered Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-phylogenetic-tree-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Phylogenetic Tree Construction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-diversity-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Diversity Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Diversity Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-taxonomic-bar-charts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Taxonomic Bar Charts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-rarefaction-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Rarefaction Curves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-core-diversity-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Core Diversity Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-alpha-diversity-group-significance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Alpha Diversity Group Significance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-beta-diversity-group-significance-permanova" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Beta Diversity Group Significance (PERMANOVA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-exporting-data-for-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Exporting Data for R
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-training-your-own-classifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Training Your Own Classifier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="qiime2-edna-metabarcoding-workflow">QIIME2 eDNA Metabarcoding Workflow</h1>
+<p><strong>SOP ID:</strong> EDNA-002
+<strong>Version:</strong> 2.0
+<strong>Date:</strong> 2026-02-23
+<strong>Author:</strong> AGRP</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This SOP guides you through a complete QIIME2 amplicon metabarcoding analysis — from raw paired-end FASTQ files to diversity statistics and R-ready export files. The workflow uses 16S rRNA data from <em>Exaiptasia diaphana</em> (sea anemone) bacterial communities as an example dataset.</p>
+<div class="admonition tip">
+<p class="admonition-title">Full Course Available</p>
+<p>This SOP is based on the AGRP QIIME2 training course. For step-by-step exercises and detailed explanations, see the full tutorial:</p>
+<p><strong><a href="https://lab417.saiab.ac.za/qiime2_course/qiime2_tutorial.html">QIIME2 eDNA Metabarcoding Tutorial</a></strong></p>
+</div>
+<p><strong>QIIME2 version:</strong> <code>qiime2-amplicon-2024.10</code></p>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Access to <code>lab417.saiab.ac.za</code> (see <a href="../../hpc/getting-started/">Getting Started</a>)</li>
+<li>Demultiplexed paired-end FASTQ files (Illumina MiSeq)</li>
+<li>A metadata file in TSV format (validated with Keemei)</li>
+<li>A pre-trained classifier matching your primer region (see <a href="#6-training-your-own-classifier">Section 6</a>)</li>
+</ul>
+<hr />
+<h2 id="environment-setup">Environment Setup</h2>
+<p>Activate the shared QIIME2 environment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">source</span><span class="w"> </span>/usr/local/bin/qiime2-activate
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>qiime<span class="w"> </span>info
+</code></pre></div>
+<p>Use a <code>screen</code> session to protect long-running jobs from disconnection:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>screen<span class="w"> </span>-S<span class="w"> </span>qiime_analysis
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Screen command</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctrl-a ctrl-d</code></td>
+<td>Detach from session</td>
+</tr>
+<tr>
+<td><code>screen -r qiime_analysis</code></td>
+<td>Reattach session</td>
+</tr>
+</tbody>
+</table>
+<h3 id="directory-setup">Directory Setup</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>analysis/seqs
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>mkdir<span class="w"> </span>analysis/visualisations
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>mkdir<span class="w"> </span>analysis/tree
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>mkdir<span class="w"> </span>analysis/taxonomy
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>mkdir<span class="w"> </span>analysis/export
+</code></pre></div>
+<hr />
+<h2 id="workflow-summary">Workflow Summary</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Raw FASTQs → Import → Trim Primers → Quality Check → DADA2 Denoise
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    → Taxonomic Classification → Filter Contaminants
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    → Phylogenetic Tree → Diversity Metrics → Export for R
+</code></pre></div>
+<hr />
+<h2 id="1-data-import-cleaning-quality-control">1. Data Import, Cleaning &amp; Quality Control</h2>
+<h3 id="11-import-raw-data">1.1 Import Raw Data</h3>
+<p>Import demultiplexed paired-end FASTQ files (Casava format):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>qiime<span class="w"> </span>tools<span class="w"> </span>import<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>--type<span class="w"> </span><span class="s1">&#39;SampleData[PairedEndSequencesWithQuality]&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--input-path<span class="w"> </span>raw_data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--input-format<span class="w"> </span>CasavaOneEightSingleLanePerSampleDirFmt<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span>--output-path<span class="w"> </span>analysis/seqs/combined.qza
+</code></pre></div>
+<p><strong>Output:</strong> <code>analysis/seqs/combined.qza</code></p>
+<h3 id="12-remove-primers-with-cutadapt">1.2 Remove Primers with Cutadapt</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Confirm with your sequencing facility whether primers were already removed.</p>
+</div>
+<p>Replace the primer sequences below with your own if using a different region:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>qiime<span class="w"> </span>cutadapt<span class="w"> </span>trim-paired<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>--i-demultiplexed-sequences<span class="w"> </span>analysis/seqs/combined.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>--p-front-f<span class="w"> </span>AGGATTAGATACCCTGGTA<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>--p-front-r<span class="w"> </span>CRRCACGAGCTGACGAC<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span>--p-error-rate<span class="w"> </span><span class="m">0</span>.20<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span>--output-dir<span class="w"> </span>analysis/seqs_trimmed_data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span>--verbose
+</code></pre></div>
+<p><strong>Primers (16S V5V6):</strong> Forward 784f / Reverse 1492r
+<strong>Output:</strong> <code>analysis/seqs_trimmed_data/trimmed_sequences.qza</code></p>
+<h3 id="13-assess-sequence-quality">1.3 Assess Sequence Quality</h3>
+<p>Generate a quality visualisation:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>qiime<span class="w"> </span>demux<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>--i-data<span class="w"> </span>analysis/seqs_trimmed_data/trimmed_sequences.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/trimmed_sequences.qzv
+</code></pre></div>
+<p>Download the <code>.qzv</code> file to your computer with <code>scp</code>, then open it at <strong><a href="https://view.qiime2.org">view.qiime2.org</a></strong>.</p>
+<p><strong>What to look for:</strong></p>
+<ul>
+<li>Sequence retention: 70–90% is optimal</li>
+<li>Forward and reverse quality plots — note where median quality drops below <strong>Q30</strong></li>
+<li>Record truncation lengths for the DADA2 step (separate values for forward and reverse reads)</li>
+</ul>
+<h3 id="14-denoise-with-dada2">1.4 Denoise with DADA2</h3>
+<p>DADA2 corrects sequencing errors, merges paired reads, removes chimeras, and produces Amplicon Sequence Variants (ASVs).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This step can take hours on large datasets. Adjust <code>--p-trunc-len-f</code> and <code>--p-trunc-len-r</code> based on <strong>your own</strong> quality plots — do not use these values blindly.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>qiime<span class="w"> </span>dada2<span class="w"> </span>denoise-paired<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--i-demultiplexed-seqs<span class="w"> </span>analysis/seqs_trimmed_data/trimmed_sequences.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--p-trunc-len-f<span class="w"> </span><span class="m">211</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>--p-trunc-len-r<span class="w"> </span><span class="m">167</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span>--p-n-threads<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span>--output-dir<span class="w"> </span>analysis/dada2out<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span>--verbose
+</code></pre></div>
+<p><strong>Outputs:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>analysis/dada2out/table.qza</code></td>
+<td>ASV feature table</td>
+</tr>
+<tr>
+<td><code>analysis/dada2out/representative_sequences.qza</code></td>
+<td>ASV sequences</td>
+</tr>
+<tr>
+<td><code>analysis/dada2out/denoising_stats.qza</code></td>
+<td>Per-sample retention stats</td>
+</tr>
+</tbody>
+</table>
+<h3 id="15-check-denoising-statistics">1.5 Check Denoising Statistics</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--m-input-file<span class="w"> </span>analysis/dada2out/denoising_stats.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/16s_denoising_stats.qzv
+</code></pre></div>
+<p><strong>Quality targets:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Target retention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Passed quality filter</td>
+<td>&gt; 70–80%</td>
+</tr>
+<tr>
+<td>Merged</td>
+<td>&gt; 85–95%</td>
+</tr>
+<tr>
+<td>Non-chimeric</td>
+<td>&gt; 85–95%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="16-summarise-feature-table">1.6 Summarise Feature Table</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/dada2out/table.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/16s_table.qzv
+</code></pre></div>
+<p>In the <strong>Interactive Sample Detail</strong> tab, note the median per-sample frequency — you will use this as your rarefaction depth later.</p>
+<hr />
+<h2 id="2-taxonomic-classification">2. Taxonomic Classification</h2>
+<h3 id="21-classify-asvs">2.1 Classify ASVs</h3>
+<p>Run the Naive Bayes classifier against the pre-trained SILVA reference:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>qiime<span class="w"> </span>feature-classifier<span class="w"> </span>classify-sklearn<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>--i-classifier<span class="w"> </span>silva_138_16s_v5v6_classifier_2021-4.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>--i-reads<span class="w"> </span>analysis/dada2out/representative_sequences.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>--p-n-jobs<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>--output-dir<span class="w"> </span>analysis/taxonomy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>--verbose
+</code></pre></div>
+<p><strong>Output:</strong> <code>analysis/taxonomy/classification.qza</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The classifier provided is specific to the <strong>16S V5V6 region</strong>. For different primers, you must train your own (see <a href="#6-training-your-own-classifier">Section 6</a>).</p>
+</div>
+<h3 id="22-visualise-taxonomy">2.2 Visualise Taxonomy</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>qiime<span class="w"> </span>metadata<span class="w"> </span>tabulate<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>--m-input-file<span class="w"> </span>analysis/taxonomy/classification.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/taxonomy.qzv
+</code></pre></div>
+<p>Taxonomy strings follow the format:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>k__Bacteria;p__Firmicutes;c__Bacilli;o__Lactobacillales;f__Streptococcaceae
+</code></pre></div></p>
+<p>Confidence scores range from 0–1. Classifications with low confidence (&lt; 0.7) should be treated cautiously.</p>
+<h3 id="23-remove-mitochondria-and-chloroplasts">2.3 Remove Mitochondria and Chloroplasts</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>qiime<span class="w"> </span>taxa<span class="w"> </span>filter-table<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/dada2out/table.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>--i-taxonomy<span class="w"> </span>analysis/taxonomy/classification.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>--p-exclude<span class="w"> </span>Mitochondria,Chloroplast<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span>--o-filtered-table<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza
+</code></pre></div>
+<p><strong>Output:</strong> <code>analysis/taxonomy/16s_table_filtered.qza</code></p>
+<h3 id="24-summarise-filtered-table">2.4 Summarise Filtered Table</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>qiime<span class="w"> </span>feature-table<span class="w"> </span>summarize<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--m-sample-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/16s_table_filtered.qzv
+</code></pre></div>
+<p>Use the median frequency from the <strong>Interactive Sample Detail</strong> tab to set your rarefaction depth in Section 4.</p>
+<hr />
+<h2 id="3-phylogenetic-tree-construction">3. Phylogenetic Tree Construction</h2>
+<p>Build a rooted phylogenetic tree from ASV sequences using MAFFT + FastTree:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>qiime<span class="w"> </span>phylogeny<span class="w"> </span>align-to-tree-mafft-fasttree<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--i-sequences<span class="w"> </span>analysis/dada2out/representative_sequences.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--o-alignment<span class="w"> </span>analysis/tree/aligned_16s_representative_seqs.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span>--o-masked-alignment<span class="w"> </span>analysis/tree/masked_aligned_16s_representative_seqs.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">  </span>--o-tree<span class="w"> </span>analysis/tree/16s_unrooted_tree.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span>--o-rooted-tree<span class="w"> </span>analysis/tree/16s_rooted_tree.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span>--p-n-threads<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">  </span>--verbose
+</code></pre></div>
+<p>The <strong>rooted tree</strong> (<code>16s_rooted_tree.qza</code>) is required for phylogenetic diversity metrics in the next section.</p>
+<hr />
+<h2 id="4-diversity-analysis">4. Diversity Analysis</h2>
+<h3 id="41-taxonomic-bar-charts">4.1 Taxonomic Bar Charts</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>qiime<span class="w"> </span>taxa<span class="w"> </span>barplot<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>--i-taxonomy<span class="w"> </span>analysis/taxonomy/classification.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/barchart.qzv
+</code></pre></div>
+<p>In QIIME2 View, use the taxonomic level dropdown (Level 1–7) to explore community composition across samples.</p>
+<h3 id="42-rarefaction-curves">4.2 Rarefaction Curves</h3>
+<p>Set <code>--p-max-depth</code> to the <strong>median sample frequency</strong> from <code>16s_table_filtered.qzv</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha-rarefaction<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>--i-phylogeny<span class="w"> </span>analysis/tree/16s_rooted_tree.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span>--p-max-depth<span class="w"> </span><span class="m">9062</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/16s_alpha_rarefaction.qzv
+</code></pre></div>
+<p><strong>Plateauing curves</strong> indicate sufficient sequencing depth. Non-plateauing curves mean diversity is undersampled.</p>
+<h3 id="43-core-diversity-metrics">4.3 Core Diversity Metrics</h3>
+<p>Set <code>--p-sampling-depth</code> to the <strong>median frequency</strong> from your filtered table (samples below this depth are excluded):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>core-metrics-phylogenetic<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span>--i-phylogeny<span class="w"> </span>analysis/tree/16s_rooted_tree.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span>--i-table<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>--p-sampling-depth<span class="w"> </span><span class="m">5583</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span>--output-dir<span class="w"> </span>analysis/diversity_metrics
+</code></pre></div>
+<p><strong>Alpha diversity metrics generated (within-sample):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shannon index</td>
+<td>Richness weighted by abundance</td>
+</tr>
+<tr>
+<td>Observed features</td>
+<td>Count of unique ASVs</td>
+</tr>
+<tr>
+<td>Faith's PD</td>
+<td>Phylogenetic diversity</td>
+</tr>
+<tr>
+<td>Evenness (Pielou's)</td>
+<td>How evenly distributed species are</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Beta diversity metrics generated (between-sample):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jaccard</td>
+<td>Qualitative (presence/absence)</td>
+</tr>
+<tr>
+<td>Bray-Curtis</td>
+<td>Quantitative (abundance-weighted)</td>
+</tr>
+<tr>
+<td>Unweighted UniFrac</td>
+<td>Qualitative + phylogenetic</td>
+</tr>
+<tr>
+<td>Weighted UniFrac</td>
+<td>Quantitative + phylogenetic</td>
+</tr>
+</tbody>
+</table>
+<p>Copy visualisations to your visualisations folder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>cp<span class="w"> </span>analysis/diversity_metrics/*.qzv<span class="w"> </span>analysis/visualisations/
+</code></pre></div>
+<h3 id="44-alpha-diversity-group-significance">4.4 Alpha Diversity Group Significance</h3>
+<p>Test whether groups differ in phylogenetic diversity and evenness:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha-group-significance<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span>--i-alpha-diversity<span class="w"> </span>analysis/diversity_metrics/faith_pd_vector.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/faith-pd-group-significance.qzv
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>alpha-group-significance<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span>--i-alpha-diversity<span class="w"> </span>analysis/diversity_metrics/evenness_vector.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/evenness-group-significance.qzv
+</code></pre></div>
+<p>A p-value &lt; 0.05 (Kruskal-Wallis test) indicates a significant difference between groups.</p>
+<h3 id="45-beta-diversity-group-significance-permanova">4.5 Beta Diversity Group Significance (PERMANOVA)</h3>
+<p>Test whether microbial composition differs between metadata groups:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>beta-group-significance<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span>--i-distance-matrix<span class="w"> </span>analysis/diversity_metrics/unweighted_unifrac_distance_matrix.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span>--m-metadata-column<span class="w"> </span>Genotype<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/unweighted-unifrac-genotype-significance.qzv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span>--p-pairwise
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>qiime<span class="w"> </span>diversity<span class="w"> </span>beta-group-significance<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">  </span>--i-distance-matrix<span class="w"> </span>analysis/diversity_metrics/unweighted_unifrac_distance_matrix.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="w">  </span>--m-metadata-file<span class="w"> </span>metadata.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="w">  </span>--m-metadata-column<span class="w"> </span>Environment<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="w">  </span>--o-visualization<span class="w"> </span>analysis/visualisations/unweighted-unifrac-environment-significance.qzv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a><span class="w">  </span>--p-pairwise
+</code></pre></div>
+<p>Replace <code>Genotype</code> and <code>Environment</code> with the relevant column names from your own metadata file.</p>
+<hr />
+<h2 id="5-exporting-data-for-r">5. Exporting Data for R</h2>
+<p>Export files in formats compatible with phyloseq and other R packages:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Phylogenetic tree (Newick format)</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span>--input-path<span class="w"> </span>analysis/tree/16s_unrooted_tree.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span>--output-path<span class="w"> </span>analysis/export
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="c1"># ASV feature table (BIOM format)</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">  </span>--input-path<span class="w"> </span>analysis/taxonomy/16s_table_filtered.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">  </span>--output-path<span class="w"> </span>analysis/export
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="c1"># Convert BIOM to TSV</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>biom<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">  </span>-i<span class="w"> </span>analysis/export/feature-table.biom<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">  </span>-o<span class="w"> </span>analysis/export/feature-table.tsv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">  </span>--to-tsv
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="c1"># Taxonomy assignments</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>qiime<span class="w"> </span>tools<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a><span class="w">  </span>--input-path<span class="w"> </span>analysis/taxonomy/classification.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a><span class="w">  </span>--output-path<span class="w"> </span>analysis/export
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a><span class="c1"># Remove extra header lines</span>
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>sed<span class="w"> </span><span class="s1">&#39;1d&#39;</span><span class="w"> </span>analysis/export/taxonomy.tsv<span class="w"> </span>&gt;<span class="w"> </span>analysis/export/taxonomy_noHeader.tsv
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>sed<span class="w"> </span><span class="s1">&#39;1d&#39;</span><span class="w"> </span>analysis/export/feature-table.tsv<span class="w"> </span>&gt;<span class="w"> </span>analysis/export/feature-table_noHeader.tsv
+</code></pre></div>
+<p><strong>Files exported to <code>analysis/export/</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tree.nwk</code></td>
+<td>Phylogenetic tree for phyloseq</td>
+</tr>
+<tr>
+<td><code>feature-table.biom</code></td>
+<td>ASV table (BIOM format)</td>
+</tr>
+<tr>
+<td><code>feature-table_noHeader.tsv</code></td>
+<td>ASV table (TSV format)</td>
+</tr>
+<tr>
+<td><code>taxonomy_noHeader.tsv</code></td>
+<td>Taxonomy assignments</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-training-your-own-classifier">6. Training Your Own Classifier</h2>
+<p>Required when using <strong>different primers or a different gene region</strong> to the V5V6 classifier above.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Step 1 — Extract region-specific reads from SILVA reference</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>qiime<span class="w"> </span>feature-classifier<span class="w"> </span>extract-reads<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span>--i-sequences<span class="w"> </span>silva-138-99-seqs.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span>--p-f-primer<span class="w"> </span>FORWARD_PRIMER_SEQUENCE<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span>--p-r-primer<span class="w"> </span>REVERSE_PRIMER_SEQUENCE<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">  </span>--o-reads<span class="w"> </span>silva_138_marker_gene.qza
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="c1"># Step 2 — Train the Naive Bayes classifier</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>qiime<span class="w"> </span>feature-classifier<span class="w"> </span>fit-classifier-naive-bayes<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">  </span>--i-reference-reads<span class="w"> </span>silva_138_marker_gene.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">  </span>--i-reference-taxonomy<span class="w"> </span>silva-138-99-tax.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">  </span>--o-classifier<span class="w"> </span>silva_138_marker_gene_classifier.qza<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">  </span>--verbose
+</code></pre></div>
+<p>Replace <code>FORWARD_PRIMER_SEQUENCE</code> and <code>REVERSE_PRIMER_SEQUENCE</code> with your actual primers.</p>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Memory error during classification</td>
+<td>Add <code>--p-reads-per-batch 10000</code> or reduce <code>--p-n-jobs</code></td>
+</tr>
+<tr>
+<td>Low read retention after DADA2</td>
+<td>Re-examine quality plots and adjust truncation lengths</td>
+</tr>
+<tr>
+<td>Rarefaction curves don't plateau</td>
+<td>Increase <code>--p-max-depth</code> or consider deeper sequencing</td>
+</tr>
+<tr>
+<td>Sample dropped from diversity analysis</td>
+<td>Its frequency was below <code>--p-sampling-depth</code>; lower the depth or check that sample</td>
+</tr>
+<tr>
+<td>QIIME2 View won't load</td>
+<td>Use Chrome or Firefox (not private/incognito mode)</td>
+</tr>
+<tr>
+<td>Wrong classifier results</td>
+<td>Ensure classifier matches your primer region</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code>qiime &lt;plugin&gt; &lt;command&gt; --help</code> at any time to see full parameter descriptions.</p>
+</div>
+<hr />
+<h2 id="reference">Reference</h2>
+<p>Dungan AM, van Oppen MJH, and Blackall LL (2021) Short-Term Exposure to Sterile Seawater Reduces Bacterial Community Diversity in the Sea Anemone, <em>Exaiptasia diaphana</em>. <em>Front. Mar. Sci.</em> 7:599314. doi:10.3389/fmars.2020.599314</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><strong><a href="https://lab417.saiab.ac.za/qiime2_course/qiime2_tutorial.html">Full QIIME2 Tutorial — AGRP Course</a></strong></li>
+<li><a href="https://docs.qiime2.org/">Official QIIME2 Documentation</a></li>
+<li><a href="https://forum.qiime2.org/">QIIME2 Forum</a></li>
+<li><a href="https://www.arb-silva.de/">SILVA Reference Database</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

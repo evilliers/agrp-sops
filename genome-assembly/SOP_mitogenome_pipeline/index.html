@@ -1,0 +1,2356 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Standard Operating Procedures for the Aquatic Genomics Research Platform at SAIAB">
+      
+      
+        <meta name="author" content="Aquatic Genomics Research Platform (AGRP)">
+      
+      
+        <link rel="canonical" href="https://evilliers.github.io/agrp-sops/genome-assembly/SOP_mitogenome_pipeline/">
+      
+      
+        <link rel="prev" href="../assembly-polishing/">
+      
+      
+        <link rel="next" href="../../edna-metabarcoding/crabs-reference-db/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Mitogenome Assembly (ONT) - AGRP Standard Operating Procedures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sop-fish-mitogenome-assembly-and-annotation-from-ont-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-header__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AGRP Standard Operating Procedures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mitogenome Assembly (ONT)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Publishing SOPs
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../hpc/getting-started/" class="md-tabs__link">
+          
+  
+  
+  HPC
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../SOP_Genome_Assembly/" class="md-tabs__link">
+          
+  
+  
+  Genome Assembly
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../edna-metabarcoding/crabs-reference-db/" class="md-tabs__link">
+          
+  
+  
+  eDNA Metabarcoding
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-management/data-management-policy/" class="md-tabs__link">
+          
+  
+  
+  Data Management
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="AGRP Standard Operating Procedures" class="md-nav__button md-logo" aria-label="AGRP Standard Operating Procedures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AGRP Standard Operating Procedures
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/evilliers/agrp-sops" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    evilliers/agrp-sops
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing SOPs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HPC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    HPC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/slurm-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SLURM Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/conda-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conda Environments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/storage_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../hpc/user_management_sop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Account Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Genome Assembly
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SOP_Genome_Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    De Novo Genome Assembly
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nanopore-qc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nanopore QC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assembly-polishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Polishing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mitogenome Assembly (ONT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pipeline-code-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pipeline Code Repository
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Pipeline Code Repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#contributing-changes-via-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributing changes via pull request
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-software-and-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Software and environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-input-data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Input data requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-repository-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Repository layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-step-1-create-a-species-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Step 1 — Create a species config file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-step-2-run-the-assembly-and-mitoz-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Step 2 — Run the assembly and MitoZ pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Step 2 — Run the assembly and MitoZ pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-assembly-quality-after-step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking assembly quality after Step 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-step-3-run-mitos2-annotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Step 3 — Run MITOS2 annotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Step 3 — Run MITOS2 annotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitos2-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MITOS2 output files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-step-4-generate-the-final-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Step 4 — Generate the final report
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interpreting-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Interpreting outputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interpreting outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assembly-quality-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assembly quality indicators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitoz-circos-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MitoZ circos plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blast-species-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLAST species identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gene-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gene order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-adding-a-new-species-quick-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Adding a new species — quick checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eDNA Metabarcoding
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    eDNA Metabarcoding
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/crabs-reference-db/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CRABS Reference DB
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/qiime2-workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QIIME2 Workflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/SOP_ONT_Barcoding_Pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ONT COI Barcoding Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/eDNA_mothur_and_BLAST_analysis_SOP_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mothur + BLAST Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../edna-metabarcoding/reference-database-creation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference Database Creation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Management
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-management/data-management-policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Management Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pipeline-code-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pipeline Code Repository
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Pipeline Code Repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#contributing-changes-via-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contributing changes via pull request
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-software-and-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Software and environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-input-data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Input data requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-repository-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Repository layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-step-1-create-a-species-config-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Step 1 — Create a species config file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-step-2-run-the-assembly-and-mitoz-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Step 2 — Run the assembly and MitoZ pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Step 2 — Run the assembly and MitoZ pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pipeline-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-assembly-quality-after-step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking assembly quality after Step 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-step-3-run-mitos2-annotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Step 3 — Run MITOS2 annotation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Step 3 — Run MITOS2 annotation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mitos2-output-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MITOS2 output files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-step-4-generate-the-final-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Step 4 — Generate the final report
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interpreting-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Interpreting outputs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interpreting outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assembly-quality-indicators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assembly quality indicators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitoz-circos-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MitoZ circos plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blast-species-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BLAST species identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gene-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gene order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-adding-a-new-species-quick-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Adding a new species — quick checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="sop-fish-mitogenome-assembly-and-annotation-from-ont-data">SOP: Fish Mitogenome Assembly and Annotation from ONT Data</h1>
+<p><strong>Version:</strong> 1.1
+<strong>Date:</strong> 2026-03-30
+<strong>Pipeline scripts:</strong> <code>run_pipeline.sh</code>, <code>annotate_mitos2.sh</code>, <code>generate_report.sh</code></p>
+<hr />
+<h2 id="1-overview">1. Overview</h2>
+<p>This SOP describes how to assemble and annotate a fish mitochondrial genome (mitogenome) from Oxford Nanopore Technology (ONT) long reads. The pipeline takes raw reads, enriches mitochondrial reads by mapping to a reference, assembles and polishes the mitogenome, annotates it using two complementary tools (MITOS2 for gene annotation and MitoZ for circos visualisation), performs BLAST-based species identification against NCBI nt, and generates a final markdown report.</p>
+<p>The pipeline is configured per species using a plain-text config file, allowing it to be reused across any fish species without modifying the main scripts.</p>
+<p><strong>Expected outputs for a typical vertebrate fish mitogenome:</strong></p>
+<ul>
+<li>1 circular contig, ~16–18 kb</li>
+<li>13 protein-coding genes</li>
+<li>2 ribosomal RNA genes (12S, 16S)</li>
+<li>22 transfer RNA genes</li>
+</ul>
+<hr />
+<h2 id="2-pipeline-code-repository">2. Pipeline Code Repository</h2>
+<p>The pipeline scripts are version-controlled in a dedicated Gitea repository:</p>
+<p><strong><a href="http://172.20.142.126:3000/evilliers/mitogenome-pipeline">172.20.142.126:3000/evilliers/mitogenome-pipeline</a></strong></p>
+<p>This repository contains:</p>
+<table>
+<thead>
+<tr>
+<th>File / Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run_pipeline.sh</code></td>
+<td>Main assembly pipeline (Steps 0–8)</td>
+</tr>
+<tr>
+<td><code>annotate_mitos2.sh</code></td>
+<td>MITOS2 annotation (run separately)</td>
+</tr>
+<tr>
+<td><code>generate_report.sh</code></td>
+<td>Final report generator</td>
+</tr>
+<tr>
+<td><code>configs/</code></td>
+<td>Species config files (one per species)</td>
+</tr>
+<tr>
+<td><code>SOP_mitogenome_pipeline.md</code></td>
+<td>This SOP (kept in sync with the website)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Large files excluded from git</p>
+<p>The following are <strong>not</strong> tracked in git due to size:
+<code>singularity/mitoz_3.6.sif</code> (~2 GB), <code>results/</code>, <code>reference/</code>, <code>logs/</code>, and raw read files.
+These are generated or downloaded automatically on first run.</p>
+</div>
+<h3 id="contributing-changes-via-pull-request">Contributing changes via pull request</h3>
+<p>If you update any pipeline script or config file, please submit a pull request rather than pushing directly to <code>main</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 1. Clone the repo (first time only)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>http://172.20.142.126:3000/evilliers/mitogenome-pipeline.git
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># 2. Create a feature branch</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>fix/describe-your-change
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># 3. Make your changes, then commit</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>git<span class="w"> </span>add<span class="w"> </span>run_pipeline.sh<span class="w">          </span><span class="c1"># stage specific files, not git add -A</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Fix: brief description of what changed&quot;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># 4. Push the branch and open a PR on Gitea</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>fix/describe-your-change
+</code></pre></div>
+<p>Then open a pull request on Gitea at <code>172.20.142.126:3000/evilliers/mitogenome-pipeline/pulls</code>. In the PR description, note:</p>
+<ul>
+<li>What script(s) were changed and why</li>
+<li>Which species / config was used to test</li>
+<li>Any new or changed output files</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Updating the SOP</p>
+<p>If your change affects how the pipeline is run, update <code>SOP_mitogenome_pipeline.md</code> in the same PR. After merging, copy the updated SOP to the <code>agrp-sops</code> repository and push there too so the website stays in sync.</p>
+</div>
+<hr />
+<h2 id="3-prerequisites">3. Prerequisites</h2>
+<h3 id="31-software-and-environments">3.1 Software and environments</h3>
+<p>The following tools must be installed before running the pipeline.</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Environment / method</th>
+<th>Used in step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NanoPlot</td>
+<td><code>ont</code> conda env</td>
+<td>Step 1 (QC)</td>
+</tr>
+<tr>
+<td>minimap2</td>
+<td><code>ont</code> conda env</td>
+<td>Step 3 (read enrichment)</td>
+</tr>
+<tr>
+<td>samtools</td>
+<td><code>ont</code> conda env</td>
+<td>Step 3 (read enrichment)</td>
+</tr>
+<tr>
+<td>seqkit</td>
+<td><code>ont</code> conda env</td>
+<td>Step 3, Step 6</td>
+</tr>
+<tr>
+<td>Flye</td>
+<td><code>ont</code> conda env</td>
+<td>Step 4 (assembly)</td>
+</tr>
+<tr>
+<td>QUAST</td>
+<td><code>ont</code> conda env</td>
+<td>Step 6 (stats)</td>
+</tr>
+<tr>
+<td>medaka</td>
+<td><code>medaka</code> conda env</td>
+<td>Step 5 (polishing)</td>
+</tr>
+<tr>
+<td>MITOS2 (runmitos)</td>
+<td><code>mitos2</code> conda env</td>
+<td>Annotation script</td>
+</tr>
+<tr>
+<td>BioPython</td>
+<td><code>mitos2</code> conda env</td>
+<td>Step 8 (BLAST species ID)</td>
+</tr>
+<tr>
+<td>MitoZ</td>
+<td>Singularity image</td>
+<td>Step 7 (circos / gene order)</td>
+</tr>
+<tr>
+<td>efetch (NCBI E-utilities)</td>
+<td>system PATH</td>
+<td>Step 0 (reference download)</td>
+</tr>
+<tr>
+<td>Singularity / Apptainer</td>
+<td>system binary</td>
+<td>Step 7</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>mitos2</code> conda environment and the MitoZ Singularity image are created automatically on first run if they do not exist. BioPython is already included in the <code>mitos2</code> environment.</p>
+<h3 id="32-input-data-requirements">3.2 Input data requirements</h3>
+<ul>
+<li>ONT reads in <code>.fastq.gz</code> format (a single concatenated file per species)</li>
+<li>A known NCBI RefSeq accession for a closely related mitogenome to use as a mapping reference</li>
+</ul>
+<hr />
+<h2 id="4-repository-layout">4. Repository layout</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mitogenome-pipeline/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── run_pipeline.sh          # Main assembly pipeline (Steps 0–8)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── annotate_mitos2.sh       # MITOS2 annotation (run separately)
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── generate_report.sh       # Final report generator
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>├── configs/
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   └── anguilla_marmorata.conf   # Example species config
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>├── reference/               # Reference FASTAs (auto-downloaded, not in git)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   └── refseq89m/           # MITOS2 reference database (auto-downloaded)
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├── singularity/
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│   └── mitoz_3.6.sif        # MitoZ Singularity image (auto-downloaded, not in git)
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>└── results/
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    └── &lt;species_prefix&gt;/    # All outputs for a species (not in git)
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        ├── 01_qc/
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        ├── 03_mito_reads/
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        ├── 04_assembly/
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        ├── 05_polished/
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        ├── 06_stats/
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        ├── 07_mitoz/
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        ├── 07_annotation/
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        ├── 08_blast/
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        └── report.md
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>07_annotation/</code> only appears after running <code>annotate_mitos2.sh</code>. <code>08_blast/</code> and <code>report.md</code> are created by <code>run_pipeline.sh</code> and <code>generate_report.sh</code> respectively.</p>
+</blockquote>
+<hr />
+<h2 id="5-step-1-create-a-species-config-file">5. Step 1 — Create a species config file</h2>
+<p>Each species requires a config file in the <code>configs/</code> directory. Copy the example and edit it for the new species.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cp<span class="w"> </span>configs/anguilla_marmorata.conf<span class="w"> </span>configs/&lt;new_species&gt;.conf
+</code></pre></div>
+<p>Open the new file and set the following variables:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># =============================================================================</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Species config: &lt;Common name or full name&gt;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># =============================================================================</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nv">SPECIES_NAME</span><span class="o">=</span><span class="s2">&quot;Genus species&quot;</span><span class="w">         </span><span class="c1"># Full scientific name (for display only)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nv">SPECIES_PREFIX</span><span class="o">=</span><span class="s2">&quot;genus_species&quot;</span><span class="w">       </span><span class="c1"># Lowercase, underscore-separated (used for file names)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># Input reads (fastq or fastq.gz) — path relative to project root</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nv">READS</span><span class="o">=</span><span class="s2">&quot;path/to/reads.fastq.gz&quot;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># NCBI RefSeq accession for a closely related mitogenome</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nv">REFERENCE_ACCESSION</span><span class="o">=</span><span class="s2">&quot;NC_XXXXXX.1&quot;</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1"># Expected mitogenome size — used by Flye (e.g., 17k, 16.5k)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="nv">GENOME_SIZE</span><span class="o">=</span><span class="s2">&quot;17k&quot;</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1"># Flye read type:</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="c1">#   --nano-hq   for R10+ flowcells with high-accuracy basecalling (recommended)</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="c1">#   --nano-raw  for older R9.4.1 flowcells or standard basecalling</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="nv">FLYE_MODE</span><span class="o">=</span><span class="s2">&quot;--nano-hq&quot;</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="c1"># Medaka polishing model — must match the flowcell and basecaller version used</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c1"># See: https://github.com/nanoporetech/medaka#models</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="nv">MEDAKA_MODEL</span><span class="o">=</span><span class="s2">&quot;r1041_e82_400bps_sup_v5.0.0&quot;</span>
+</code></pre></div>
+<p><strong>Choosing <code>REFERENCE_ACCESSION</code>:</strong> Search NCBI for a complete mitogenome from the same genus or a closely related genus. The reference is used only for read enrichment (mapping) and QUAST comparison; it does not need to be from the same species.</p>
+<p><strong>Choosing <code>FLYE_MODE</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flowcell</th>
+<th>Basecalling</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R10.4.1 + SUP/HAC</td>
+<td><code>--nano-hq</code></td>
+<td></td>
+</tr>
+<tr>
+<td>R9.4.1</td>
+<td><code>--nano-raw</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Choosing <code>MEDAKA_MODEL</code>:</strong> The model name encodes the flowcell chemistry, pore version, basecaller speed, and model version. Check <code>medaka tools list_models</code> for all available models.</p>
+<hr />
+<h2 id="6-step-2-run-the-assembly-and-mitoz-pipeline">6. Step 2 — Run the assembly and MitoZ pipeline</h2>
+<p>Activate the <code>ont</code> conda environment, then run the pipeline with the species config:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>bash<span class="w"> </span>run_pipeline.sh<span class="w"> </span>configs/&lt;species&gt;.conf
+</code></pre></div>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>conda<span class="w"> </span>activate<span class="w"> </span>ont
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>bash<span class="w"> </span>run_pipeline.sh<span class="w"> </span>configs/anguilla_marmorata.conf
+</code></pre></div></p>
+<p>The script will run non-interactively through all steps. The first run for a new species will also:</p>
+<ul>
+<li>Download the reference mitogenome from NCBI (Step 0, requires internet)</li>
+<li>Pull the MitoZ Singularity image (~1 GB, Step 7, requires internet)</li>
+</ul>
+<p>Both are skipped on subsequent runs if the files already exist.</p>
+<h3 id="pipeline-steps">Pipeline steps</h3>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Tool</th>
+<th>Description</th>
+<th>Output directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>efetch</td>
+<td>Download reference mitogenome from NCBI</td>
+<td><code>reference/</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>NanoPlot</td>
+<td>Read quality report</td>
+<td><code>results/&lt;prefix&gt;/01_qc/</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>minimap2 + samtools</td>
+<td>Map all reads to reference, keep mapped reads</td>
+<td><code>results/&lt;prefix&gt;/03_mito_reads/</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Flye</td>
+<td>Assemble enriched mito reads</td>
+<td><code>results/&lt;prefix&gt;/04_assembly/</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Medaka</td>
+<td>Polish assembly with raw reads</td>
+<td><code>results/&lt;prefix&gt;/05_polished/</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>seqkit + QUAST</td>
+<td>Assembly statistics and comparison to reference</td>
+<td><code>results/&lt;prefix&gt;/06_stats/</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>MitoZ (Singularity)</td>
+<td>Circos plot and gene order</td>
+<td><code>results/&lt;prefix&gt;/07_mitoz/</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>BioPython + NCBI BLAST</td>
+<td>Species identification — top 10 nt hits</td>
+<td><code>results/&lt;prefix&gt;/08_blast/</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Step 2 (Filtlong pre-filtering) is intentionally skipped. Pre-filtering to a size limit before mapping discards most mitochondrial reads. All raw reads are mapped directly to the reference instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Step 8 submits <code>consensus.fasta</code> to NCBI BLAST over HTTP and may take 5–15 minutes depending on NCBI load. An internet connection is required.</p>
+</div>
+<h3 id="checking-assembly-quality-after-step-6">Checking assembly quality after Step 6</h3>
+<p>Before proceeding to annotation, verify the assembly looks correct:</p>
+<ol>
+<li><strong>Check contig count and circularity</strong> — <code>results/&lt;prefix&gt;/04_assembly/assembly_info.txt</code> should show 1 contig, <code>circ. = Y</code>, length ~16–18 kb.</li>
+<li><strong>Check QUAST genome fraction</strong> — <code>results/&lt;prefix&gt;/06_stats/report.txt</code> should show <code>Genome fraction (%) = ~100</code> and <code># misassemblies = 0</code>.</li>
+<li><strong>Check MitoZ gene order</strong> — <code>results/&lt;prefix&gt;/07_mitoz/&lt;prefix&gt;.consensus.fasta.result/</code> should contain the circos plot and GenBank file.</li>
+</ol>
+<hr />
+<h2 id="7-step-3-run-mitos2-annotation">7. Step 3 — Run MITOS2 annotation</h2>
+<p>MITOS2 is run as a separate script. Pass the same config file used for assembly — the script derives all paths from <code>SPECIES_PREFIX</code> and writes output to <code>results/&lt;prefix&gt;/07_annotation/</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>bash<span class="w"> </span>annotate_mitos2.sh<span class="w"> </span>configs/&lt;species&gt;.conf
+</code></pre></div>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bash<span class="w"> </span>annotate_mitos2.sh<span class="w"> </span>configs/anguilla_marmorata.conf
+</code></pre></div></p>
+<p>On first run, the script will automatically:</p>
+<ol>
+<li>Create the <code>mitos2</code> conda environment (if not present)</li>
+<li>Download the MITOS2 reference database <code>refseq89m</code> from Zenodo (~20 MB)</li>
+</ol>
+<h3 id="mitos2-output-files">MITOS2 output files</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>result.bed</code></td>
+<td>Gene coordinates (BED format)</td>
+</tr>
+<tr>
+<td><code>result.gff</code></td>
+<td>Gene annotation (GFF3 format)</td>
+</tr>
+<tr>
+<td><code>result.fas</code></td>
+<td>Gene nucleotide sequences</td>
+</tr>
+<tr>
+<td><code>result.faa</code></td>
+<td>Protein sequences</td>
+</tr>
+<tr>
+<td><code>result.mito</code></td>
+<td>Summary of all annotated features</td>
+</tr>
+<tr>
+<td><code>result.geneorder</code></td>
+<td>Gene order string</td>
+</tr>
+<tr>
+<td><code>result.png</code></td>
+<td>Linear genome map</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Expected result for a vertebrate fish:</strong> 13 protein-coding genes, 2 rRNAs (12S, 16S), 22 tRNAs. Missing or fragmented genes may indicate a misassembly or a genuinely unusual mitogenome and should be investigated.</p>
+<hr />
+<h2 id="8-step-4-generate-the-final-report">8. Step 4 — Generate the final report</h2>
+<p>Once the pipeline and MITOS2 annotation are complete, generate a markdown report that summarises all results in one place:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>bash<span class="w"> </span>generate_report.sh<span class="w"> </span>configs/&lt;species&gt;.conf
+</code></pre></div>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>bash<span class="w"> </span>generate_report.sh<span class="w"> </span>configs/anguilla_marmorata.conf
+</code></pre></div></p>
+<p>The report is written to <code>results/&lt;prefix&gt;/report.md</code> and contains:</p>
+<ul>
+<li>Assembly statistics (contig length, coverage, circularity, QUAST metrics)</li>
+<li>BLAST species identification table (top 10 NCBI nt hits)</li>
+<li>MitoZ annotation summary and full gene table</li>
+<li>MITOS2 annotation summary and gene order (if <code>annotate_mitos2.sh</code> has been run)</li>
+<li>Index of all output files</li>
+</ul>
+<p>The report can be opened in any markdown viewer, text editor, or converted to PDF/HTML. If MITOS2 has not yet been run, section 4 will display a prompt with the command to run it — the report can be regenerated at any time.</p>
+<hr />
+<h2 id="9-interpreting-outputs">9. Interpreting outputs</h2>
+<h3 id="assembly-quality-indicators">Assembly quality indicators</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Acceptable range</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contig length</td>
+<td>15,500–18,000 bp</td>
+<td><code>results/&lt;prefix&gt;/04_assembly/assembly_info.txt</code></td>
+</tr>
+<tr>
+<td>Circular</td>
+<td>Y</td>
+<td><code>results/&lt;prefix&gt;/04_assembly/assembly_info.txt</code></td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>&gt; 50× (ideally 100–200×)</td>
+<td><code>results/&lt;prefix&gt;/04_assembly/assembly_info.txt</code></td>
+</tr>
+<tr>
+<td>Genome fraction</td>
+<td>&gt; 95%</td>
+<td><code>results/&lt;prefix&gt;/06_stats/report.txt</code></td>
+</tr>
+<tr>
+<td>Misassemblies</td>
+<td>0</td>
+<td><code>results/&lt;prefix&gt;/06_stats/report.txt</code></td>
+</tr>
+<tr>
+<td>Mismatches per 100 kbp</td>
+<td>&lt; 1,000</td>
+<td><code>results/&lt;prefix&gt;/06_stats/report.txt</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mitoz-circos-plot">MitoZ circos plot</h3>
+<p>MitoZ names its result directory after the input filename, so the outputs are at:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>results/&lt;prefix&gt;/07_mitoz/&lt;prefix&gt;.consensus.fasta.result/circos.png
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>results/&lt;prefix&gt;/07_mitoz/&lt;prefix&gt;.consensus.fasta.result/circos.svg
+</code></pre></div>
+<p>The GenBank annotation file is at:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>results/&lt;prefix&gt;/07_mitoz/tmp_&lt;prefix&gt;_consensus.fasta_mitoscaf.fa/&lt;prefix&gt;_consensus.fasta_mitoscaf.fa.gbf
+</code></pre></div>
+<p>The circos plot shows the circular mitogenome with gene positions, strand orientation, and a GC content track. Both PNG (289 kb) and SVG (44 kb) are produced — open the SVG in any web browser or vector graphics editor for a scalable version.</p>
+<h3 id="blast-species-identification">BLAST species identification</h3>
+<p>Results are in <code>results/&lt;prefix&gt;/08_blast/blast_results.tsv</code> with columns: rank, accession, identity %, alignment length, e-value, bitscore, description.</p>
+<p>The top hit identity percentage is the key value to interpret:</p>
+<table>
+<thead>
+<tr>
+<th>Identity %</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥ 99%</td>
+<td>Strong species-level match</td>
+</tr>
+<tr>
+<td>97–99%</td>
+<td>Likely same species, minor sequence divergence</td>
+</tr>
+<tr>
+<td>95–97%</td>
+<td>Probable congeneric species</td>
+</tr>
+<tr>
+<td>&lt; 95%</td>
+<td>Genus-level or higher match only</td>
+</tr>
+</tbody>
+</table>
+<p>If the top BLAST hits disagree with the sample label, treat the BLAST result as the authoritative identification. A mislabelled sample will show all top hits belonging to a different genus or family than expected.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>MitoZ's "closely related species" in <code>summary.txt</code> is determined from its own limited internal database and is used to guide annotation — it is <strong>not</strong> a species identification. Always use the BLAST result for species ID.</p>
+</div>
+<h3 id="gene-order">Gene order</h3>
+<p>The gene order string from MITOS2 is in <code>results/&lt;prefix&gt;/07_annotation/result.geneorder</code>. A <code>-</code> prefix indicates the gene is on the minus strand. Compare against published gene orders for the taxon to confirm the assembly is correctly oriented.</p>
+<hr />
+<h2 id="10-adding-a-new-species-quick-checklist">10. Adding a new species — quick checklist</h2>
+<ul>
+<li>[ ] Obtain concatenated ONT reads (<code>.fastq.gz</code>)</li>
+<li>[ ] Find a RefSeq accession for a related mitogenome on NCBI</li>
+<li>[ ] Clone (or pull) the pipeline repo: <code>git clone http://172.20.142.126:3000/evilliers/mitogenome-pipeline.git</code></li>
+<li>[ ] Copy and edit a config: <code>cp configs/anguilla_marmorata.conf configs/&lt;new_species&gt;.conf</code></li>
+<li>[ ] Set all 7 config variables: <code>SPECIES_NAME</code>, <code>SPECIES_PREFIX</code>, <code>READS</code>, <code>REFERENCE_ACCESSION</code>, <code>GENOME_SIZE</code>, <code>FLYE_MODE</code>, <code>MEDAKA_MODEL</code></li>
+<li>[ ] Run: <code>conda activate ont &amp;&amp; bash run_pipeline.sh configs/&lt;new_species&gt;.conf</code></li>
+<li>[ ] Check assembly quality (contig count, circularity, QUAST)</li>
+<li>[ ] Verify BLAST top hit matches expected species/genus (<code>results/&lt;prefix&gt;/08_blast/blast_results.tsv</code>)</li>
+<li>[ ] Run: <code>bash annotate_mitos2.sh configs/&lt;new_species&gt;.conf</code></li>
+<li>[ ] Verify gene count (expect 13 CDS + 2 rRNA + 22 tRNA)</li>
+<li>[ ] Generate final report: <code>bash generate_report.sh configs/&lt;new_species&gt;.conf</code></li>
+<li>[ ] Commit the new config file and push (or open a PR): <code>git add configs/&lt;new_species&gt;.conf &amp;&amp; git commit -m "Add config: &lt;species name&gt;"</code></li>
+</ul>
+<hr />
+<h2 id="11-troubleshooting">11. Troubleshooting</h2>
+<p><strong>Very few reads after Step 3 (mito read enrichment)</strong>
+The reference may be too divergent from your species. Try a closer relative as the mapping reference. Check <code>seqkit stats</code> output after Step 3 — at minimum a few thousand reads are needed for assembly.</p>
+<p><strong>Flye produces 0 contigs or multiple short contigs</strong>
+Coverage is likely too low. Check the read count from Step 3. Consider using <code>--nano-raw</code> if reads were basecalled without super-accuracy mode.</p>
+<p><strong>QUAST shows low genome fraction or many misassemblies</strong>
+The reference may be from a distantly related species. This does not necessarily indicate a bad assembly — compare GC content and length against published mitogenomes for the taxon instead.</p>
+<p><strong>MitoZ Singularity pull fails</strong>
+Check internet connectivity and available disk space (<code>df -h</code>). The <code>.sif</code> file is ~1 GB. Re-run the pipeline once the image has been downloaded manually:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>singularity<span class="w"> </span>pull<span class="w"> </span>singularity/mitoz_3.6.sif<span class="w"> </span>docker://guanliangmeng/mitoz:3.6
+</code></pre></div></p>
+<p><strong>BLAST step times out or returns no results</strong>
+NCBI BLAST can be slow under heavy load. The step may take up to 15 minutes. If it fails, the pipeline will exit — re-run from Step 8 by calling the BioPython command directly, or submit <code>results/&lt;prefix&gt;/05_polished/consensus.fasta</code> manually to <a href="https://blast.ncbi.nlm.nih.gov">NCBI BLAST</a> and save the top 10 hits as <code>results/&lt;prefix&gt;/08_blast/blast_results.tsv</code>.</p>
+<p><strong>BLAST top hits do not match the sample label</strong>
+This is a strong indicator of sample mislabelling. Trust the BLAST result over the label. See section 9 (Interpreting BLAST results) for identity % thresholds. Note that MitoZ's "closely related species" is not a species identification — always use BLAST for this purpose.</p>
+<p><strong>MITOS2 misses genes</strong>
+Try the <a href="http://mitos.bioinf.uni-leipzig.de">MITOS2 web server</a> with the polished consensus as input (Reference: RefSeq 89 Metazoa, Genetic code: 2 — vertebrate mt). The web server uses the same algorithm but may give slightly different results with default settings.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
